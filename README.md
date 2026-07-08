@@ -15,6 +15,18 @@ Current main goal is to reintroduce the Ascension Atlas. It’s mechanics will m
 
 The game contains assets that imitate the originals, but it does not include any original asset from Skyforge.
 
+## Getting Started
+
+Requirements:
+Unity 6000.3.18f1 - recommended version
+
+Steps:
+1. Clone this repository.
+2. Open UnityHub
+3. Go to Projects -> Add -> Add project from disk
+4. Choode the path to the downloaded repository
+5. Open the project and wait until all the packages are installed
+
 ## Current focus
 
 Here are the things that are worked on, or will be in the near future:
