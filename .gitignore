@@ -1,0 +1,31 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.userprefs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unity crash reports
+sysinfo.txt
+
+# Generated packages
+*.pidb
+*.pdb
+*.mdb
+
+# Unity upgrade logs
+UpgradeLog.htm

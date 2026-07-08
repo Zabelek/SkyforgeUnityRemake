@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62e7517ac2bf5a41906d4a6e174bacb, type: 3}
+  m_Name: Berserker_DestructiveAttack_Ability_SO
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
+  AttackTimerNext: 1
+  AttackTimerMax: 1.4
+  IsSkill: 0
+  Icon: {fileID: 21300000, guid: 5eddebb01a3db8d4ea48bc894b52513a, type: 3}
+  UpgradedIcon: {fileID: 0}
+  EscapeIcon: {fileID: 0}
+  StateType: 5
+  Name: Destructive Attack
+  Description: 'Has two charge levels:\n\nDestructive Strike: Inflicts $X-$Y damage
+    to all enemies in a 4 yard radius and makes them 30% more vulnerable to damage
+    from Berserker''s attacks for 25 seconds.\nDestructive Wave: Inflicts $X-$Y damage
+    to all enemies within a 30 yard radius in front of the character and makes them
+    30% more vulnerable to damage from Berserker''s attacks for 25 seconds.'
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  DamageMultiplier: 1.5
+  ManaCost: 0
+  AbilityWeight: 0.4
+  Cooldown: 0
+  UpgradedCooldown: 0
+  EscapeCooldown: 0

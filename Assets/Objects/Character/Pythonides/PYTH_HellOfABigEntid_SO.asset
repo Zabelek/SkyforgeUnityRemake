@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05aa26ef71abf474fb7882d9834677c3, type: 3}
+  m_Name: PYTH_HellOfABigEntid_SO
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
+  Name: Hell  Of  A  Big  Entid
+  Category: {fileID: 11400000, guid: d49b24a76446c6241a0cd62cb73c7ad7, type: 2}
+  CCResistant: 1
+  MaxHealth: 6400
+  MaxMana: 0
+  MovementSpeed: 2.5
+  AttackSpeed: 0.5
+  BaseDamage: 12
+  CriticalChance: 0
+  CombatManaRegen: 0

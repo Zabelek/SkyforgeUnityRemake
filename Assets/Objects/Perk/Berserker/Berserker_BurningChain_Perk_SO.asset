@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3634322dd3e8b44e8f5e9463418ac88, type: 3}
+  m_Name: Berserker_BurningChain_Perk_SO
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  Stat: 0
+  Value: 0
+  Functional: 1
+  Name: Burning Chain
+  Description: Finishing combo strikes, i.e. Fast Attack, Dissection, Crushing Throw,
+    and Fracture have a 20%, 25%, 35% and 40% chance to inflict Burning Chain to
+    the Berserker for 15 seconds, which increases the damage of the next Crippling
+    Blow by 150%.
+  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

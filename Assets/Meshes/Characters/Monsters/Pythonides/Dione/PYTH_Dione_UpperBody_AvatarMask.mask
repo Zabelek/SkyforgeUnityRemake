@@ -1,0 +1,205 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PYTH_Dione_UpperBody_AvatarMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Dione
+    m_Weight: 0
+  - m_Path: Dione_Rig
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_1_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_1_1/Leg_Left_Finger_1_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_1_1/Leg_Left_Finger_1_2/Leg_Left_Finger_1_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_1_1/Leg_Left_Finger_1_2/Leg_Left_Finger_1_3/Leg_Left_Finger_1_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_2_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_2_1/Leg_Left_Finger_2_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_2_1/Leg_Left_Finger_2_2/Leg_Left_Finger_2_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_2_1/Leg_Left_Finger_2_2/Leg_Left_Finger_2_3/Leg_Left_Finger_2_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_3_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_3_1/Leg_Left_Finger_3_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_3_1/Leg_Left_Finger_3_2/Leg_Left_Finger_3_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Left_IK/Leg_Left_Finger_3_1/Leg_Left_Finger_3_2/Leg_Left_Finger_3_3/Leg_Left_Finger_3_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_1_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_1_1/Leg_Right_Finger_1_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_1_1/Leg_Right_Finger_1_2/Leg_Right_Finger_1_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_1_1/Leg_Right_Finger_1_2/Leg_Right_Finger_1_3/Leg_Right_Finger_1_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_2_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_2_1/Leg_Right_Finger_2_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_2_1/Leg_Right_Finger_2_2/Leg_Right_Finger_2_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_2_1/Leg_Right_Finger_2_2/Leg_Right_Finger_2_3/Leg_Right_Finger_2_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_3_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_3_1/Leg_Right_Finger_3_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_3_1/Leg_Right_Finger_3_2/Leg_Right_Finger_3_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Leg_Right_IK/Leg_Right_Finger_3_1/Leg_Right_Finger_3_2/Leg_Right_Finger_3_3/Leg_Right_Finger_3_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Head
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_1/Head_Other_1_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_2/Head_Other_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_3
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Other_3/Head_Other_3_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Left_Mid
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Left_Mid/Head_Side_Left_Bottom
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Left_Mid/Head_Side_Left_Bottom/Head_Side_Left_Bottom_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Left_Mid/Head_Side_Left_Top
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Left_Mid/Head_Side_Left_Top/Head_Side_Left_Top_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Right_Mid
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Right_Mid/Head_Side_Right_Bottom
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Right_Mid/Head_Side_Right_Bottom/Head_Side_Right_Bottom_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Right_Mid/Head_Side_Right_Top
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Head_Side_Right_Mid/Head_Side_Right_Top/Head_Side_Right_Top_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Jaw_Down
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Jaw_Down/Jaw_Down_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Jaw_Up
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Head/Jaw_Up/Jaw_Up_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Left_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Left_1/Leg_Left_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Left_1/Leg_Left_2/Leg_Left_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Left_1/Leg_Left_2/Leg_Left_3/Leg_Left_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Right_1
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Right_1/Leg_Right_2
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Right_1/Leg_Right_2/Leg_Right_3
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Leg_Right_1/Leg_Right_2/Leg_Right_3/Leg_Right_3_end
+    m_Weight: 0
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left/Foearm_Left
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left/Foearm_Left/Foearm_Left_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_1_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_1_1/Paw_Left_1_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_1_1/Paw_Left_1_2/Paw_Left_1_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_2_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_2_1/Paw_Left_2_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_2_1/Paw_Left_2_2/Paw_Left_2_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_3_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_3_1/Paw_Left_3_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Left_IK/Paw_Left_3_1/Paw_Left_3_2/Paw_Left_3_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right/Foearm_Right
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right/Foearm_Right/Foearm_Right_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_1_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_1_1/Paw_Right_1_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_1_1/Paw_Right_1_2/Paw_Right_1_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_2_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_2_1/Paw_Right_2_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_2_1/Paw_Right_2_2/Paw_Right_2_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_3_1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_3_1/Paw_Right_3_2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Arm_Right_IK/Paw_Right_3_1/Paw_Right_3_2/Paw_Right_3_2_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Spine3
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Spine3/Spine4
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Spine4_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail2
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail2/Tail3
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail2/Tail3/Tail4
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail2/Tail3/Tail4/Tail4_end
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail5
+    m_Weight: 1
+  - m_Path: Dione_Rig/Origin/Spine1/Tail1/Tail5/Tail5_end
+    m_Weight: 1

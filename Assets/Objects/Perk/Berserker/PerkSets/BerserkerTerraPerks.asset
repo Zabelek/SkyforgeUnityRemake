@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ae2c9b107d70142a3d4ffbc7ec693e, type: 3}
+  m_Name: BerserkerTerraPerks
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSetSO
+  Name: Terra
+  Perks:
+  - {fileID: 11400000, guid: 9d10d74ee535a104c9eb77e9833d356d, type: 2}
+  - {fileID: 11400000, guid: 70acc119d4d54c74583786783b5492d9, type: 2}
+  - {fileID: 11400000, guid: 9cd8392377306dd4aa15f5bb6515d8b1, type: 2}

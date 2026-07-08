@@ -1,0 +1,231 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PYTH_EntidUpperBody_AvatarMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Entid
+    m_Weight: 0
+  - m_Path: Entid_Rig
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.009
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.009/Bone.010
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.009/Bone.010/Bone.010_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.011
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.011/Bone.012
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.011/Bone.012/Bone.012_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.013
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.013/Bone.014
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.013/Bone.014/Bone.014_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.015
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.015/Bone.016
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.015/Bone.016/Bone.016_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.017
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.017/Bone.018
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.017/Bone.018/Bone.018_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.019
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.019/Bone.020
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Bone.019/Bone.020/Bone.020_end
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Spine1
+    m_Weight: 0
+  - m_Path: Entid_Rig/Origin/Spine1/Mouth_Bot
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Mouth_Bot/Mouth_Bot_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Mouth_Top
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Mouth_Top/Mouth_Top_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Back
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Back/Top_Back_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Front
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Front/Top_Front_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Left
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Left/Top_Left_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Right
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Spine4/Top_Right/Top_Right_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3/Vein4
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3/Vein4/Vein5
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3/Vein4/Vein5/Vein6
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3/Vein4/Vein5/Vein6/Vein7
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1/Vein2/Vein3/Vein4/Vein5/Vein6/Vein7/Vein7_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001/Vein4.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001/Vein4.001/Vein5.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001/Vein4.001/Vein5.001/Vein6.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001/Vein4.001/Vein5.001/Vein6.001/Vein7.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.001/Vein2.001/Vein3.001/Vein4.001/Vein5.001/Vein6.001/Vein7.001/Vein7.001_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002/Vein4.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002/Vein4.002/Vein5.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002/Vein4.002/Vein5.002/Vein6.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002/Vein4.002/Vein5.002/Vein6.002/Vein7.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.002/Vein2.002/Vein3.002/Vein4.002/Vein5.002/Vein6.002/Vein7.002/Vein7.002_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003/Vein4.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003/Vein4.003/Vein5.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003/Vein4.003/Vein5.003/Vein6.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003/Vein4.003/Vein5.003/Vein6.003/Vein7.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein1.003/Vein2.003/Vein3.003/Vein4.003/Vein5.003/Vein6.003/Vein7.003/Vein7.003_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw1
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw1/Claw1_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw2
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw2/Claw2_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw3
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw3/Claw3_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw4
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK/Vein8/Claw4/Claw4_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw1.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw1.001/Claw1.001_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw2.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw2.001/Claw2.001_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw3.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw3.001/Claw3.001_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw4.001
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.001/Vein8.001/Claw4.001/Claw4.001_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw1.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw1.002/Claw1.002_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw2.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw2.002/Claw2.002_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw3.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw3.002/Claw3.002_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw4.002
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.002/Vein8.002/Claw4.002/Claw4.002_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw1.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw1.003/Claw1.003_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw2.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw2.003/Claw2.003_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw3.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw3.003/Claw3.003_end
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw4.003
+    m_Weight: 1
+  - m_Path: Entid_Rig/Origin/Spine1/Spine2/Spine3/Vein_IK.003/Vein8.003/Claw4.003/Claw4.003_end
+    m_Weight: 1

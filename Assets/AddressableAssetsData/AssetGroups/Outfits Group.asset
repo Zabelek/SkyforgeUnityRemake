@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Outfits Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Outfits Group
+  m_GUID: bb157ab390448044f94e48282e7aa2ba
+  m_SerializeEntries:
+  - m_GUID: 18e3da4245d8d604f8286cf83f815e80
+    m_Address: Armor_WizardHat_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Hats
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 287d8ddadf7d17a41809d5f1ab9c4d10
+    m_Address: Armor_HoodAndMask_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Hats
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36566f3172af4fd45929eedf1c056cbe
+    m_Address: OutfitRegistry
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e6dccddc288b1a42bb10ac48d24f6f2
+    m_Address: Armor_FoilHat_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Hats
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 790c8836bf6b0fa4eab70ec2d6479f8d
+    m_Address: Armor_HorseHead_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Hats
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f26460ab7410ac94cb59a9f8151fea6e
+    m_Address: Armor_CursedArmor_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Outfits
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6a9ded06ebdca9c49af99ee3614ac8a3, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7fb395fcb790e0b47ae3c358c0edef28, type: 2}
+    - {fileID: 11400000, guid: f47afe00e6cdb4b42b850059faff8e94, type: 2}

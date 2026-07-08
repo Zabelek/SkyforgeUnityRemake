@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62e7517ac2bf5a41906d4a6e174bacb, type: 3}
+  m_Name: Berserker_WildLeap_Ability_SO
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
+  AttackTimerNext: 1.8
+  AttackTimerMax: 2.1
+  IsSkill: 1
+  Icon: {fileID: 21300000, guid: 225b3ecae32ee1343a4c56b4508eee6f, type: 3}
+  UpgradedIcon: {fileID: 0}
+  EscapeIcon: {fileID: 21300000, guid: f1c5455befb9fa449a95b812ac739716, type: 3}
+  StateType: 0
+  Name: Wild Leap
+  Description: Berserker leaps towards the selected enemy. All movement restricting
+    effects are removed, and Berserker is immune to them for 3 seconds. Inflicts
+    $X damage to the target and surrounding enemies. If no target is selected, Berserker
+    will leap a distance of up to 24 yards. If stunned, feared, disoriented or immobilized,
+    Berserker can break free once every 20 seconds by using Wild Leap.
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  DamageMultiplier: 1.7
+  ManaCost: 0
+  AbilityWeight: 0.8
+  Cooldown: 19
+  UpgradedCooldown: 0
+  EscapeCooldown: 15

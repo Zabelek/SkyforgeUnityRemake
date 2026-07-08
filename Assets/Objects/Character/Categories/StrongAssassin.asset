@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc95983e63802c4ca2c832f2460b74b, type: 3}
+  m_Name: StrongAssassin
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCategorySO
+  Name: Assassin
+  IconBackground: {fileID: 21300000, guid: 6e09f75774fbf7a4d81bedac5ed59efb, type: 3}
+  Icon: {fileID: 21300000, guid: cd3f62c2425071a4ba66a991758813a5, type: 3}
+  ShowBackgroundAboveModel: 1
+  HealthBarsAmount: 1
+  DropsHealingOrbs: 1

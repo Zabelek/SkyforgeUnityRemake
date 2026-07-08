@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62e7517ac2bf5a41906d4a6e174bacb, type: 3}
+  m_Name: PYTH_EntidFirstSkill_Ability_SO
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
+  AttackTimerNext: 4
+  AttackTimerMax: 60
+  IsSkill: 1
+  Icon: {fileID: 0}
+  UpgradedIcon: {fileID: 0}
+  EscapeIcon: {fileID: 0}
+  StateType: 0
+  Name: Summon Triffids
+  Description: Summons Yummy Triffids
+  Class: 
+  DamageMultiplier: 1
+  ManaCost: 0
+  AbilityWeight: 0
+  Cooldown: 60
+  UpgradedCooldown: 0
+  EscapeCooldown: 0

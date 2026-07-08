@@ -1,0 +1,199 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PYTH_Triffid_UpperBody_AvatarMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: material.002
+    m_Weight: 0
+  - m_Path: material.003
+    m_Weight: 0
+  - m_Path: material.004
+    m_Weight: 0
+  - m_Path: material.005
+    m_Weight: 0
+  - m_Path: Triffid
+    m_Weight: 0
+  - m_Path: Triffid_Rig
+    m_Weight: 0
+  - m_Path: Triffid_Rig/origin
+    m_Weight: 0
+  - m_Path: Triffid_Rig/origin/origin_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1
+    m_Weight: 0
+  - m_Path: Triffid_Rig/spine1/spine2
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1/Flower2
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1/Flower2/Flower2_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.001/Flower2.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.001/Flower2.001/Flower2.001_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.002
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.002/Flower2.002
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.002/Flower2.002/Flower2.002_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.003
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.003/Flower2.003
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.003/Flower2.003/Flower2.003_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.004
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.004/Flower2.004
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.004/Flower2.004/Flower2.004_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.005
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.005/Flower2.005
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.005/Flower2.005/Flower2.005_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.006
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.006/Flower2.006
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.006/Flower2.006/Flower2.006_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.007
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.007/Flower2.007
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Flower1.007/Flower2.007/Flower2.007_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/spine4
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/spine4/spine4_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6/Veins7
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6/Veins7/Veins8
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6/Veins7/Veins8/Veins9
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6/Veins7/Veins8/Veins9/Veins10
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1/Veins2/Veins3/Veins4/Veins5/Veins6/Veins7/Veins8/Veins9/Veins10/Veins10_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001/Veins7.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001/Veins7.001/Veins8.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001/Veins7.001/Veins8.001/Veins9.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001/Veins7.001/Veins8.001/Veins9.001/Veins10.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins1.001/Veins2.001/Veins3.001/Veins4.001/Veins5.001/Veins6.001/Veins7.001/Veins8.001/Veins9.001/Veins10.001/Veins10.001_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6/Veins_Bot7
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6/Veins_Bot7/Veins_Bot8
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6/Veins_Bot7/Veins_Bot8/Veins_Bot9
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6/Veins_Bot7/Veins_Bot8/Veins_Bot9/Veins_Bot10
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1/Veins_Bot2/Veins_Bot3/Veins_Bot4/Veins_Bot5/Veins_Bot6/Veins_Bot7/Veins_Bot8/Veins_Bot9/Veins_Bot10/Veins_Bot10_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001/Veins_Bot7.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001/Veins_Bot7.001/Veins_Bot8.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001/Veins_Bot7.001/Veins_Bot8.001/Veins_Bot9.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001/Veins_Bot7.001/Veins_Bot8.001/Veins_Bot9.001/Veins_Bot10.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot1.001/Veins_Bot2.001/Veins_Bot3.001/Veins_Bot4.001/Veins_Bot5.001/Veins_Bot6.001/Veins_Bot7.001/Veins_Bot8.001/Veins_Bot9.001/Veins_Bot10.001/Veins_Bot10.001_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK/Veins_Bot11
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK/Veins_Bot11/Veins_Bot11_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK.001/Veins_Bot11.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_Bot_IK.001/Veins_Bot11.001/Veins_Bot11.001_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK/Veins11
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK/Veins11/Veins11_end
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK.001/Veins11.001
+    m_Weight: 1
+  - m_Path: Triffid_Rig/spine1/spine2/spine3/Veins_IK.001/Veins11.001/Veins11.001_end
+    m_Weight: 1

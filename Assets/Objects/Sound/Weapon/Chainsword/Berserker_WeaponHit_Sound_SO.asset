@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db67436ffd38d4b8cd59c65af3e095, type: 3}
+  m_Name: Berserker_WeaponHit_Sound_SO
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffectSO
+  AudioClips:
+  - {fileID: 8300000, guid: 334fd598c45a68f45ab60e404c7cbcc0, type: 3}
+  - {fileID: 8300000, guid: ca8b2c3e91b92514ca345926fda5ddb7, type: 3}
+  - {fileID: 8300000, guid: 34891242b4ad1764ca5c9c89e03b1caa, type: 3}
+  Name: Chainsword_Hit
+  VolumeModifier: 1
+  PlayedOptimized: 1

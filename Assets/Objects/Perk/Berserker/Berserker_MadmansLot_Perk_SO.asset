@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3634322dd3e8b44e8f5e9463418ac88, type: 3}
+  m_Name: Berserker_MadmansLot_Perk_SO
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  Stat: 0
+  Value: 0
+  Functional: 1
+  Name: Madman's Lot
+  Description: Every Fracture, if it consumes Rage, will reduce the cooldown of Firestorm
+    by 10 seconds. When the ability is active, the Berserker restores 1% of health
+    per second for every common enemy hit and 2.5% for every elite enemy or immortal.
+    You can recover up to 5% of health per second.
+  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

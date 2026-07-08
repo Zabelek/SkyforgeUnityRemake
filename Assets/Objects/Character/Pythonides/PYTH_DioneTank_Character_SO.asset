@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05aa26ef71abf474fb7882d9834677c3, type: 3}
+  m_Name: PYTH_DioneTank_Character_SO
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
+  Name: Dione Tank
+  MaxHealth: 1200
+  MaxMana: 0
+  MovementSpeed: 4
+  AttackSpeed: 1
+  BaseDamage: 3
+  Category: {fileID: 11400000, guid: e64d242872eb93b42bd28377a443bba4, type: 2}
+  CCResistant: 1

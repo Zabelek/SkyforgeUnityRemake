@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db67436ffd38d4b8cd59c65af3e095, type: 3}
+  m_Name: PYTH_EntidAcidSpit_Sound_SO
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffectSO
+  AudioClips:
+  - {fileID: 8300000, guid: 46aac7c381afeec48a4978b037873b99, type: 3}
+  Name: Acid_Spit
+  VolumeModifier: 1
+  PlayedOptimized: 1

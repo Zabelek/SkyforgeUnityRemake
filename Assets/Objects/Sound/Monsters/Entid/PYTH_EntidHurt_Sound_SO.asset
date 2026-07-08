@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db67436ffd38d4b8cd59c65af3e095, type: 3}
+  m_Name: PYTH_EntidHurt_Sound_SO
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffectSO
+  AudioClips:
+  - {fileID: 8300000, guid: ef2830caf6eeb424e83d7c36047c909a, type: 3}
+  - {fileID: 8300000, guid: b18e5f0bc0cb36b4c9df1b1b50d2aadb, type: 3}
+  - {fileID: 8300000, guid: bd139498527fd0048a55750fdac137fa, type: 3}
+  Name: Hurt
+  VolumeModifier: 0.4
+  PlayedOptimized: 1

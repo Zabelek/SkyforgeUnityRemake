@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44f94889f7d8bc4aa31dda0a5ec6cff, type: 3}
+  m_Name: Test_Scenario_5
+  m_EditorClassIdentifier: Assembly-CSharp::VoicelineSO
+  Text: An experimental AI is guarding access to many important systems in this building.
+    Help me defeat it by destroying the power generators in the center platform,
+    and I will help you with your enemy.
+  Voice: {fileID: 8300000, guid: 8569db5873ed30b49b3a297f9aef7354, type: 3}
+  Speaker: {fileID: 11400000, guid: cf47e83f7746abd4ea993d69be9a9870, type: 2}
+  Volume: 1
+  Time: 13

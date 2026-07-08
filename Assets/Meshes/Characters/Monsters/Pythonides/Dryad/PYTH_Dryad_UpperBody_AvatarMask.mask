@@ -1,0 +1,411 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PYTH_Dryad_UpperBody_AvatarMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Cialo_Kobieta
+    m_Weight: 0
+  - m_Path: Cialo_Kobieta.004
+    m_Weight: 0
+  - m_Path: Cialo_Kobieta.005
+    m_Weight: 0
+  - m_Path: Cylinder.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L.
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L./foot.L
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L./foot.L/heel.02.L
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L./foot.L/heel.02.L/heel.02.L_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L./foot.L/toe.L
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.L./foot.L/toe.L/toe.L_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R/foot.R
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R/foot.R/heel.02.R
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R/foot.R/heel.02.R/heel.02.R_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R/foot.R/toe.R
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/footIK.R/foot.R/toe.R/toe.R_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end2
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end2/root_end2_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end3
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end3/root_end3_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end4
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end4/root_end4_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end5
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK/root_end1/root_end5/root_end5_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end2.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end2.001/root_end2.001_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end3.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end3.001/root_end3.001_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end4.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end4.001/root_end4.001_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end5.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.001/root_end1.001/root_end5.001/root_end5.001_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end2.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end2.002/root_end2.002_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end3.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end3.002/root_end3.002_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end4.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end4.002/root_end4.002_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end5.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.002/root_end1.002/root_end5.002/root_end5.002_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end2.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end2.003/root_end2.003_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end3.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end3.003/root_end3.003_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end4.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end4.003/root_end4.003_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end5.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/root_end_IK.003/root_end1.003/root_end5.003/root_end5.003_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/pelvis.L
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/pelvis.L/pelvis.L_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/pelvis.R
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/pelvis.R/pelvis.R_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7/root8
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7/root8/root9
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7/root8/root9/root10
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7/root8/root9/root10/root11
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1/root2/root3/root4/root5/root6/root7/root8/root9/root10/root11/root11_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001/root8.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001/root8.001/root9.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001/root8.001/root9.001/root10.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001/root8.001/root9.001/root10.001/root11.001
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.001/root2.001/root3.001/root4.001/root5.001/root6.001/root7.001/root8.001/root9.001/root10.001/root11.001/root11.001_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002/root8.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002/root8.002/root9.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002/root8.002/root9.002/root10.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002/root8.002/root9.002/root10.002/root11.002
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.002/root2.002/root3.002/root4.002/root5.002/root6.002/root7.002/root8.002/root9.002/root10.002/root11.002/root11.002_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003/root8.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003/root8.003/root9.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003/root8.003/root9.003/root10.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003/root8.003/root9.003/root10.003/root11.003
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/root1.003/root2.003/root3.003/root4.003/root5.003/root6.003/root7.003/root8.003/root9.003/root10.003/root11.003/root11.003_end
+    m_Weight: 0
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/breast.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/breast.L/breast.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/breast.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/breast.R/breast.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/f_index.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/f_index.01.L/f_index.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/f_index.01.L/f_index.02.L/f_index.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/f_index.01.L/f_index.02.L/f_index.03.L/f_index.03.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/thumb.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/thumb.01.L/thumb.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/thumb.01.L/thumb.02.L/thumb.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.01.L/thumb.01.L/thumb.02.L/thumb.03.L/thumb.03.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.02.L/f_middle.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.02.L/f_middle.01.L/f_middle.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.02.L/f_middle.01.L/f_middle.02.L/f_middle.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.02.L/f_middle.01.L/f_middle.02.L/f_middle.03.L/f_middle.03.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.03.L/f_ring.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.03.L/f_ring.01.L/f_ring.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.03.L/f_ring.01.L/f_ring.02.L/f_ring.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.03.L/f_ring.01.L/f_ring.02.L/f_ring.03.L/f_ring.03.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.04.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.04.L/f_pinky.01.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.04.L/f_pinky.01.L/f_pinky.02.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.04.L/f_pinky.01.L/f_pinky.02.L/f_pinky.03.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L/palm.04.L/f_pinky.01.L/f_pinky.02.L/f_pinky.03.L/f_pinky.03.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L.001
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/handIK.L.001/hand.L.001/hand.L.001_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L/forearm.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L/forearm.L/forearm.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/f_index.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/f_index.01.R/f_index.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/f_index.01.R/f_index.02.R/f_index.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/f_index.01.R/f_index.02.R/f_index.03.R/f_index.03.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/thumb.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/thumb.01.R/thumb.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/thumb.01.R/thumb.02.R/thumb.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.01.R/thumb.01.R/thumb.02.R/thumb.03.R/thumb.03.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.02.R/f_middle.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.02.R/f_middle.01.R/f_middle.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.02.R/f_middle.01.R/f_middle.02.R/f_middle.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.02.R/f_middle.01.R/f_middle.02.R/f_middle.03.R/f_middle.03.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.03.R/f_ring.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.03.R/f_ring.01.R/f_ring.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.03.R/f_ring.01.R/f_ring.02.R/f_ring.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.03.R/f_ring.01.R/f_ring.02.R/f_ring.03.R/f_ring.03.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.04.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.04.R/f_pinky.01.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.04.R/f_pinky.01.R/f_pinky.02.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.04.R/f_pinky.01.R/f_pinky.02.R/f_pinky.03.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/handIK.R.001/hand.R/palm.04.R/f_pinky.01.R/f_pinky.02.R/f_pinky.03.R/f_pinky.03.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/forearm.R_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/spine.004
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/spine.004/spine.005
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/spine.004/spine.005/spine.006
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/spine.004/spine.005/spine.006/spine.006_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/weapon
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/spine.001/spine.002/spine.003/weapon/weapon_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.L/shin.L
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.L/shin.L/shin.L_end
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.R/shin.R
+    m_Weight: 1
+  - m_Path: Dryad_Rig/origin/spine/thigh.R/shin.R/shin.R_end
+    m_Weight: 1
+  - m_Path: material.001
+    m_Weight: 0
+  - m_Path: material.002
+    m_Weight: 0
+  - m_Path: material.003
+    m_Weight: 0
+  - m_Path: material.004
+    m_Weight: 0
+  - m_Path: Plane.004
+    m_Weight: 0
+  - m_Path: Plane.005
+    m_Weight: 0
+  - m_Path: Plane.012
+    m_Weight: 0
