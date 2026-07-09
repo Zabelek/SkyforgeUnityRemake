@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "ca.andydbc.unity-texture-packer": {
-      "version": "file:F:/Pobrane/unity-texture-packer-master",
+    "com.andbc.texturepacker": {
+      "version": "https://github.com/andydbc/unity-texture-packer.git",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "c1a44020673d18365544c57e8382091422536686"
     },
     "com.ezhex1991.ezsoftbone": {
       "version": "https://www.pkglnk.dev/ezsoftbone.git",
