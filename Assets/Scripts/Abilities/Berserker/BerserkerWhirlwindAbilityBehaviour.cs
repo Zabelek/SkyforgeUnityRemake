@@ -229,7 +229,7 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
                 performer.Stats.CurrentMana = 0;
             }
         }
-        else if(potentialHealing > 0 && ((HeroBehaviour)performer).GetPerk("Madman's Lot")?.Enabled == true)
+        else if(potentialHealing > 0 && ((HeroBehaviour)performer).GetPerk("Base_Berserker_MadmansLot")?.Enabled == true)
         { 
             if (potentialHealing > 5)
                 potentialHealing = 5;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,11 +20,15 @@ public class EffectManager
     #region Methods
     public void UpdateEffects()
     {
+        var toRemoveList = new List<GameplayEffectBehaviour>();
         foreach (var effect in _effects)
         {
             effect.OnUpdate(_character);
+            if((effect.TimeLeft <= 0 && effect.TimeLeft > -100) || effect == null)
+            {
+                toRemoveList.Add(effect);
+            }
         }
-        var toRemoveList = _effects.FindAll(eff => eff.TimeLeft <= 0 && eff.TimeLeft > -100);
         foreach (var effect in toRemoveList)
         {
             RemoveEffect(effect);
@@ -76,6 +79,10 @@ public class EffectManager
                 effectToRemove.OnRemove(_character);
                 try { GameObject.Destroy(effectToRemove.gameObject); } catch { }
             }
+        }
+        else
+        {
+            _effects.Remove(effect);
         }
     }
     public void ClearEffects()

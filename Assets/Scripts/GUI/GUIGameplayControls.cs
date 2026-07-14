@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
@@ -54,9 +58,6 @@ public class GUIGameplayControls : MonoBehaviour
     [Tooltip("All the sounds played by the interface such as notifications, that are not referenced anywhere else in the interface components")]
     public SoundEffectSO[] SoundEffects;
     private GUIAbilitiesPanel _abilitiesPanel;
-    [Header("Openable Windows")]
-    [SerializeField] private GUIDebugWindow _debugWindow;
-    [SerializeField] private GUISettingsWindow _settingsWindow;
     [Header("Dash and Companion")]
     [SerializeField] private Image _dashFillImage;
     [SerializeField] private TextMeshProUGUI _dashNumberText;
@@ -95,20 +96,28 @@ public class GUIGameplayControls : MonoBehaviour
     private Vignette _vignette;
     [Tooltip("The screen displayed when the player is, surprise surprise, dead")]
     [SerializeField] private Transform _deathScreen;
+    [Tooltip("The camera that is set as an output camera in the GraphicsCompositor")]
+    [SerializeField] private Transform _sceneRoot;
+    [SerializeField] private SettingsManager _settingsManager;
+    [Tooltip("Different black fade used for transition to menu")]
+    [SerializeField] private GUISceneBlackFade _menuBlackFade;
+    //so that the player can't open/close menu too fast
+    private float _menuOpenDelay = 0.5f;
     #endregion
 
     #region Mono
-    void Start()
+    private void Awake()
+    {
+        SkyforgeLoader.GUIGameplayControls = this;
+    }
+    private void Start()
     {
         _charactersInRange = new();
         _player.OnCombatStartEvent += StartCombat;
         _player.OnCombatEndEvent += EndCombat;
-        _debugWindow.SetPlayer(_player);
         _inputBehaviour.OpenMenuAction += MenuOpenClose;
         _inputBehaviour.OpenSettingsAction += SettingsOpenClose;
         _inputBehaviour.OnAppExitAction += AppExit_Performed;
-        _debugWindow.gameObject.SetActive(false);
-        _settingsWindow.gameObject.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _player.OnPerkChange += PerksChanged;
@@ -120,7 +129,7 @@ public class GUIGameplayControls : MonoBehaviour
         }
         SkyforgeLoader.LoadedSceneReady = true;
     }
-    void Update()
+    private void Update()
     {
         UpdatePlayerStatus();
         UpdateSelectedCharacters();
@@ -128,10 +137,44 @@ public class GUIGameplayControls : MonoBehaviour
         UpdateDashAndCompanion();
         UpdateOpportunityButtons();
         UpdateVolumeAndDeathScreen();
+        if (_menuOpenDelay > 0)
+            _menuOpenDelay -= Time.deltaTime;
+    }
+    private void OnDestroy()
+    {
+        SkyforgeLoader.GUIGameplayControls = null;
     }
     #endregion
 
     #region Methods
+    public async Task CloseMenu()
+    {
+        _sceneRoot.gameObject.SetActive(true);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Globals.Instance.IsMenuOpen = false;
+        FreezeCam(false);
+        if (SkyforgeLoader.SettingsChanged)
+        {
+            _settingsManager.ApplySceneSettings();
+        }
+        if (SkyforgeLoader.PerksChanged)
+        {
+            _player.SyncPerks(true);
+            SkyforgeLoader.SettingsChanged = false;
+        }
+        await _menuBlackFade.StartFadeOut();
+    }
+    public async Task OpenMenu()
+    {
+        _menuOpenDelay = 0.5f;
+        FreezeCam(true);
+        await _menuBlackFade.StartFadeIn();
+        Globals.Instance.IsMenuOpen = true;
+        _sceneRoot.gameObject.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     public void ShowCharacterMessage(VoicelineSO voiceline)
     {
         _characterMessageBox.SetMessage(voiceline);
@@ -158,10 +201,14 @@ public class GUIGameplayControls : MonoBehaviour
         if (!_player.IsDead)
         {
             _deathScreen.gameObject.SetActive(false);
+            _abilitiesPanel.gameObject.SetActive(true);
+            _playerEffects.gameObject.SetActive(true);
         }
         else
         {
             _deathScreen.gameObject.SetActive(true);
+            _abilitiesPanel.gameObject.SetActive(false);
+            _playerEffects.gameObject.SetActive(false);
         }
     }
     private void UpdateOpportunityButtons()
@@ -425,45 +472,33 @@ public class GUIGameplayControls : MonoBehaviour
     }
     private void MenuOpenClose(object sender, EventArgs e)
     {
-        if(_debugWindow.gameObject.activeSelf == false)
+        if (gameObject.activeSelf && !Globals.Instance.IsCutscenePlaying && _menuOpenDelay<=0)
         {
-            if (_settingsWindow.gameObject.activeSelf == true)
-                _settingsWindow.gameObject.SetActive(false);
-            _debugWindow.gameObject.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Globals.Instance.IsMenuOpen = true;
-            FreezeCam(true);
+            if (Globals.Instance.IsMenuOpen == false)
+            {
+                _ = OpenMenuAndShowSystemView();
+            }
         }
-        else
-        {
-            _debugWindow.gameObject.SetActive(false);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Globals.Instance.IsMenuOpen = false;
-            FreezeCam(false);
-        }
+    }
+    private async Task OpenMenuAndShowSystemView()
+    {
+        await SkyforgeLoader.SetMenuOpen(true);
+        SkyforgeLoader.GUIGameMenu.ShowSystemView();
     }
     private void SettingsOpenClose(object sender, EventArgs e)
     {
-        if (_settingsWindow.gameObject.activeSelf == false)
+        if (gameObject.activeSelf && !Globals.Instance.IsCutscenePlaying && _menuOpenDelay <= 0)
         {
-            if (_debugWindow.gameObject.activeSelf == true)
-                _debugWindow.gameObject.SetActive(false);
-            _settingsWindow.gameObject.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Globals.Instance.IsMenuOpen = true;
-            FreezeCam(true);
+            if (Globals.Instance.IsMenuOpen == false)
+            {
+                _ = OpenMenuAndShowSettingsView();
+            }
         }
-        else
-        {
-            _settingsWindow.gameObject.SetActive(false);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Globals.Instance.IsMenuOpen = false;
-            FreezeCam(false);
-        }
+    }
+    private async Task OpenMenuAndShowSettingsView()
+    {
+        await SkyforgeLoader.SetMenuOpen(true);
+        SkyforgeLoader.GUIGameMenu.ShowSettingsView();
     }
     private void FreezeCam(bool freeze)
     {

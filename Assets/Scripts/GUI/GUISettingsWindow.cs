@@ -27,8 +27,6 @@ public class GUISettingsWindow : MonoBehaviour
     #region Mono
     private void Start()
     {
-        SetUpGraphicsControls();
-        SetUpSoundControls();
         _patternCheckbox.gameObject.SetActive(false);
         _patternSlider.gameObject.SetActive(false);
         _patternSliderTitle.gameObject.SetActive(false);
@@ -48,37 +46,45 @@ public class GUISettingsWindow : MonoBehaviour
         {
             _manager.SetTextureQuality(value);
         });
+        _texturesToggle.gameObject.SetActive(true);
         _shadowsToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
         _shadowsToggle.GetComponentInChildren<TextMeshProUGUI>().text = "High Quality Shadows";
         _shadowsToggle.onValueChanged.AddListener((bool value) =>
         {
             _manager.SetShadowsQuality(value);
         });
+        _shadowsToggle.gameObject.SetActive(true);
         _antiAliasingToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
         _antiAliasingToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Anti-Aliasing";
         _antiAliasingToggle.onValueChanged.AddListener((bool value) =>
         {
             _manager.SetAntiAliasing(value);
         });
+        _antiAliasingToggle.gameObject.SetActive(true);
         _probeVolumeToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
         _probeVolumeToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Adaptive Probe Volume";
         _probeVolumeToggle.onValueChanged.AddListener((bool value) =>
         {
             _manager.SetProbeVolume(value);
         });
+        _probeVolumeToggle.gameObject.SetActive(true);
         _ssrToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
         _ssrToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Screen Space Reflections";
         _ssrToggle.onValueChanged.AddListener((bool value) =>
         {
             _manager.SetSSR(value);
         });
+        _ssrToggle.gameObject.SetActive(true);
         _ssaoToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
         _ssaoToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Ambient Occlusion";
         _ssaoToggle.onValueChanged.AddListener((bool value) =>
         {
             _manager.SetSSAO(value);
         });
-        Instantiate(_patternSliderTitle, _graphicsLayout.transform).text = "Gamma";
+        _ssaoToggle.gameObject.SetActive(true);
+        var gammaTitle = Instantiate(_patternSliderTitle, _graphicsLayout.transform);
+        gammaTitle.text = "Gamma";
+        gammaTitle.gameObject.SetActive(true);
         _gammaSlider = Instantiate(_patternSlider, _graphicsLayout.transform);
         _gammaSlider.minValue = -1;
         _gammaSlider.maxValue = 1;
@@ -87,11 +93,14 @@ public class GUISettingsWindow : MonoBehaviour
         {
             _manager.SetGamma(value);
         });
+        _gammaSlider.gameObject.SetActive(true);
     }
     private void SetUpSoundControls()
     {
 
-        Instantiate(_patternSliderTitle, _soundLayout.transform).text = "SFX Volume";
+        var sfxTitle = Instantiate(_patternSliderTitle, _soundLayout.transform);
+        sfxTitle.text = "SFX Volume";
+        sfxTitle.gameObject.SetActive(true);
         _sfxSlider = Instantiate(_patternSlider, _soundLayout.transform);
         _sfxSlider.minValue = 0.0001f;
         _sfxSlider.maxValue = 1;
@@ -99,7 +108,10 @@ public class GUISettingsWindow : MonoBehaviour
         {
             _manager.SetSFXVolume(value);
         });
-        Instantiate(_patternSliderTitle, _soundLayout.transform).text = "Voice Volume";
+        _sfxSlider.gameObject.SetActive(true);
+        var voiceTitle = Instantiate(_patternSliderTitle, _soundLayout.transform);
+        voiceTitle.text = "Voice Volume";
+        voiceTitle.gameObject.SetActive(true);
         _voiceSlider = Instantiate(_patternSlider, _soundLayout.transform);
         _voiceSlider.minValue = 0.0001f;
         _voiceSlider.maxValue = 1;
@@ -107,7 +119,10 @@ public class GUISettingsWindow : MonoBehaviour
         {
             _manager.SetVoiceVolume(value);
         });
-        Instantiate(_patternSliderTitle, _soundLayout.transform).text = "Music Volume";
+        _voiceSlider.gameObject.SetActive(true);
+        var musicTitle = Instantiate(_patternSliderTitle, _soundLayout.transform);
+        musicTitle.text = "Music Volume";
+        musicTitle.gameObject.SetActive(true);
         _musicSlider = Instantiate(_patternSlider, _soundLayout.transform);
         _musicSlider.minValue = 0.0001f;
         _musicSlider.maxValue = 1;
@@ -115,9 +130,12 @@ public class GUISettingsWindow : MonoBehaviour
         {
             _manager.SetMusicVolume(value);
         });
+        _musicSlider.gameObject.SetActive(true);
     }
-    private void LoadFromSettings()
+    public void LoadFromSettings()
     {
+        if (_texturesToggle == null)
+            SetUpGraphicsControls();
         _texturesToggle.isOn = SkyforgeLoader.SettingsSet.HighTextures;
         _texturesToggle.GetComponent<GUICustomToggle>().SetByCode(SkyforgeLoader.SettingsSet.HighTextures);
         _shadowsToggle.isOn = SkyforgeLoader.SettingsSet.HighShadows;
@@ -131,6 +149,8 @@ public class GUISettingsWindow : MonoBehaviour
         _probeVolumeToggle.isOn = SkyforgeLoader.SettingsSet.AdaptiveProbeVolume;
         _probeVolumeToggle.GetComponent<GUICustomToggle>().SetByCode(SkyforgeLoader.SettingsSet.AdaptiveProbeVolume);
         _gammaSlider.value = SkyforgeLoader.SettingsSet.Gamma;
+        if (_sfxSlider == null)
+            SetUpSoundControls();
         _sfxSlider.value = SkyforgeLoader.SettingsSet.SFXVolume;
         _voiceSlider.value = SkyforgeLoader.SettingsSet.VoiceVolume;
         _musicSlider.value = SkyforgeLoader.SettingsSet.MusicVolume;

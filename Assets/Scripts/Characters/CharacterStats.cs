@@ -37,27 +37,27 @@ public class CharacterStats
         if (CurrentMana > MaxMana)
             CurrentMana = MaxMana;
     }
-    public void ModifyAccordingToPerk(PerkSO perk)
+    public void ModifyAccordingToPerk(PerkSO perk, int modifier)
     {
         if (perk.Stat == PerkSO.StatType.AttackSpeed)
         {
-            AttackSpeed += perk.Value;
+            AttackSpeed += perk.Value * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.BaseDamage)
         {
-            BaseDamage += (int)(perk.Value);
+            BaseDamage += (int)(perk.Value) * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.CriticalChance)
         {
-            CriticalChance += perk.Value;
+            CriticalChance += perk.Value * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.MaxHP)
         {
-            MaxHP += (int)(perk.Value);
+            MaxHP += (int)(perk.Value) * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.CombatManaRegen)
         {
-            CombatManaRegen += (int)(perk.Value);
+            CombatManaRegen += (int)(perk.Value) * modifier;
         }
     }
     public void ModifyAccordingToDifficultyLevel()

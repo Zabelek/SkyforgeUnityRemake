@@ -5,7 +5,6 @@ public class LockablePerk
     #region variables
     public EventHandler OnEnabled, OnDisabled;
     public PerkSO Perk { get; set; }
-    public bool Unlocked { get; set; }
     public bool Enabled { get; private set; }
     #endregion
 
@@ -13,12 +12,10 @@ public class LockablePerk
     public LockablePerk(PerkSO perk, bool unlocked)
     {
         Perk = perk;
-        Unlocked = unlocked;
     }
     public LockablePerk(PerkSO perk)
     {
         Perk = perk;
-        Unlocked = false;
     }
     #endregion
 

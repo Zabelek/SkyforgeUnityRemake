@@ -9,7 +9,6 @@ public class HeroClassBehaviour : MonoBehaviour
     {
         N, L, LL, LLL, LLLL, R, LR, LLR, LLLR
     }
-
     #region Variables
     [Header("Class Related Variables")]
     [Tooltip("Hero Class Scriptable Object with basic information about the class")]
@@ -252,7 +251,7 @@ public class HeroClassBehaviour : MonoBehaviour
             }
             _hero.OnDeath += Hero_OnDeath;
             _hero.OnPerkChange += Hero_OnPerkChange;
-            Hero_OnPerkChange(this, EventArgs.Empty);
+            Hero_OnPerkChange(this, null);
         }
         SetStance(0);
     }
@@ -323,7 +322,7 @@ public class HeroClassBehaviour : MonoBehaviour
     {
         //for inheriting classes
     }
-    protected virtual void Hero_OnPerkChange(object sender, EventArgs e)
+    protected virtual void Hero_OnPerkChange(object sender, HeroBehaviour.PerkChangeEventArgs e)
     {
         //for inheriting classes
     }

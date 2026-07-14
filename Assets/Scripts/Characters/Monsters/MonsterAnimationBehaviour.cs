@@ -20,7 +20,7 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
         }
         else
         {
-            Debug.Log("WARNIONG! Monster Animation Behaviour attached to non-monster character! There will be errors!");
+            Debug.Log("WARNING! Monster Animation Behaviour attached to non-monster character! There will be errors!");
         }
     }
     protected override void FixedUpdate()

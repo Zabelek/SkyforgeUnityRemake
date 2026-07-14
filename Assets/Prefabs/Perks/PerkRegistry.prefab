@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3204705338942452564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4672790879958837599}
+  - component: {fileID: 6488478955859710461}
+  m_Layer: 0
+  m_Name: PerkRegistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4672790879958837599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204705338942452564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6488478955859710461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204705338942452564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68969e060283d84d99b0048bda648eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerkRegistry
+  Perks:
+  - {fileID: 11400000, guid: 2fcb43599a2fe7443b457b176c89b846, type: 2}
+  - {fileID: 11400000, guid: 23a6b2a873917dc4d943c71f16b2974a, type: 2}
+  - {fileID: 11400000, guid: 7f4eed3c5edc0c9458daacfbb9d3b25f, type: 2}
+  - {fileID: 11400000, guid: 2854da73baaaaf147a5e21142e9bdcf5, type: 2}
+  - {fileID: 11400000, guid: 5007236dbb23f034ab7221172cccf571, type: 2}
+  - {fileID: 11400000, guid: 41a3974c75c89a243b4dd4ae28702970, type: 2}
+  - {fileID: 11400000, guid: 6932726c6ca4d614a8ee0c3d4a3b0ff4, type: 2}
+  - {fileID: 11400000, guid: 70acc119d4d54c74583786783b5492d9, type: 2}
+  - {fileID: 11400000, guid: 2e821eeabc9988945a1f386185a9074e, type: 2}
+  - {fileID: 11400000, guid: 9cd8392377306dd4aa15f5bb6515d8b1, type: 2}
+  - {fileID: 11400000, guid: c0403dd142796c140bc7b9ef99bf5e18, type: 2}
+  - {fileID: 11400000, guid: 70282b425f4fd024ab2314bcea26d59c, type: 2}
+  - {fileID: 11400000, guid: 626dd67a36658e74fa6dba8340350c84, type: 2}
+  - {fileID: 11400000, guid: 9d10d74ee535a104c9eb77e9833d356d, type: 2}
+  - {fileID: 11400000, guid: f893120721110a64f9cdd2cadd1b146c, type: 2}
+  PerkSets:
+  - {fileID: 11400000, guid: b2a8c8e6631a1d0468e6f443b2111dad, type: 2}

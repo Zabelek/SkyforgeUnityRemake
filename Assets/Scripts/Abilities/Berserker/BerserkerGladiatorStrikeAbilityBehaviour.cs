@@ -20,6 +20,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
     [SerializeField]
     private float _chainswordSoundTimerBase, _groundImpactSoundTimerBase, _effectTimerStartBase, _startLeapTimerBase, _untilHitTimerBaseLeap;
     private float _chainswordSoundTimer, _groundImpactSoundTimer, _effectTimerStart, _startLeapTimer;
+    private Rigidbody _rigidbody;
     #endregion
 
     #region Methods
@@ -46,17 +47,22 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 }
                 if (_performingTimer >= _startLeapTimer && _performingTimer < _untilHitTimer)
                 {
-                    if (performer.GetComponent<Rigidbody>()?.isKinematic == false)
+                    if (_rigidbody == null && performer.GetComponent<Rigidbody>() != null)
                     {
-                        performer.GetComponent<Rigidbody>().isKinematic = true;
+                        _rigidbody = performer.GetComponent<Rigidbody>();
+                        _rigidbody.linearVelocity = Vector3.zero;
+                        _rigidbody.isKinematic = true;
                     }
-                    var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
-                    var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
-                    vec -= _initialPlayerPosition;
-                    vec.y += Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
-                    vec = vec - _alreadyMovedAmount;
-                    _alreadyMovedAmount += vec;
-                    performer.MoveBySkill(vec, MovingAbilityBehaviour.MovingType.Raw);
+                    if (_rigidbody != null)
+                    {
+                        var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
+                        var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
+                        var addValue = Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
+                        if (addValue > 0)
+                            vec.y += addValue;
+                        vec = vec - _rigidbody.position;
+                        performer.MoveBySkill(vec, MovingAbilityBehaviour.MovingType.Raw);
+                    }
                 }
                 if (_currentParticles == null && _performingTimer >= _effectTimerStart)
                 {
@@ -75,9 +81,10 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 }
                 if (_performingTimer >= _untilHitTimer)
                 {
-                    if (performer.GetComponent<Rigidbody>()?.isKinematic == true)
+                    if (_rigidbody != null)
                     {
-                        performer.GetComponent<Rigidbody>().isKinematic = false;
+                        _rigidbody.isKinematic = false;
+                        _rigidbody.linearVelocity = Vector3.zero;
                     }
                 }
             }
@@ -175,7 +182,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
             }
             if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
             {
-                _destinationVector = new Vector3(newhit.position.x, newhit.position.y + 0.5f, newhit.position.z);
+                _destinationVector = new Vector3(newhit.position.x, newhit.position.y, newhit.position.z);
                 return;
             }
             _destinationVector = player.transform.position;
@@ -191,7 +198,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
             }
             if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
             {
-                _destinationVector = new Vector3(newhit.position.x, newhit.position.y + 0.5f, newhit.position.z); 
+                _destinationVector = new Vector3(newhit.position.x, newhit.position.y, newhit.position.z); 
                 return;
             }
             _destinationVector = player.transform.position;
@@ -266,6 +273,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
         _secondHitPerformed = false;
         _thirdHitPerformed = false;
         _currentDamages = null;
+        _rigidbody = null;
     }
     #endregion
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3634322dd3e8b44e8f5e9463418ac88, type: 3}
   m_Name: Berserker_TectonicBlast_Perk_SO
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  ID: Base_Berserker_TectonicBlast
   Stat: 0
   Value: 0
   Functional: 1

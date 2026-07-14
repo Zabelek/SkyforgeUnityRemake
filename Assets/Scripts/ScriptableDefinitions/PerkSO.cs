@@ -7,6 +7,8 @@ public class PerkSO : ScriptableObject
     {
         MaxHP, BaseDamage, CriticalChance, AttackSpeed, CombatManaRegen
     }
+    [Tooltip("Must be unique. This string identifies the perk in the game systems. If you're modding the game, best use your name instead of Base_ at the beginning")]
+    public string ID;
     [Tooltip("Specifies which stat this perk would modify. If Functional is set to true, it'll be ignored")]
     public StatType Stat;
     [Tooltip("Stat modifier. If Functional is set to true, it'll be ignored")]

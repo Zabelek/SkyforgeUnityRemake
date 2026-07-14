@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class GUIDebugWindow : MonoBehaviour
 {
     #region Variables
-    private PlayerBehaviour _player;
     [SerializeField] private GUIDebugWindowPerkCheckBox _patternChechbox;
     [SerializeField] private LayoutGroup _checkboxeGroup;
     [SerializeField] private LayoutGroup _terraCheckboxGroup;
@@ -22,31 +21,23 @@ public class GUIDebugWindow : MonoBehaviour
     {
         _checkboxes = new();
         _terraCheckboxes = new();
-        var a9perk = Globals.Instance.RegisteredPerks.FirstOrDefault(p => p.Name == "Burning Chain");
-        foreach (var perk in Globals.Instance.RegisteredPerks)
+        var a9perk = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == "Base_Berserker_BurningChain");
+        foreach (var perk in SkyforgeLoader.PerkRegistry.Perks)
         {
-            if(perk != a9perk)
+            if(perk != a9perk && !SkyforgeLoader.PerkRegistry.PerkSets[0].Perks.Contains(perk))
             {
                 var checkbox = Instantiate(_patternChechbox, _checkboxeGroup.transform);
-                if (_player != null)
-                {
-                    checkbox.SetPlayer(_player);
-                }
                 checkbox.SetPerk(perk);
                 _checkboxes.Add(checkbox);
             }
         }
-        _a9ComboBox.SetPlayer(_player);
         _a9ComboBox.SetPerk(a9perk);
-        foreach (var perk in Globals.Instance.RegisteredPerkSets[0].Perks)
+        foreach (var perk in SkyforgeLoader.PerkRegistry.PerkSets[0].Perks)
         {
             var checkbox = Instantiate(_patternChechbox, _terraCheckboxGroup.transform);
-            if (_player != null)
-            {
-                checkbox.SetPlayer(_player);
-            }
             checkbox.SetPerk(perk);
             _terraCheckboxes.Add(checkbox);
+            checkbox.OnChange += TerraPerk_Changed;
         }
         _patternChechbox.gameObject.SetActive(false);
         _quitButton.OnClick += QuitButton_Clicked;
@@ -58,18 +49,8 @@ public class GUIDebugWindow : MonoBehaviour
     #region Methods
     public void SetPlayer(PlayerBehaviour player)
     {
-        _player = player;
         if(_checkboxes == null) _checkboxes = new();
         if (_terraCheckboxes == null) _terraCheckboxes = new();
-        foreach (var checkbox in _checkboxes)
-        {
-            checkbox.SetPlayer(player);
-        }
-        foreach (var checkbox in _terraCheckboxes)
-        {
-            checkbox.SetPlayer(player);
-        }
-        _a9ComboBox.SetPlayer(player);
     }
     #endregion
 
@@ -90,6 +71,16 @@ public class GUIDebugWindow : MonoBehaviour
     private void QuitButton_Clicked(object sender, EventArgs e)
     {
         Application.Quit();
+    }
+    private void TerraPerk_Changed(object sender, EventArgs e)
+    {
+        foreach(var checkbox in _terraCheckboxes)
+        {
+            if(sender is GUIDebugWindowPerkCheckBox && checkbox != (GUIDebugWindowPerkCheckBox)sender)
+            {
+                checkbox.UpdateSprite(this, EventArgs.Empty);
+            }
+        }
     }
     #endregion
 }

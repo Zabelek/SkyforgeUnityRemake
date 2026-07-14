@@ -8,7 +8,7 @@ public class GUICustomToggle : MonoBehaviour
     [SerializeField] private Sprite _checked;
     [Tooltip("Sprite to be displayed on main image when the check box is set to false")]
     [SerializeField] private Sprite _unchecked;
-    [Tooltip("The inafe to display sprites")]
+    [Tooltip("The image to display sprites")]
     [SerializeField] private Image _display;
     #endregion
 

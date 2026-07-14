@@ -79,7 +79,7 @@ public class BerserkerDissectionAbilityBehaviour : MovingAbilityBehaviour
         }
         if(casualityAmount>0)
         {
-            if (performer is HeroBehaviour && ((HeroBehaviour)performer).GetHeroClass() is BerserkerClassBehaviour && ((HeroBehaviour)performer).GetPerk("Burning Chain")?.Enabled == true)
+            if (performer is HeroBehaviour && ((HeroBehaviour)performer).GetHeroClass() is BerserkerClassBehaviour && ((HeroBehaviour)performer).GetPerk("Base_Berserker_BurningChain")?.Enabled == true)
             {
                 if (Random.Range(1, 100) <= BURNING_CHAIN_CHANCE_PERCENT)
                 {

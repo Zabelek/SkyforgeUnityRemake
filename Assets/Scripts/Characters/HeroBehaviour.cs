@@ -8,6 +8,12 @@ public class HeroBehaviour : CharacterBehaviour
 {
     private const float WEAPON_HIDE_DRAW_DURATION_TRESHOLD = 1.5f;
 
+    public class PerkChangeEventArgs : EventArgs
+    {
+        public PerkSO PerkSO;
+        public bool Enabled;
+    }
+
     #region Variables
     [Header("Hero and Class Related Variables")]
     [Tooltip("Create an Empty inside a weapon bone in the character skeleton and drag it here")]
@@ -16,7 +22,7 @@ public class HeroBehaviour : CharacterBehaviour
     [SerializeField] private HeroClassBehaviour _heroClass;
     protected List<LockablePerk> _perks;
     protected List<ChoosablePerkSet> _perkSets;
-    public event EventHandler OnPerkChange;
+    public event EventHandler<PerkChangeEventArgs> OnPerkChange;
     public WeaponBehaviour EquippedWeapon { get; protected set; }
     public bool CanDash { get; set; }
     //to prevent spamming draw/hide weapon aminations
@@ -29,17 +35,6 @@ public class HeroBehaviour : CharacterBehaviour
         base.Awake();
         _perks = new();
         _perkSets = new();
-        if(Globals.Instance != null)
-        {
-            foreach (var perk in Globals.Instance.RegisteredPerks)
-            {
-                _perks.Add(new LockablePerk(perk));
-            }
-            foreach (var perkSet in Globals.Instance.RegisteredPerkSets)
-            {
-                _perkSets.Add(new ChoosablePerkSet(perkSet));
-            }
-        }
         CanDash = true;
         _nextDrawStateChangeTimer = 0;
     }
@@ -59,36 +54,54 @@ public class HeroBehaviour : CharacterBehaviour
     #endregion
 
     #region Methods
-    public virtual void UnlockPerk(LockablePerk perk)
+    public virtual void AddPerk(PerkSO perkSO, bool autoEnable, bool saveToProfile = false)
     {
-        if (GetAllPerks().Contains(perk))
+        if (!GetAllPerks().Any(p => p.Perk == perkSO))
         {
-            perk.Unlocked = true;
-            EnablePerk(perk);
+            var perk = new LockablePerk(perkSO);
+            _perks.Add(perk);
+            var perkSet = _perkSets.FirstOrDefault(perSet => perSet.PerkSetSO.Perks.Contains(perkSO));
+            if (perkSet != null)
+            {
+                perkSet.AddPerk(perk);
+            }
+            if(autoEnable)
+            {
+                perk.Enable();
+                ManagePerkChange(perk);
+            }
         }
     }
-    public virtual void LockPerk(LockablePerk perk)
+    public virtual void RemovePerk(PerkSO perkSO, bool saveToProfile = false)
     {
-        if (GetAllPerks().Contains(perk))
+        var perk = GetAllPerks().FirstOrDefault(p => p.Perk == perkSO);
+        if (perk != null)
         {
-            perk.Unlocked = false;
-            DisablePerk(perk);
+            _perks.Remove(perk);
+            var perkSet = _perkSets.FirstOrDefault(perSet => perSet.PerkSetSO.Perks.Contains(perkSO));
+            if (perkSet != null)
+            {
+                perkSet.RemovePerk(perk);
+            }
+            ManagePerkRemoval(perk);
         }
     }
-    public virtual void EnablePerk(LockablePerk perk)
+    public virtual void EnablePerk(PerkSO perkSO)
     {
-        if (GetAllPerks().Contains(perk))
+        var perk = GetAllPerks().FirstOrDefault(p => p.Perk == perkSO);
+        if (perk != null)
         {
             perk.Enable();
-            ManagePerkChange();
+            ManagePerkChange(perk);
         }
     }
-    public virtual void DisablePerk(LockablePerk perk)
+    public virtual void DisablePerk(PerkSO perkSO)
     {
+        var perk = GetAllPerks().FirstOrDefault(p => p.Perk == perkSO);
         if (GetAllPerks().Contains(perk))
         {
             perk.Disable();
-            ManagePerkChange();
+            ManagePerkChange(perk);
         }
     }
     protected virtual void ChangeClass(HeroClassBehaviour nextClass)
@@ -98,7 +111,6 @@ public class HeroBehaviour : CharacterBehaviour
         {
             _heroClass.SetHero(null);
         }
-        ManagePerkChange();
         nextClass.SetHero(this);
         _heroClass = nextClass;
         if(_animationBehaviour!=null)
@@ -109,14 +121,14 @@ public class HeroBehaviour : CharacterBehaviour
                 _animationBehaviour.SetController(DefaultAnimatorController);
             _animationBehaviour.TriggerAnimation("Init");
         }
-        OnPerkChange?.Invoke(this, EventArgs.Empty);
+        SyncPerks(false);
     }
-    private void ManagePerkChange()
+    private void ResetPerkEffects()
     {
         Stats.Reset(CharacterSO);
         foreach (var perk in GetAllPerks())
         {
-            if ((perk.Perk.Class == _heroClass.HeroClassSO || perk.Perk.Class == null) && perk.Enabled && perk.Unlocked)
+            if ((perk.Perk.Class == _heroClass.HeroClassSO || perk.Perk.Class == null) && perk.Enabled)
             {
                 if(perk.Perk.Functional)
                 {
@@ -124,11 +136,50 @@ public class HeroBehaviour : CharacterBehaviour
                 }
                 else
                 {
-                    Stats.ModifyAccordingToPerk(perk.Perk);
+                    Stats.ModifyAccordingToPerk(perk.Perk, 1);
                 }
             }
         }
-        OnPerkChange?.Invoke(this, EventArgs.Empty);
+        OnPerkChange?.Invoke(this, null);
+    }
+    private void ManagePerkChange(LockablePerk perk)
+    {
+        if(perk.Enabled)
+        {
+            if (perk.Perk.Functional)
+            {
+                _heroClass.ManageAddedPerk(perk.Perk);
+            }
+            else
+            {
+                Stats.ModifyAccordingToPerk(perk.Perk, 1);
+            }
+        }
+        else
+        {
+            if (perk.Perk.Functional)
+            {
+                _heroClass.ManageRemovedPerk(perk.Perk);
+            }
+            else
+            {
+                Stats.ModifyAccordingToPerk(perk.Perk, -1);
+            }
+        }
+    }
+    private void ManagePerkRemoval(LockablePerk perk)
+    {
+        if (perk.Enabled)
+        {
+            if (perk.Perk.Functional)
+            {
+                _heroClass.ManageRemovedPerk(perk.Perk);
+            }
+            else
+            {
+                Stats.ModifyAccordingToPerk(perk.Perk, -1);
+            }
+        }
     }
     public override int GetEffectiveDamage()
     {
@@ -272,6 +323,14 @@ public class HeroBehaviour : CharacterBehaviour
             CancelAllAbilities();
         }
     }
+    public virtual void SyncPerks(bool addOnly)
+    {
+        //for inheriting classes
+    }
+    protected virtual void AddRegisteredPerkSets()
+    {
+        //for inheriting classes
+    }
     #endregion
 
     #region StatGetters
@@ -279,32 +338,32 @@ public class HeroBehaviour : CharacterBehaviour
     {
         return _heroClass;
     }
-    public LockablePerk GetPerk(string name)
+    public LockablePerk GetPerk(string perkID)
     {
-        var ret = _perks.FirstOrDefault(p => p.Perk.Name == name);
-        if(ret == null && _perkSets.Any())
-        {
-            ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk.Name == name)).Perks.FirstOrDefault(p => p.Perk.Name == name);
-        }
-        return ret;
+        return _perks.FirstOrDefault(p => p.Perk.ID == perkID);
+        //if(ret == null && _perkSets.Any())
+        //{
+        //    ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk.ID == name)).Perks.FirstOrDefault(p => p.Perk.ID == name);
+        //}
+        //return ret;
     }
     public LockablePerk GetPerk(PerkSO perkSO)
     {
-        var ret = _perks.FirstOrDefault(p => p.Perk == perkSO);
-        if (ret == null)
-        {
-            ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk == perkSO)).Perks.FirstOrDefault(p => p.Perk == perkSO);
-        }
-        return ret;
+        return _perks.FirstOrDefault(p => p.Perk == perkSO);
+        //if (ret == null)
+        //{
+        //    ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk == perkSO)).Perks.FirstOrDefault(p => p.Perk == perkSO);
+        //}
+        //return ret;
     }
     public List<LockablePerk> GetAllPerks()
     {
         var ret = new List<LockablePerk>();
         foreach (var perk in _perks)
             ret.Add(perk);
-        foreach(var perkSet in _perkSets)
-            foreach(var perk in perkSet.Perks)
-                ret.Add(perk);
+        //foreach(var perkSet in _perkSets)
+            //foreach(var perk in perkSet.Perks)
+                //ret.Add(perk);
         return ret;
     }
     public override float GetMovementSpeedModifiers()

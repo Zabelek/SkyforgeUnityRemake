@@ -18,15 +18,18 @@ public class BerserkerClassBehaviour : HeroClassBehaviour
     #endregion
 
     #region Methods    
-    private void UnlockAbilityFromPerk(string perkName)
+    private void UnlockAbilityFromPerk(string perkID, string abilityName)
     {
-        if (_hero.GetPerk(perkName)?.Enabled == true)
+        if(abilityName.Length>0)
         {
-            _stances[0].GetAbility(perkName).Unlocked = true;
-        }
-        else
-        {
-            _stances[0].GetAbility(perkName).Unlocked = false;
+            if (_hero.GetPerk(perkID)?.Enabled == true)
+            {
+                _stances[0].GetAbility(abilityName).Unlocked = true;
+            }
+            else
+            {
+                _stances[0].GetAbility(abilityName).Unlocked = false;
+            }
         }
     }
     public override void ManageMana()
@@ -103,35 +106,49 @@ public class BerserkerClassBehaviour : HeroClassBehaviour
     }
     private void Hero_OnCombatEnded(object sender, EventArgs e)
     {
-        if (_hero.GetPerk("Thrill Of Victory")?.Enabled == true)
+        if (_hero.GetPerk("Base_Berserker_ThrillOfVictory")?.Enabled == true)
         {
-            if (_thrillOfVictoryEffect != null)
+            if (_thrillOfVictoryEffect != null && !_hero.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Thrill of Victory Cast"))
                 _hero.AddEffect(_thrillOfVictoryEffect);
         }
     }
-    protected override void Hero_OnPerkChange(object sender, EventArgs e)
+    protected override void Hero_OnPerkChange(object sender, HeroBehaviour.PerkChangeEventArgs e)
     {
-        base.Hero_OnPerkChange(sender, e);
-        UnlockAbilityFromPerk("Crippling Blow");
-        UnlockAbilityFromPerk("Tectonic Blast");
-        UnlockAbilityFromPerk("Thirst for Battle");
-        UnlockAbilityFromPerk("Thundering Roar");
-        UnlockAbilityFromPerk("Gladiator");
-        if (_hero.GetPerk("Firestorm")?.Enabled == true)
+    }
+    public override void ManageAddedPerk(PerkSO perk)
+    {
+        if (perk.ID == "Base_Berserker_CripplingBlow")
+            UnlockAbilityFromPerk("Base_Berserker_CripplingBlow", "Crippling Blow");
+        if (perk.ID == "Base_Berserker_TectonicBlast")
+            UnlockAbilityFromPerk("Base_Berserker_TectonicBlast", "Tectonic Blast");
+        if (perk.ID == "Base_Berserker_ThirstFforBattle")
+            UnlockAbilityFromPerk("Base_Berserker_ThirstFforBattle", "Thirst for Battle");
+        if (perk.ID == "Base_Berserker_ThunderingRoar")
+            UnlockAbilityFromPerk("Base_Berserker_ThunderingRoar", "Thundering Roar");
+        if (perk.ID == "Base_Berserker_Gladiator")
+            UnlockAbilityFromPerk("Base_Berserker_Gladiator", "Gladiator");
+        if(perk.ID == "Base_Berserker_Firestorm")
         {
-            _stances[0].GetAbility("Whirlwind").Ability.UpgradedVersionUnlocked = true;
+            if (_hero.GetPerk("Base_Berserker_Firestorm")?.Enabled == true)
+            {
+                _stances[0].GetAbility("Whirlwind").Ability.UpgradedVersionUnlocked = true;
+            }
+            else
+            {
+                _stances[0].GetAbility("Whirlwind").Ability.UpgradedVersionUnlocked = false;
+            }
         }
-        else
+        if (perk.ID == "Base_Berserker_ThrillOfVictory" && _thrillOfVictoryEffect != null)
         {
-            _stances[0].GetAbility("Whirlwind").Ability.UpgradedVersionUnlocked = false;
-        }
-        if (_thrillOfVictoryEffect != null)
-        {
-            if (_hero.GetPerk("Thrill Of Victory")?.Enabled == true)
+            if (_hero.GetPerk("Base_Berserker_ThrillOfVictory")?.Enabled == true)
                 _hero.AddEffect(_thrillOfVictoryEffect);
             else
                 _hero.RemoveEffect(_thrillOfVictoryEffect);
         }
+    }
+    public override void ManageRemovedPerk(PerkSO perk)
+    {
+        ManageAddedPerk(perk);
     }
     public override void RightReleasePerformed()
     {

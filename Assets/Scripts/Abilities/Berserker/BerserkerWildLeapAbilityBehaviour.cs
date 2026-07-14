@@ -19,6 +19,7 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
     //timers
     [SerializeField] private float _startLeapTimerBase, _chainswordSoundTimerBase, _groundImpactSoundTimerBase, _effectTimerStartBase;
     private float _startLeapTimer, _chainswordSoundTimer, _groundImpactSoundTimer, _effectTimerStart;
+    private Rigidbody _rigidbody;
     #endregion
 
     #region Methods
@@ -34,17 +35,22 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
         {
             if (_performingTimer >= _startLeapTimer && _performingTimer < _untilHitTimer)
             {
-                if (performer.GetComponent<Rigidbody>()?.isKinematic == false)
+                if (_rigidbody == null && performer.GetComponent<Rigidbody>() != null)
                 {
-                    performer.GetComponent<Rigidbody>().isKinematic = true;
+                    _rigidbody = performer.GetComponent<Rigidbody>();
+                    _rigidbody.linearVelocity = Vector3.zero;
+                    _rigidbody.isKinematic = true;
                 }
-                var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
-                var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
-                vec -= _initialPlayerPosition;
-                vec.y += Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
-                vec = vec - _alreadyMovedAmount;
-                _alreadyMovedAmount += vec;
-                performer.MoveBySkill(vec, MovingAbilityBehaviour.MovingType.Raw);
+                if(_rigidbody!=null)
+                {
+                    var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
+                    var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
+                    var addValue = Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
+                    if (addValue > 0)
+                        vec.y += addValue;
+                    vec = vec - _rigidbody.position;
+                    performer.MoveBySkill(vec, MovingAbilityBehaviour.MovingType.Raw);
+                }
             }
             if (_currentParticles == null && _performingTimer >= _effectTimerStart)
             {
@@ -161,11 +167,10 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
         {
             performer.MovePosition(new Vector3(newhit.position.x, newhit.position.y, newhit.position.z));
         }
-        var rigidbody = performer.GetComponent<Rigidbody>();
-        if (rigidbody?.isKinematic == true)
+        if (_rigidbody != null)
         {
-            rigidbody.isKinematic = false;
-            rigidbody.linearVelocity = Vector3.zero;
+            _rigidbody.isKinematic = false;
+            _rigidbody.linearVelocity = Vector3.zero;
         }
     }
     public override void PerformHit(CharacterBehaviour performer)
@@ -208,6 +213,7 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
         _alreadyMovedAmount = Vector3.zero;
         _chainswordSoundPlayed = false;
         _groundImpactSoundPlayed = false;
+        _rigidbody = null;
     }
     #endregion
 }

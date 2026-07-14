@@ -35,6 +35,8 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] protected VideoPlayer _videoPlayer;
     [Tooltip("Component that manages the scene fading out to black")]
     [SerializeField] protected GUISceneBlackFade _blackFade;
+    [Tooltip("This will delay the start of the initial scenario scene. The screen will remain black at the beginning of the scenario.")]
+    public float SceneStartDelay;
     #endregion
 
     #region Mono
@@ -52,7 +54,8 @@ public class ScenarioManager : MonoBehaviour
             child.SetManager(this);
 
         }
-        StartCoroutine(DelayedInitSequence(3f));
+        StartCoroutine(DelayedInitSequence(SceneStartDelay));
+        StartCoroutine(_player.DelayedInitSequence());
         _player.OnPlayerRessurected += Resurrect_Performed;
         _spawnPoint = _player.transform.position;
     }
@@ -87,7 +90,7 @@ public class ScenarioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _player.Resurrect();
-        _player.MovePosition(_spawnPoint);
+        _player.transform.position = _spawnPoint;
         _interface.ShowCharacterMessage(_deadJokes[UnityEngine.Random.Range(0, _deadJokes.Count()-1)]);
         _ = _blackFade.StartFadeOut();
     }

@@ -23,7 +23,7 @@ public class ChoosablePerkSet
         perk.OnEnabled += PerkEnabled;
         Perks.Add(perk);
     }
-    private void RemovePerk(LockablePerk perk)
+    public void RemovePerk(LockablePerk perk)
     {
         perk.OnEnabled -= PerkEnabled;
         Perks.Remove(perk);

@@ -42,6 +42,7 @@ MonoBehaviour:
   m_BundleRedirectLimit: -1
   m_SharedBundleSettings: 0
   m_SharedBundleSettingsCustomGroupIndex: 0
+  m_simulatedLoadDelay: 0.1
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
@@ -60,6 +61,7 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
+  - {fileID: 11400000, guid: 32dc2b2f8dd97ae47a7545d0d9e40860, type: 2}
   - {fileID: 11400000, guid: 699a8991db474ce41a7e302f9617246b, type: 2}
   - {fileID: 11400000, guid: fe8b2a618c07f204e965f71fba7ca97f, type: 2}
   m_BuildSettings:

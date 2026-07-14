@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -61,6 +62,7 @@ public class PlayerBehaviour : HeroBehaviour
         }
         _emoteInterrupted = false;
         _emoteDelayTimer = 0;
+        //SyncPerks(false);
         //ChangeClass(GetHeroClass());
     }
     protected override void Start()
@@ -422,6 +424,77 @@ public class PlayerBehaviour : HeroBehaviour
         base.SetCanMove(canMove);
         if(canMove == false)
             IsRunning = false;
+    }
+    public override void SyncPerks(bool addOnly)
+    {
+        if(SkyforgeLoader.PerkRegistry != null && SkyforgeLoader.CurrentProfile != null)
+        {
+            if (!addOnly)
+            {
+                Stats.Reset(CharacterSO);
+                AddRegisteredPerkSets();
+                _perks.Clear();
+                foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
+                {
+                    var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
+                    if (perkSO.Class == null || perkSO.Class == GetHeroClass().HeroClassSO)
+                    {
+                        AddPerk(perkSO, perkState.Enabled);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
+                {
+                    var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
+                    if (perkSO.Class == null || perkSO.Class == GetHeroClass().HeroClassSO)
+                    {
+                        var perkToOvwerwrite = _perks.FirstOrDefault(p => p.Perk == perkSO);
+                        if (perkToOvwerwrite == null)
+                        {
+                            AddPerk(perkSO, perkState.Enabled);
+                        }
+                        else if(perkToOvwerwrite.Enabled != perkState.Enabled)
+                        {
+                            if (perkState.Enabled)
+                                EnablePerk(perkSO);
+                            else
+                                DisablePerk(perkSO);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    protected override void AddRegisteredPerkSets()
+    {
+        if (SkyforgeLoader.PerkRegistry != null && SkyforgeLoader.CurrentProfile != null)
+        {
+            _perkSets.Clear();
+            foreach (var perkSetSO in SkyforgeLoader.PerkRegistry.PerkSets)
+            {
+                if(perkSetSO.HeroClassSO == null || perkSetSO.HeroClassSO == GetHeroClass().HeroClassSO)
+                {
+                    var perkSet = new ChoosablePerkSet(perkSetSO);
+                    perkSet.ClearPerks();
+                    _perkSets.Add(perkSet);
+                }
+            }
+        }
+    }
+    public override void AddPerk(PerkSO perkSO, bool autoEnable, bool saveToProfile = false)
+    {
+        base.AddPerk(perkSO, autoEnable);
+        if(saveToProfile && SkyforgeLoader.CurrentProfile != null && !SkyforgeLoader.CurrentProfile.AcquiredPerks.Any(ps => ps.PerkID == perkSO.ID))
+        {
+            SkyforgeLoader.CurrentProfile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = perkSO.ID, Enabled = true });
+        }
+    }
+    public IEnumerator DelayedInitSequence()
+    {
+        yield return new WaitForSeconds(2);
+        SyncPerks(false);
     }
     #endregion
 }

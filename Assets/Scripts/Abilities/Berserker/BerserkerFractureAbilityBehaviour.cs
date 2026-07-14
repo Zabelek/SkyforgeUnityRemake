@@ -135,14 +135,14 @@ public class BerserkerFractureAbilityBehaviour : AbilityBehaviour
             if(performer is HeroBehaviour && ((HeroBehaviour)performer).GetHeroClass() is BerserkerClassBehaviour)
             {
                 var zerkClass = (BerserkerClassBehaviour)(((HeroBehaviour)performer).GetHeroClass());
-                if (((HeroBehaviour)performer).GetPerk("Madman's Lot")?.Enabled == true)
+                if (((HeroBehaviour)performer).GetPerk("Base_Berserker_MadmansLot")?.Enabled == true)
                 {
                     var whirlwind = zerkClass.CurrentStance.GetAbility("Whirlwind").Ability;
                     whirlwind.UpgradedVersionCooldown += 10;
                     if (whirlwind.UpgradedVersionCooldown > whirlwind.UpgradedVersionCooldownMax)
                         whirlwind.UpgradedVersionCooldown = whirlwind.UpgradedVersionCooldownMax;
                 }
-                if (((HeroBehaviour)performer).GetPerk("Burning Chain")?.Enabled == true)
+                if (((HeroBehaviour)performer).GetPerk("Base_Berserker_BurningChain")?.Enabled == true)
                 {
                     if (Random.Range(1, 100) <= BURNING_CHAIN_CHANCE_PERCENT)
                     {

@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ProfileScene.unity
     guid: 40f35dd79c4494844be9000db7eb7a31
   - enabled: 1
+    path: Assets/Scenes/GameMenuScene.unity
+    guid: e2e5d90be74f78a45b4c8b34dc60a6f0
+  - enabled: 1
     path: Assets/Scenes/DivineObservatoryScene.unity
     guid: b2376f8b063b4cf4993d48caffb6a3a4
   m_configObjects:

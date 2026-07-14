@@ -31,7 +31,7 @@ public class BerserkerGladiatorAbilityBehaviour : AbilityBehaviour
             {
                 performer.AddEffect(_effectBase);
                 _effectApplied = true;
-                if (((HeroBehaviour)performer).GetPerk("Rage Incarnate")?.Enabled == true)
+                if (((HeroBehaviour)performer).GetPerk("Base_Berserker_RageIncarnate")?.Enabled == true)
                 {
                     performer.AddEffect(_rageIncarnateEffect);
                     float percent = (float)performer.Stats.CurrentMana / (float)performer.Stats.MaxMana;

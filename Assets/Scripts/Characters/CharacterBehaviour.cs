@@ -9,6 +9,7 @@ public class CharacterBehaviour : MonoBehaviour
 {
     //When a character is walking, it's speed is multiplied by this value
     public const float WALKING_SPEED_MOD = 0.3f;
+    public const float INSTANT_DEATH_HEIGHT = -150;
 
     #region MainVariables
     public event EventHandler OnHurt;
@@ -83,6 +84,8 @@ public class CharacterBehaviour : MonoBehaviour
     private float _orbDroppingCollisionRadius;
     [Tooltip("By default, when the character appears in the scene, it fades in for a second. If you want to disable the fading animation, set this to false")]
     public bool FadedIntoScene = true;
+    [Tooltip("If this variable is set to true, the character will be killed f they fall too low.")]
+    public bool KillBelowScene = true;
     private Rigidbody _rigidbody;
     #endregion
 
@@ -121,6 +124,7 @@ public class CharacterBehaviour : MonoBehaviour
         else
             _fadeInTimer = 0;
         _droppedHealingOrbsInTheFight = 0;
+        _effectManager.ClearEffects();
     }
     protected virtual void Update()
     {
@@ -129,7 +133,7 @@ public class CharacterBehaviour : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         _effectManager.UpdateEffects();
-        if (_LastDamageExpireTimer > 0)
+        if (_LastDamageExpireTimer > 0 && !IsDead)
         {
             _LastDamageExpireTimer -= Time.fixedDeltaTime;
             if (_LastDamageExpireTimer <= 0)
@@ -141,9 +145,9 @@ public class CharacterBehaviour : MonoBehaviour
             LeaveCombat();
         }
         UpdateOutOfCombatHealing();
-        if(transform.position.y <-150)
+        if(KillBelowScene && transform.position.y < INSTANT_DEATH_HEIGHT && !IsDead)
         {
-            Kill(this);
+            KillOffCombat();
         }
     }
     protected virtual void OnDestroy()
@@ -302,6 +306,13 @@ public class CharacterBehaviour : MonoBehaviour
         {
             SkyforgeLoader.CurrentProfile.Prestige += 69;
         }
+    }
+    public virtual void KillOffCombat()
+    {
+        Kill(this);
+        _lastOffCombatHealAmount = (int)(Stats.MaxHP * 0.06f);
+        _healTimer = 1;
+        OnDeath?.Invoke(this, EventArgs.Empty);
     }
     public virtual void Resurrect()
     {
