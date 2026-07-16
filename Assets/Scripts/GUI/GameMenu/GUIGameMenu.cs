@@ -34,7 +34,9 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private GUISettingsWindow _settingsWindow;
     [SerializeField] private GUISceneBlackFade _blackFade;
     [Header("DisplayPanels")]
+    [Tooltip("Mostly things in the to bar, displaying prestige, profile name etc")]
     [SerializeField] private GUIGameMenuStatsPanel _statsPanel;
+    [Tooltip("Bottom panel with resources")]
     [SerializeField] private GUIGameMenuResourcesPanel _resourcesPanel;
     #endregion
 

@@ -10,9 +10,6 @@ public class GUIGameMenuResourcesPanel : MonoBehaviour
     private CultureInfo _cultureInfo;
     #endregion
 
-    #region Mono
-    #endregion
-
     #region Methods
     public void UpdateValues()
     {
@@ -24,8 +21,5 @@ public class GUIGameMenuResourcesPanel : MonoBehaviour
         _creditsTextBox.text = SkyforgeLoader.CurrentProfile.GameplayResources.Credits.ToString("#,##0", _cultureInfo);
         _aelionEidosesTextBox.text = SkyforgeLoader.CurrentProfile.GameplayResources.AelionEidoses.ToString("#,##0", _cultureInfo);
     }
-    #endregion
-
-    #region EventHandlers
     #endregion
 }

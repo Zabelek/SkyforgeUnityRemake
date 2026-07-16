@@ -10,9 +10,6 @@ public class GUIGameMenuStatsPanel : MonoBehaviour
     private CultureInfo _cultureInfo;
     #endregion
 
-    #region Mono
-    #endregion
-
     #region Methods
     public void UpdateValues()
     {
@@ -24,8 +21,5 @@ public class GUIGameMenuStatsPanel : MonoBehaviour
         _profileNameTextBox.text = SkyforgeLoader.CurrentProfile.Name;
         _prestigeTextBox.text = SkyforgeLoader.CurrentProfile.Prestige.ToString("#,##0", _cultureInfo);
     }
-    #endregion
-
-    #region EventHandlers
     #endregion
 }

@@ -5,6 +5,8 @@ public class GameplayResources
 {
     [XmlIgnore]
     public EventHandler<GUIResourceNotificationSystem.ResourceChangeEventArgs> ResourceChangedEvent;
+
+    //Each new resoure here has to be constructed exactly the way those belowa are. It has to properly trigger events on change, otherwise the GUI may not work as intended
     private int _credits;
     public int Credits {
         get

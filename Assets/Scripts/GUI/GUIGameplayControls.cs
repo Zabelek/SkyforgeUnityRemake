@@ -4,10 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
@@ -107,8 +104,8 @@ public class GUIGameplayControls : MonoBehaviour
     [Tooltip("Interactable widget is a small button that appears when E interaction is available")]
     [SerializeField] private TextMeshProUGUI _interactableWidgetText;
     private IPlayerInteractable _currentlySelectedInteractable;
-    [Tooltip("Different black fade used for transition to menu")]
     [Header("Menu Black Fade")]
+    [Tooltip("Different black fade used for transition to menu")]
     [SerializeField] private GUISceneBlackFade _menuBlackFade;
     //so that the player can't open/close menu too fast
     private float _menuOpenDelay = 0.5f;
@@ -388,6 +385,7 @@ public class GUIGameplayControls : MonoBehaviour
                         }
                     }
                 }
+                //if no luck with the character, try to look for IPlayerInteractable instead, if close enough
                 else if(bestTargetForCharacters == null && (hit.transform.position - _player.transform.position).magnitude < MAX_INTERACTABLE_RANGE && hit.TryGetComponent<IPlayerInteractable>(out var interactable))
                 {
                     var currentScore = (screenDistanceNormalized * _selectionScreenWeight) + (worldDistanceNormalized * _selectionDistanceWeight);
@@ -417,6 +415,7 @@ public class GUIGameplayControls : MonoBehaviour
                 _characterTopBar.gameObject.SetActive(false);
                 _bossTopBar.gameObject.SetActive(false);
             }
+            //if any interactoble found, display the widget
             if (bestInteractable != null)
             {
                 _currentlySelectedInteractable = bestInteractable;

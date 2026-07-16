@@ -16,7 +16,7 @@ public class GUIDamageCanvas : MonoBehaviour
     private bool _alreadyVisible, _scheduledForFadeout;
     private float _fadeoutTimer;
     private Damage _previousDamage;
-    //in case the same damage displays, buc changes its value
+    //in case the same damage displays, but changes its value
     private int _previousDisplayValue;
     private int _previousAmountsIndex;
     private int _targetDisplayValue;

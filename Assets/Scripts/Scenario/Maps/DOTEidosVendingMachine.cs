@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class DOTEidosVendingMachine : MonoBehaviour, IPlayerInteractable
 {
-    #region Variables
-    #endregion
-
     #region Methods
     public string GetInteractionTitle()
     {
