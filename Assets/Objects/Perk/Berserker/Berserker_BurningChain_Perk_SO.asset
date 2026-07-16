@@ -21,4 +21,4 @@ MonoBehaviour:
     and Fracture have a 20%, 25%, 35% and 40% chance to inflict Burning Chain to
     the Berserker for 15 seconds, which increases the damage of the next Crippling
     Blow by 150%.
-  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

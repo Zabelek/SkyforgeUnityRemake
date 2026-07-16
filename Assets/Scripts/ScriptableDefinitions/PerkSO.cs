@@ -19,5 +19,5 @@ public class PerkSO : ScriptableObject
     [Tooltip("It'll be displayed in the interface(once implemented)")]
     public string Description;
     [Tooltip("If the perks applies to a specific class, it'll be active only when the player has this class picked")]
-    public HeroClassSO Class;
+    public HeroClassSO HeroClass;
 }

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName = "Skyforge Scriptable Objects/HeroClassSO")]
 public class HeroClassSO : ScriptableObject
 {
+    [Tooltip("Must be unique. Sometimes SO are duplicated, so SO=SO doesm't always work. This way its safer")]
+    public string ID;
     public string Name;
     [Tooltip("It'll be displayed in the interface(once implemented)")]
     public Image Icon;

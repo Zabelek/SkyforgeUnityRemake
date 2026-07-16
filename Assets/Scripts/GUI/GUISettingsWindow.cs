@@ -20,8 +20,8 @@ public class GUISettingsWindow : MonoBehaviour
     [SerializeField] private GUICommonButton _saveButton, _loadButton, _restoreButton;
     [Tooltip("Settings Manager of the scene (every scene that needs to apply settings need this component)")]
     [SerializeField] private SettingsManager _manager;
-    private Toggle _texturesToggle, _shadowsToggle, _antiAliasingToggle, _probeVolumeToggle, _ssrToggle, _ssaoToggle;
-    private Slider _gammaSlider, _sfxSlider, _voiceSlider, _musicSlider;
+    private Toggle _texturesToggle, _shadowsToggle, _antiAliasingToggle, _probeVolumeToggle, _ssrToggle, _ssaoToggle, _fullScreenToggle, _vSyncToggle;
+    private Slider _gammaSlider, _sfxSlider, _voiceSlider, _musicSlider, _frameRateSlider;
     #endregion
 
     #region Mono
@@ -94,6 +94,33 @@ public class GUISettingsWindow : MonoBehaviour
             _manager.SetGamma(value);
         });
         _gammaSlider.gameObject.SetActive(true);
+        _fullScreenToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
+        _fullScreenToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Full Screen";
+        _fullScreenToggle.onValueChanged.AddListener((bool value) =>
+        {
+            _manager.SetFullscreen(value);
+        });
+        _fullScreenToggle.gameObject.SetActive(true);
+        _vSyncToggle = Instantiate(_patternCheckbox, _graphicsLayout.transform);
+        _vSyncToggle.GetComponentInChildren<TextMeshProUGUI>().text = "VSync";
+        _vSyncToggle.onValueChanged.AddListener((bool value) =>
+        {
+            _manager.SetVSync(value);
+        });
+        _vSyncToggle.gameObject.SetActive(true);
+        var frameRateTitle = Instantiate(_patternSliderTitle, _graphicsLayout.transform);
+        frameRateTitle.text = "Frame Rate";
+        frameRateTitle.gameObject.SetActive(true);
+        _frameRateSlider = Instantiate(_patternSlider, _graphicsLayout.transform);
+        _frameRateSlider.minValue = 30;
+        _frameRateSlider.maxValue = 240;
+        _frameRateSlider.value = 60;
+        _frameRateSlider.wholeNumbers = true;
+        _frameRateSlider.onValueChanged.AddListener((float value) =>
+        {
+            _manager.SetFrameRateLimit(value);
+        });
+        _frameRateSlider.gameObject.SetActive(true);
     }
     private void SetUpSoundControls()
     {
@@ -149,6 +176,11 @@ public class GUISettingsWindow : MonoBehaviour
         _probeVolumeToggle.isOn = SkyforgeLoader.SettingsSet.AdaptiveProbeVolume;
         _probeVolumeToggle.GetComponent<GUICustomToggle>().SetByCode(SkyforgeLoader.SettingsSet.AdaptiveProbeVolume);
         _gammaSlider.value = SkyforgeLoader.SettingsSet.Gamma;
+        _fullScreenToggle.isOn = SkyforgeLoader.SettingsSet.Fullscreen;
+        _fullScreenToggle.GetComponent<GUICustomToggle>().SetByCode(SkyforgeLoader.SettingsSet.Fullscreen);
+        _vSyncToggle.isOn = SkyforgeLoader.SettingsSet.VSync;
+        _vSyncToggle.GetComponent<GUICustomToggle>().SetByCode(SkyforgeLoader.SettingsSet.VSync);
+        _frameRateSlider.value = SkyforgeLoader.SettingsSet.FrameRateLimit;
         if (_sfxSlider == null)
             SetUpSoundControls();
         _sfxSlider.value = SkyforgeLoader.SettingsSet.SFXVolume;

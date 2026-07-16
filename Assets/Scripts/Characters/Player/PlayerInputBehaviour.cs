@@ -31,8 +31,8 @@ public class PlayerInputBehaviour : MonoBehaviour
     public event EventHandler OnAbility8ReleaseAction;
     public event EventHandler OnAbility9ReleaseAction;
     public event EventHandler OnAppExitAction;
-    private bool Ability1Pressed, Ability2Pressed, Ability3Pressed, Ability4Pressed, Ability5Pressed, Ability6Pressed,
-        Ability7Pressed;
+    private bool _ability1Pressed, _ability2Pressed, _ability3Pressed, _ability4Pressed, _ability5Pressed, _ability6Pressed,
+        _ability7Pressed, _ability8Pressed, _ability9Pressed;
     public event EventHandler OpenMenuAction;
     public event EventHandler OpenSettingsAction;
     public event EventHandler OnInteractionAction;
@@ -125,97 +125,97 @@ public class PlayerInputBehaviour : MonoBehaviour
     private void Ability9_Released(InputAction.CallbackContext context)
     {
         OnAbility9ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability7Pressed = false;
+        _ability9Pressed = false;
     }
     private void Ability8_Released(InputAction.CallbackContext context)
     {
         OnAbility8ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability6Pressed = false;
+        _ability8Pressed = false;
     }
     private void Ability7_Released(InputAction.CallbackContext context)
     {
         OnAbility7ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability7Pressed = false;
+        _ability7Pressed = false;
     }
     private void Ability6_Released(InputAction.CallbackContext context)
     {
         OnAbility6ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability6Pressed = false;
+        _ability6Pressed = false;
     }
     private void Ability5_Released(InputAction.CallbackContext context)
     {
         OnAbility5ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability5Pressed = false;
+        _ability5Pressed = false;
     }
     private void Ability4_Released(InputAction.CallbackContext context)
     {
         OnAbility4ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability4Pressed = false;
+        _ability4Pressed = false;
     }
     private void Ability3_Released(InputAction.CallbackContext context)
     {
         OnAbility3ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability3Pressed = false;
+        _ability3Pressed = false;
     }
     private void Ability2_Released(InputAction.CallbackContext context)
     {
         OnAbility2ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability2Pressed = false;
+        _ability2Pressed = false;
     }
     private void Ability1_Released(InputAction.CallbackContext context)
     {
         OnAbility1ReleaseAction?.Invoke(this, EventArgs.Empty);
-        Ability1Pressed = false;
+        _ability1Pressed = false;
     }
     private void OpenMenu_Performed(InputAction.CallbackContext context)
     {
         OpenMenuAction?.Invoke(this, EventArgs.Empty);
-        Ability1Pressed = true;
+        _ability1Pressed = true;
     }
     private void Ability1_Performed(InputAction.CallbackContext context)
     {
         OnAbility1Action?.Invoke(this, EventArgs.Empty);
-        Ability1Pressed = true;
+        _ability1Pressed = true;
     }
     private void Ability2_Performed(InputAction.CallbackContext context)
     {
         OnAbility2Action?.Invoke(this, EventArgs.Empty);
-        Ability2Pressed = true;
+        _ability2Pressed = true;
     }
     private void Ability3_Performed(InputAction.CallbackContext context)
     {
         OnAbility3Action?.Invoke(this, EventArgs.Empty);
-        Ability3Pressed = true;
+        _ability3Pressed = true;
     }
     private void Ability4_Performed(InputAction.CallbackContext context)
     {
         OnAbility4Action?.Invoke(this, EventArgs.Empty);
-        Ability4Pressed = true;
+        _ability4Pressed = true;
     }
     private void Ability5_Performed(InputAction.CallbackContext context)
     {
         OnAbility5Action?.Invoke(this, EventArgs.Empty);
-        Ability5Pressed = true;
+        _ability5Pressed = true;
     }
     private void Ability6_Performed(InputAction.CallbackContext context)
     {
         OnAbility6Action?.Invoke(this, EventArgs.Empty);
-        Ability6Pressed = true;
+        _ability6Pressed = true;
     }
     private void Ability7_Performed(InputAction.CallbackContext context)
     {
         OnAbility7Action?.Invoke(this, EventArgs.Empty);
-        Ability7Pressed = true;
+        _ability7Pressed = true;
     }
     private void Ability8_Performed(InputAction.CallbackContext context)
     {
         OnAbility8Action?.Invoke(this, EventArgs.Empty);
-        Ability6Pressed = true;
+        _ability6Pressed = true;
     }
     private void Ability9_Performed(InputAction.CallbackContext context)
     {
         OnAbility9Action?.Invoke(this, EventArgs.Empty);
-        Ability7Pressed = true;
+        _ability7Pressed = true;
     }
     private void Emote_Performed(InputAction.CallbackContext context)
     {
@@ -255,21 +255,19 @@ public class PlayerInputBehaviour : MonoBehaviour
     }
     public bool GetAbilityPressed(int abilityNumber)
     {
-        if (abilityNumber == 1)
-            return Ability1Pressed;
-        else if (abilityNumber == 2)
-            return Ability2Pressed;
-        else if (abilityNumber == 3)
-            return Ability3Pressed;
-        else if (abilityNumber == 4)
-            return Ability4Pressed;
-        else if (abilityNumber == 5)
-            return Ability5Pressed;
-        else if (abilityNumber == 6)
-            return Ability6Pressed;
-        else if (abilityNumber == 7)
-            return Ability7Pressed;
-        else return false;
+        return abilityNumber switch
+        {
+            1 => _ability1Pressed,
+            2 => _ability2Pressed,
+            3 => _ability3Pressed,
+            4 => _ability4Pressed,
+            5 => _ability5Pressed,
+            6 => _ability6Pressed,
+            7 => _ability7Pressed,
+            8 => _ability8Pressed,
+            9 => _ability9Pressed,
+            _ => false
+        };
     }
     #endregion
 }

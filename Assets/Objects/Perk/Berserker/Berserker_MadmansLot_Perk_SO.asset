@@ -21,4 +21,4 @@ MonoBehaviour:
     by 10 seconds. When the ability is active, the Berserker restores 1% of health
     per second for every common enemy hit and 2.5% for every elite enemy or immortal.
     You can recover up to 5% of health per second.
-  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

@@ -20,4 +20,4 @@ MonoBehaviour:
   Description: The first Destructive Attack in a fight will make enemies 30% more
     vulnerable to damage from Berserker's attacks for 25 seconds and reduce the movement
     speed by 50% for 5 seconds.
-  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

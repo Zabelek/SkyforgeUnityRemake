@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class PlayerBehaviour : HeroBehaviour
@@ -437,7 +438,7 @@ public class PlayerBehaviour : HeroBehaviour
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
                     var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
-                    if (perkSO.Class == null || perkSO.Class == GetHeroClass().HeroClassSO)
+                    if (perkSO.HeroClass == null || perkSO.HeroClass.ID == GetHeroClass().HeroClassSO.ID)
                     {
                         AddPerk(perkSO, perkState.Enabled);
                     }
@@ -448,7 +449,7 @@ public class PlayerBehaviour : HeroBehaviour
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
                     var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
-                    if (perkSO.Class == null || perkSO.Class == GetHeroClass().HeroClassSO)
+                    if (perkSO.HeroClass == null || perkSO.HeroClass.ID == GetHeroClass().HeroClassSO.ID)
                     {
                         var perkToOvwerwrite = _perks.FirstOrDefault(p => p.Perk == perkSO);
                         if (perkToOvwerwrite == null)

@@ -128,7 +128,7 @@ public class HeroBehaviour : CharacterBehaviour
         Stats.Reset(CharacterSO);
         foreach (var perk in GetAllPerks())
         {
-            if ((perk.Perk.Class == _heroClass.HeroClassSO || perk.Perk.Class == null) && perk.Enabled)
+            if ((perk.Perk.HeroClass.ID == _heroClass.HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
             {
                 if(perk.Perk.Functional)
                 {

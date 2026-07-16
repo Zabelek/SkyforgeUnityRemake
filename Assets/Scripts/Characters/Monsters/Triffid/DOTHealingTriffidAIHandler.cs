@@ -22,7 +22,7 @@ public class DOTHealingTriffidAIHandler : AIHandlerBehaviour
     }
     public override void CheckForNewEnemy()
     {
-        if(FollowTarget.IsInCombat)
+        if(FollowTarget?.IsInCombat == true)
         {
             if (_currentEnemy?.IsDead == true)
                 _currentEnemy = null;

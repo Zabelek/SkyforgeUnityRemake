@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -8,6 +6,8 @@ using UnityEngine.Rendering.HighDefinition;
 
 public class SettingsManager : MonoBehaviour
 {
+    private const float MUTED_VOLUME_DB = -80f;
+
     #region Variables
     [Tooltip("Include only cameras that use graphics effects. Simply ignore interface cameras")]
     [SerializeField] private Camera[] _3dSceneCameras;
@@ -51,6 +51,9 @@ public class SettingsManager : MonoBehaviour
         SetProbeVolume(SkyforgeLoader.SettingsSet.AdaptiveProbeVolume);
         SetAntiAliasing(SkyforgeLoader.SettingsSet.AntiAliasing);
         SetGamma(SkyforgeLoader.SettingsSet.Gamma);
+        SetFullscreen(SkyforgeLoader.SettingsSet.Fullscreen);
+        SetVSync(SkyforgeLoader.SettingsSet.VSync);
+        SetFrameRateLimit(SkyforgeLoader.SettingsSet.FrameRateLimit);
     }
     public void SaveSettings()
     {
@@ -66,16 +69,6 @@ public class SettingsManager : MonoBehaviour
     public void RestoreDefaults()
     {
         SkyforgeLoader.SettingsSet = new();
-        SkyforgeLoader.SettingsSet.HighTextures = true;
-        SkyforgeLoader.SettingsSet.HighShadows = true;
-        SkyforgeLoader.SettingsSet.AntiAliasing = true;
-        SkyforgeLoader.SettingsSet.AdaptiveProbeVolume = true;
-        SkyforgeLoader.SettingsSet.SSR = true;
-        SkyforgeLoader.SettingsSet.SSAO = true;
-        SkyforgeLoader.SettingsSet.Gamma = 0;
-        SkyforgeLoader.SettingsSet.SFXVolume = 0.6f;
-        SkyforgeLoader.SettingsSet.VoiceVolume = 1;
-        SkyforgeLoader.SettingsSet.MusicVolume = 0.4f;
     }
     private void SetSettingsParameter(ref object globalParam, object localParam)
     {
@@ -92,6 +85,11 @@ public class SettingsManager : MonoBehaviour
         if (!EqualityComparer<T>.Default.Equals(globalParam, localParam))
             SkyforgeLoader.SettingsChanged = true;
         return localParam;
+    }
+    private static float LinearVolumeToDecibels(float value)
+    {
+        value = Mathf.Clamp01(value);
+        return value <= 0.0001f ? MUTED_VOLUME_DB : Mathf.Log10(value) * 20f;
     }
     #endregion
 
@@ -187,7 +185,7 @@ public class SettingsManager : MonoBehaviour
         SkyforgeLoader.SettingsSet.SFXVolume = SetSettingsParameter(SkyforgeLoader.SettingsSet.SFXVolume, value);
         if (_audioMixer != null)
         {
-            _audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
+            _audioMixer.SetFloat("SFXVolume", LinearVolumeToDecibels(value));
         }
     }
     public void SetVoiceVolume(float value)
@@ -195,7 +193,7 @@ public class SettingsManager : MonoBehaviour
         SkyforgeLoader.SettingsSet.VoiceVolume = SetSettingsParameter(SkyforgeLoader.SettingsSet.VoiceVolume, value);
         if (_audioMixer != null)
         {
-            _audioMixer.SetFloat("VoiceVolume", Mathf.Log10(value) * 20f);
+            _audioMixer.SetFloat("VoiceVolume", LinearVolumeToDecibels(value));
         }
     }
     public void SetMusicVolume(float value)
@@ -203,7 +201,7 @@ public class SettingsManager : MonoBehaviour
         SkyforgeLoader.SettingsSet.MusicVolume = SetSettingsParameter(SkyforgeLoader.SettingsSet.MusicVolume, value);
         if (_audioMixer != null)
         {
-            _audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
+            _audioMixer.SetFloat("MusicVolume", LinearVolumeToDecibels(value));
         }
     }
     public void SetSSAO(bool value)
@@ -221,6 +219,22 @@ public class SettingsManager : MonoBehaviour
                 _ssaoSettings.active = false;
             }
         }
+    }
+    public void SetFullscreen(bool value)
+    {
+        SkyforgeLoader.SettingsSet.Fullscreen = SetSettingsParameter(SkyforgeLoader.SettingsSet.Fullscreen, value);
+        Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+    }
+    public void SetVSync(bool value)
+    {
+        SkyforgeLoader.SettingsSet.VSync = SetSettingsParameter(SkyforgeLoader.SettingsSet.VSync, value);
+        QualitySettings.vSyncCount = value ? 1 : 0;
+    }
+    public void SetFrameRateLimit(float value)
+    {
+        int intVal = Mathf.RoundToInt(value);
+        SkyforgeLoader.SettingsSet.FrameRateLimit = SetSettingsParameter(SkyforgeLoader.SettingsSet.FrameRateLimit, intVal);
+        Application.targetFrameRate = intVal;
     }
     #endregion
 }

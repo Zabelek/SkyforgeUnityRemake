@@ -121,10 +121,13 @@ public class GUIGameplayControls : MonoBehaviour
         _charactersInRange = new();
         _player.OnCombatStartEvent += StartCombat;
         _player.OnCombatEndEvent += EndCombat;
-        _inputBehaviour.OpenMenuAction += MenuOpenClose;
-        _inputBehaviour.OpenSettingsAction += SettingsOpenClose;
-        _inputBehaviour.OnAppExitAction += AppExit_Performed;
-        _inputBehaviour.OnInteractionAction += Interaction_Performed;
+        if (_inputBehaviour != null)
+        {
+            _inputBehaviour.OpenMenuAction += MenuOpenClose;
+            _inputBehaviour.OpenSettingsAction += SettingsOpenClose;
+            _inputBehaviour.OnAppExitAction += AppExit_Performed;
+            _inputBehaviour.OnInteractionAction += Interaction_Performed;
+        }
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _player.OnPerkChange += PerksChanged;
@@ -150,11 +153,14 @@ public class GUIGameplayControls : MonoBehaviour
     private void OnDestroy()
     {
         SkyforgeLoader.GUIGameplayControls = null;
-        _inputBehaviour.OpenMenuAction -= MenuOpenClose;
-        _inputBehaviour.OpenSettingsAction -= SettingsOpenClose;
-        _inputBehaviour.OnAppExitAction -= AppExit_Performed;
-        _inputBehaviour.OnInteractionAction -= Interaction_Performed;
-        _inputBehaviour.OnInteractionAction -= Interaction_Performed;
+        if (_inputBehaviour != null)
+        {
+            _inputBehaviour.OpenMenuAction -= MenuOpenClose;
+            _inputBehaviour.OpenSettingsAction -= SettingsOpenClose;
+            _inputBehaviour.OnAppExitAction -= AppExit_Performed;
+            _inputBehaviour.OnInteractionAction -= Interaction_Performed;
+            _inputBehaviour.OnInteractionAction -= Interaction_Performed;
+        }
     }
     #endregion
 

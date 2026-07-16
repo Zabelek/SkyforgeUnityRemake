@@ -16,12 +16,21 @@ public static class SaveManager
             var serializer = new XmlSerializer(typeof(UserProfile));
             foreach (var file in fileList)
             {
-                using (var reader = new StreamReader(file))
+                try
                 {
-                    var profile = (UserProfile)serializer.Deserialize(reader);
-                    profile.FileName = Path.GetFileNameWithoutExtension(file);
-                    ret.Add(profile);
-                    reader.Close();
+                    using (var reader = new StreamReader(file))
+                    {
+
+                        var profile = (UserProfile)serializer.Deserialize(reader);
+                        profile.FileName = Path.GetFileNameWithoutExtension(file);
+                        ret.Add(profile);
+                        reader.Close();
+                    }
+                }
+                catch (System.Exception exception)
+                {
+                    Debug.LogWarning($"Unable to load profile '{file}'. The file was ignored. {exception.Message}");
+                    BackupCorruptFile(file);
                 }
             }
         }
@@ -29,9 +38,15 @@ public static class SaveManager
     }
     public static void SaveProfile(UserProfile profile)
     {
+        if (profile == null)
+        {
+            Debug.LogError("WARNING! Null profile save attempt!");
+            return;
+        }
         var serializer = new XmlSerializer(typeof(UserProfile));
-        if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "Profiles")))
-            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "Profiles"));
+        string target = Path.Combine(Application.persistentDataPath, "Profiles");
+        if (!Directory.Exists(target))
+            Directory.CreateDirectory(target);
         if (profile.FileName == null || profile.FileName.Length==0)
         {
             profile.FileName = Random.Range((int)0, int.MaxValue).ToString();
@@ -39,25 +54,34 @@ public static class SaveManager
             {
                 profile.FileName = Random.Range((int)0, int.MaxValue).ToString();
             }
-            File.Create(Path.Combine(Application.persistentDataPath, "Profiles", profile.FileName + ".xml")).Close();
+            target = Path.Combine(target, profile.FileName + ".xml");
+            File.Create(target).Close();
         }
-        using (var writer = new StreamWriter(Path.Combine(Application.persistentDataPath, "Profiles", profile.FileName + ".xml")))
-        {
-            serializer.Serialize(writer, profile);
-            writer.Close();
-        }
+        else
+            target = Path.Combine(target, profile.FileName + ".xml");
+        SerializeWithTemp(target, profile, new XmlSerializer(typeof(UserProfile)));
     }
     public static bool LoadSettings()
     {
-        if (File.Exists(Path.Combine(Application.persistentDataPath, "Settings.xml")))
+        var path = Path.Combine(Application.persistentDataPath, "Settings.xml");
+        if (File.Exists(path))
         {
-            using (var reader = new StreamReader(Path.Combine(Application.persistentDataPath, "Settings.xml")))
+            try
             {
-                var serializer = new XmlSerializer(typeof(SettingsSet));
-                SkyforgeLoader.SettingsSet = (SettingsSet)serializer.Deserialize(reader);
-                reader.Close();
+                using (var reader = new StreamReader(path))
+                {
+                    var serializer = new XmlSerializer(typeof(SettingsSet));
+                    SkyforgeLoader.SettingsSet = (SettingsSet)serializer.Deserialize(reader);
+                    reader.Close();
+                }
+                return true;
             }
-            return true;
+            catch (System.Exception exception)
+            {
+                Debug.LogWarning($"Unable to load settings! {exception.Message}");
+                BackupCorruptFile(path);
+                return false;
+            }
         }
         return false;
     }
@@ -65,14 +89,10 @@ public static class SaveManager
     {
         if (!Directory.Exists(Path.Combine(Application.persistentDataPath)))
             Directory.CreateDirectory(Path.Combine(Application.persistentDataPath));
-        if(File.Exists(Path.Combine(Application.persistentDataPath, "Settings.xml")))
-            File.Create(Path.Combine(Application.persistentDataPath, "Settings.xml")).Close();
-        using (var writer = new StreamWriter(Path.Combine(Application.persistentDataPath, "Settings.xml")))
-        {
-            var serializer = new XmlSerializer(typeof(SettingsSet));
-            serializer.Serialize(writer, SkyforgeLoader.SettingsSet);
-            writer.Close();
-        }
+        string filePath = Path.Combine(Application.persistentDataPath, "Settings.xml");
+        if (File.Exists(filePath))
+            File.Create(filePath).Close();
+        SerializeWithTemp(filePath, SkyforgeLoader.SettingsSet, new XmlSerializer(typeof(SettingsSet)));
     }
     private static bool CheckUnique(string fileName)
     {
@@ -83,6 +103,42 @@ public static class SaveManager
                 return false;
         }
         return true;
+    }
+    private static void SerializeWithTemp<T>(string path, T value, XmlSerializer serializer)
+    {
+        string temporaryPath = path + ".tmp";
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(temporaryPath, false))
+            {
+                serializer.Serialize(writer, value);
+                writer.Close();
+            }
+            File.Copy(temporaryPath, path, true);
+        }
+        finally
+        {
+            if (File.Exists(temporaryPath))
+            {
+                File.Delete(temporaryPath);
+            }
+        }
+    }
+    private static void BackupCorruptFile(string path)
+    {
+        try
+        {
+            if (!File.Exists(path))
+            {
+                return;
+            }
+            string backupPath = path + ".corrupt-" + System.DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".bak";
+            File.Copy(path, backupPath, false);
+        }
+        catch (System.Exception exception)
+        {
+            Debug.LogWarning($"Unable to create a backup of corrupt file '{path}'. {exception.Message}");
+        }
     }
     #endregion
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ public static class SkyforgeLoader
 {
     //A class designed to manage all processes that, logically, keep the whole game session together. For now it's basically: managing scene/asset loading and player profile.
     #region Variables
-    private static string _targetSceneName, _previousSceneName;
+    private static string _targetSceneName;
     public static UserProfile CurrentProfile;
     public static OutfitRegistry OutfitRegistry;
     public static PerkRegistry PerkRegistry;
@@ -28,10 +29,14 @@ public static class SkyforgeLoader
     #region Methods
     public static async Task LoadScene(string currentScene, string sceneName)
     {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            Debug.LogError("WARNING! Empty name scene loading attempt!");
+            return;
+        }
         LoadingScreenReady = false;
         LoadedSceneReady = false;
         await SceneManager.LoadSceneAsync("LoadingScene");
-        _previousSceneName = currentScene;
         _targetSceneName = sceneName;
         await LoadPerkRegistry();
     }
@@ -44,11 +49,19 @@ public static class SkyforgeLoader
     }
     public static async Task LoadScene()
     {
+        if (string.IsNullOrWhiteSpace(_targetSceneName))
+        {
+            Debug.LogError("WARNING! No target scene to load!");
+            return;
+        }
         await SceneManager.LoadSceneAsync(_targetSceneName, LoadSceneMode.Additive);
     }
     public static async Task UnloadLoadingScene()
     {
-        await SceneManager.UnloadSceneAsync("LoadingScene");
+        if (SceneManager.GetSceneByName("LoadingScene").isLoaded)
+        {
+            await SceneManager.UnloadSceneAsync("LoadingScene");
+        }
         LoadingScreenReady = true;
     }
     private static async Task LoadOutfitRegistry()
@@ -60,6 +73,10 @@ public static class SkyforgeLoader
             if (handle != null && handle.TryGetComponent<OutfitRegistry>(out OutfitRegistry registry) == true)
             {
                 OutfitRegistry = registry;
+            }
+            else
+            {
+                Debug.LogError("Unable to load the OutfitRegistry addressable!");
             }
         }
     }
@@ -87,6 +104,7 @@ public static class SkyforgeLoader
                 return outfit;
             }
         }
+        Debug.Log("No outfit found for address" + address + "!");
         return null;
     }
     public static async Task UnloadGameMenu()

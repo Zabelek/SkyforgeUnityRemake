@@ -20,4 +20,4 @@ MonoBehaviour:
   Description: The less Rage the Berserker has at the moment of transformation into
     a Gladiator, the more damage they will deal in that form (the maximum bonus is
     150% of damage). Every Gladiator Strike retores 50 points of Rage.
-  Class: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}

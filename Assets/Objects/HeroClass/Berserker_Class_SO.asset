@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bf7cb05eba1f8408adcf1db1c21bef, type: 3}
   m_Name: Berserker_Class_SO
   m_EditorClassIdentifier: Assembly-CSharp::HeroClassSO
+  ID: Base_Berserker
   Name: Berserker
   Icon: {fileID: 0}
   WeaponType: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}

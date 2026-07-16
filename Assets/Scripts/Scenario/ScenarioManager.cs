@@ -52,7 +52,6 @@ public class ScenarioManager : MonoBehaviour
             child.SetUpWithChildren();
             _cutscenes.Add(child);
             child.SetManager(this);
-
         }
         StartCoroutine(DelayedInitSequence(SceneStartDelay));
         StartCoroutine(_player.DelayedInitSequence());
@@ -91,13 +90,19 @@ public class ScenarioManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         _player.Resurrect();
         _player.transform.position = _spawnPoint;
-        _interface.ShowCharacterMessage(_deadJokes[UnityEngine.Random.Range(0, _deadJokes.Count()-1)]);
+        if (_deadJokes != null && _deadJokes.Length > 0)
+        {
+            _interface.ShowCharacterMessage(_deadJokes[UnityEngine.Random.Range(0, _deadJokes.Count() - 1)]);
+        }
         _ = _blackFade.StartFadeOut();
     }
     protected virtual IEnumerator DelayedInitSequence(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _currentCutscene = _cutscenes[0];
+        if (_cutscenes != null && _cutscenes.Count > 0)
+        {
+            _currentCutscene = _cutscenes[0];
+        }
     }
     protected IEnumerator DelayedCharacterRemoval(CharacterBehaviour character, float delay)
     {
