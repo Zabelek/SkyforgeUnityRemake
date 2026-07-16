@@ -415,8 +415,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0M
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 630f7dec9f9a9d0499c6bbf981c72599, type: 2}
-  m_sharedMaterial: {fileID: 8266619969941101004, guid: 630f7dec9f9a9d0499c6bbf981c72599, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -702,8 +702,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 50.000M
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 630f7dec9f9a9d0499c6bbf981c72599, type: 2}
-  m_sharedMaterial: {fileID: 8266619969941101004, guid: 630f7dec9f9a9d0499c6bbf981c72599, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _criticalBackground: {fileID: 2320819135290443648}
   _damageText: {fileID: 5449399801715195457}
-  _group: {fileID: 0}
+  _group: {fileID: 4555833573764924292}
 --- !u!1 &9217023375570061297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,6 +1604,7 @@ MonoBehaviour:
   Faction: {fileID: 0}
   _renderers: []
   FadedIntoScene: 1
+  KillBelowScene: 1
 --- !u!114 &4667532580671100868
 MonoBehaviour:
   m_ObjectHideFlags: 0

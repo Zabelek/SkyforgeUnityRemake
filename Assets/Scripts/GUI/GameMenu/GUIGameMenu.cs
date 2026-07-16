@@ -23,7 +23,7 @@ public class GUIGameMenu : MonoBehaviour
     [Tooltip("Some views have 3D scene to display so that the proper Cinemachine Brain has to be attached to the camera on the view enter.")]
     [SerializeField] private CinemachineCamera _atlasCinemachineBrain;
     [Tooltip("If the scene doesn't display 3d scene, the camsera would just stare into the void. This cinemachine can't face any object from 3d scenes.")]
-    [SerializeField] private CinemachineCamera  _emptyCinemachineBrain;
+    [SerializeField] private CinemachineCamera _emptyCinemachineBrain;
     [Header("MenuTabs")]
     [SerializeField] private CanvasGroup _settingsControlsGroup;
     [SerializeField] private CanvasGroup _systemControlsGroup;
@@ -33,6 +33,9 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private SettingsManager _settingsManager;
     [SerializeField] private GUISettingsWindow _settingsWindow;
     [SerializeField] private GUISceneBlackFade _blackFade;
+    [Header("DisplayPanels")]
+    [SerializeField] private GUIGameMenuStatsPanel _statsPanel;
+    [SerializeField] private GUIGameMenuResourcesPanel _resourcesPanel;
     #endregion
 
     #region Mono
@@ -74,7 +77,9 @@ public class GUIGameMenu : MonoBehaviour
     {
         _sceneRoot.gameObject.SetActive(true);
         _menuCloseDelay = 0.5f;
-        if(SkyforgeLoader.SettingsChanged)
+        _statsPanel.UpdateValues();
+        _resourcesPanel.UpdateValues();
+        if (SkyforgeLoader.SettingsChanged)
         {
             _settingsManager.ApplySceneSettings();
             _settingsWindow.LoadFromSettings();

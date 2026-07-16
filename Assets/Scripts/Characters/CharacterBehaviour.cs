@@ -133,7 +133,7 @@ public class CharacterBehaviour : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         _effectManager.UpdateEffects();
-        if (_LastDamageExpireTimer > 0 && !IsDead)
+        if (_LastDamageExpireTimer > 0)
         {
             _LastDamageExpireTimer -= Time.fixedDeltaTime;
             if (_LastDamageExpireTimer <= 0)

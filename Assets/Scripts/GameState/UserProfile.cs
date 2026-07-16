@@ -16,4 +16,12 @@ public class UserProfile
     [XmlIgnore]
     public string FileName { get; set; }
     public List<PerkState> AcquiredPerks { get; set; }
+    public GameplayResources GameplayResources { get; set; }
+
+    public UserProfile()
+    {
+        Difficulty = new();
+        AcquiredPerks = new();
+        GameplayResources = new();
+    }
 }

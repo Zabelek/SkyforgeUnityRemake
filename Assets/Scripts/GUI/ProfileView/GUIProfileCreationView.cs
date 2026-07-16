@@ -66,6 +66,8 @@ public class GUIProfileCreationView : MonoBehaviour
         ret.HatNumber = _currentHatNumber;
         ret.Difficulty = _diffLevels[_currentDiffNumber];
         ret.Prestige = 0;
+        ret.GameplayResources.Credits = 1000;
+        ret.GameplayResources.AelionEidoses = 0;
         return ret;
     }
     private async Task UpdateHat()

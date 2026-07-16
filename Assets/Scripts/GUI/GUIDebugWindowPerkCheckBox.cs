@@ -76,6 +76,7 @@ public class GUIDebugWindowPerkCheckBox : MonoBehaviour
                 SkyforgeLoader.CurrentProfile.AcquiredPerks.Add(_perkState);
             }
             SkyforgeLoader.EnablePerk(_perkSO);
+            SkyforgeLoader.PerksChanged = true;
             UpdateSprite(this, EventArgs.Empty);
         }
         OnChange?.Invoke(this, EventArgs.Empty);
@@ -94,6 +95,7 @@ public class GUIDebugWindowPerkCheckBox : MonoBehaviour
                 _perkState.Enabled = false;
             }
             UpdateSprite(this, EventArgs.Empty);
+            SkyforgeLoader.PerksChanged = true;
         }
         OnChange?.Invoke(this, EventArgs.Empty);
     }

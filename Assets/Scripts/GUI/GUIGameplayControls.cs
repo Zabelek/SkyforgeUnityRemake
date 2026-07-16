@@ -14,6 +14,8 @@ using UnityEngine.UI;
 
 public class GUIGameplayControls : MonoBehaviour
 {
+    public const float MAX_INTERACTABLE_RANGE = 3;
+
     #region Variables
     [Header("GUI Base References")]
     [Tooltip("Drag here Player from the current scene")]
@@ -99,7 +101,14 @@ public class GUIGameplayControls : MonoBehaviour
     [Tooltip("The camera that is set as an output camera in the GraphicsCompositor")]
     [SerializeField] private Transform _sceneRoot;
     [SerializeField] private SettingsManager _settingsManager;
+    [Header("Interactable")]
+    [Tooltip("Interactable widget is a small button that appears when E interaction is available")]
+    [SerializeField] private Transform _interactableWidget;
+    [Tooltip("Interactable widget is a small button that appears when E interaction is available")]
+    [SerializeField] private TextMeshProUGUI _interactableWidgetText;
+    private IPlayerInteractable _currentlySelectedInteractable;
     [Tooltip("Different black fade used for transition to menu")]
+    [Header("Menu Black Fade")]
     [SerializeField] private GUISceneBlackFade _menuBlackFade;
     //so that the player can't open/close menu too fast
     private float _menuOpenDelay = 0.5f;
@@ -118,6 +127,7 @@ public class GUIGameplayControls : MonoBehaviour
         _inputBehaviour.OpenMenuAction += MenuOpenClose;
         _inputBehaviour.OpenSettingsAction += SettingsOpenClose;
         _inputBehaviour.OnAppExitAction += AppExit_Performed;
+        _inputBehaviour.OnInteractionAction += Interaction_Performed;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _player.OnPerkChange += PerksChanged;
@@ -143,6 +153,11 @@ public class GUIGameplayControls : MonoBehaviour
     private void OnDestroy()
     {
         SkyforgeLoader.GUIGameplayControls = null;
+        _inputBehaviour.OpenMenuAction -= MenuOpenClose;
+        _inputBehaviour.OpenSettingsAction -= SettingsOpenClose;
+        _inputBehaviour.OnAppExitAction -= AppExit_Performed;
+        _inputBehaviour.OnInteractionAction -= Interaction_Performed;
+        _inputBehaviour.OnInteractionAction -= Interaction_Performed;
     }
     #endregion
 
@@ -161,7 +176,6 @@ public class GUIGameplayControls : MonoBehaviour
         if (SkyforgeLoader.PerksChanged)
         {
             _player.SyncPerks(true);
-            SkyforgeLoader.SettingsChanged = false;
         }
         await _menuBlackFade.StartFadeOut();
     }
@@ -345,8 +359,10 @@ public class GUIGameplayControls : MonoBehaviour
             Vector2 screenPoint = new Vector2(cam.pixelRect.x + cam.pixelRect.width * 0.5f, cam.pixelRect.y + cam.pixelRect.height * 0.55f);
             float maxScreenDistance = Vector2.Distance(screenPoint, new Vector2(cam.pixelRect.x, cam.pixelRect.y));
             Collider[] hits = Physics.OverlapSphere(_player.transform.position, _selectionMaxTargetDistance);
-            float bestScore = float.MaxValue;
-            CharacterBehaviour bestTarget = null;
+            float bestScoreForCharacters = float.MaxValue;
+            CharacterBehaviour bestTargetForCharacters = null;
+            float bestScoreForInteractables = float.MaxValue;
+            IPlayerInteractable bestInteractable = null;
             float playerZCameraPos = Globals.Instance.ViewportCamera.WorldToScreenPoint(_player.transform.position).z;
             foreach (var hit in hits)
             {
@@ -365,18 +381,27 @@ public class GUIGameplayControls : MonoBehaviour
                     if (character != _player)
                     {
                         var currentScore = (screenDistanceNormalized * _selectionScreenWeight) + (worldDistanceNormalized * _selectionDistanceWeight);
-                        if (currentScore < bestScore && screenDistanceNormalized < _selectionMaxAngleTolerance)
+                        if (currentScore < bestScoreForCharacters && screenDistanceNormalized < _selectionMaxAngleTolerance)
                         {
-                            bestScore = currentScore;
-                            bestTarget = character;
+                            bestScoreForCharacters = currentScore;
+                            bestTargetForCharacters = character;
                         }
                     }
                 }
+                else if(bestTargetForCharacters == null && (hit.transform.position - _player.transform.position).magnitude < MAX_INTERACTABLE_RANGE && hit.TryGetComponent<IPlayerInteractable>(out var interactable))
+                {
+                    var currentScore = (screenDistanceNormalized * _selectionScreenWeight) + (worldDistanceNormalized * _selectionDistanceWeight);
+                    if (currentScore < bestScoreForInteractables && screenDistanceNormalized < _selectionMaxAngleTolerance)
+                    {
+                        bestScoreForInteractables = currentScore;
+                        bestInteractable = interactable;
+                    }
+                }
             }
-            if (bestTarget != null)
+            if (bestTargetForCharacters != null)
             {
-                AutoSelectCharacter(bestTarget);
-                if (bestTarget.CharacterSO.Category.HealthBarsAmount == 1)
+                AutoSelectCharacter(bestTargetForCharacters);
+                if (bestTargetForCharacters.CharacterSO.Category.HealthBarsAmount == 1)
                 {
                     _characterTopBar.gameObject.SetActive(true);
                     _bossTopBar.gameObject.SetActive(false);
@@ -391,6 +416,17 @@ public class GUIGameplayControls : MonoBehaviour
             {
                 _characterTopBar.gameObject.SetActive(false);
                 _bossTopBar.gameObject.SetActive(false);
+            }
+            if (bestInteractable != null)
+            {
+                _currentlySelectedInteractable = bestInteractable;
+                _interactableWidget.gameObject.SetActive(true);
+                _interactableWidgetText.text = bestInteractable.GetInteractionTitle();
+            }
+            else
+            {
+                _currentlySelectedInteractable = null;
+                _interactableWidget.gameObject.SetActive(false);
             }
         }
         else
@@ -560,6 +596,13 @@ public class GUIGameplayControls : MonoBehaviour
     {
         Application.Quit();
     }
-
+    private void Interaction_Performed(object sender, EventArgs e)
+    {
+        if(!_player.IsDead && !Globals.Instance.IsCutscenePlaying && !Globals.Instance.IsMenuOpen && _currentlySelectedInteractable != null)
+        {
+            _currentlySelectedInteractable.Interact(_player);
+            _player.PlayAnimation("Interaction");
+        }
+    }
     #endregion
 }
