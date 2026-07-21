@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class GUIProfilePickView : MonoBehaviour
     [SerializeField] private GUIMapSelectionButton _mapButtonBase;
     [Tooltip("Parent transform where all created buttons go")]
     [SerializeField] private Transform _mapButtons;
+    [SerializeField] private SoundEffectSO _switchSound;
+    [SerializeField] private Image _classIcon;
     #endregion
 
     #region Mono
@@ -52,6 +55,10 @@ public class GUIProfilePickView : MonoBehaviour
             _profileView.PlayerVisualization.EquippedWeapon.SetWeaponDraw();
             _profileView.PlayerVisualization.ChangeWeaponOutState(true);
         }
+        if(SkyforgeLoader.ClassRegistry != null)
+        {
+            _classIcon.sprite = SkyforgeLoader.ClassRegistry.RegisteredClasses.FirstOrDefault(c => c.ID == userProfile.CurrentlyPickedClass).SimplifiedIcon;
+        }
     }
     #endregion
 
@@ -62,6 +69,7 @@ public class GUIProfilePickView : MonoBehaviour
         {
             _profileView.SetCurrentProfile(_profileView.CurrentProfile + 1);
             _ = SetProfile(_profileView.Profiles[_profileView.CurrentProfile], true);
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
         }
     }
     private void PreviousProfileButton_Clicked()
@@ -70,6 +78,7 @@ public class GUIProfilePickView : MonoBehaviour
         {
             _profileView.SetCurrentProfile(_profileView.CurrentProfile - 1);
             _ = SetProfile(_profileView.Profiles[_profileView.CurrentProfile], true);
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
         }
     }
     #endregion

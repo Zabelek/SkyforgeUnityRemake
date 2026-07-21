@@ -21,3 +21,6 @@ MonoBehaviour:
     a Gladiator, the more damage they will deal in that form (the maximum bonus is
     150% of damage). Every Gladiator Strike retores 50 points of Rage.
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 15
+  AtlasIcon: 2

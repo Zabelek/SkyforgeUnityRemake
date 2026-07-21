@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class GUIResourceChangeWidget : MonoBehaviour
 {
-    public const float ANIMATION_TIMER = 0.3f;
-    public const float MAX_LIFETIME = 5;
 
     #region Variables
     public EventHandler OnDestroyed;
@@ -16,15 +14,18 @@ public class GUIResourceChangeWidget : MonoBehaviour
     private Vector3 _defaultPos, _initialPos, _upPosePrevious, _upPoseTarget;
     private short _upPosition;
     private CanvasGroup _canvasGroup;
+    [SerializeField] private Vector3 _initialAnimationTransform, _goUpAnimationTransform;
+    [SerializeField] private bool _fadeInOnInit;
+    [SerializeField] private float _targetAlphaValue, _maxLifetime, _animationTimer;
     #endregion
 
     #region Mono
     protected void Awake()
     {
-        _initAnimationTimer = ANIMATION_TIMER;
+        _initAnimationTimer = _animationTimer;
         _upPosition = 0;
         _defaultPos = transform.localPosition;
-        _initialPos = transform.localPosition + new Vector3(130,0,0);
+        _initialPos = transform.localPosition + _initialAnimationTransform;
         transform.localPosition = _initialPos;
         _canvasGroup = GetComponent<CanvasGroup>();
         _currentLifetime = 0;
@@ -35,28 +36,36 @@ public class GUIResourceChangeWidget : MonoBehaviour
         if (_initAnimationTimer>0)
         {
             _initAnimationTimer -= Time.deltaTime;
-            this.transform.localPosition = Vector3.Lerp(_defaultPos, _initialPos, _initAnimationTimer / ANIMATION_TIMER);
+            this.transform.localPosition = Vector3.Lerp(_defaultPos, _initialPos, _initAnimationTimer / _animationTimer);
+            if(_fadeInOnInit)
+            {
+                _canvasGroup.alpha = Mathf.Lerp(_targetAlphaValue, 0, _fadeOutTimer / _animationTimer);
+            }
             if (_initAnimationTimer <= 0)
+            {
                 this.transform.localPosition = _defaultPos;
+                if (_fadeInOnInit)
+                    _canvasGroup.alpha = _targetAlphaValue;
+            }
         }
         if(_upAnimationTimer>0)
         {
             _upAnimationTimer -= Time.deltaTime;
-            this.transform.localPosition = Vector3.Lerp(_upPoseTarget, _upPosePrevious, _upAnimationTimer / ANIMATION_TIMER);
+            this.transform.localPosition = Vector3.Lerp(_upPoseTarget, _upPosePrevious, _upAnimationTimer / _animationTimer);
             if (_upAnimationTimer <= 0)
                 this.transform.localPosition = _upPoseTarget;
         }
         if(_fadeOutTimer > 0)
         {
             _fadeOutTimer -= Time.deltaTime;
-            _canvasGroup.alpha = Mathf.Lerp(0, 0.8f, _fadeOutTimer / ANIMATION_TIMER);
+            _canvasGroup.alpha = Mathf.Lerp(0, _targetAlphaValue, _fadeOutTimer / _animationTimer);
             if (_fadeOutTimer <= 0)
             {
                 Destroy(this.gameObject);
                 return;
             }
         }
-        if(_fadeOutTimer == 0 && _currentLifetime>MAX_LIFETIME)
+        if(_fadeOutTimer == 0 && _currentLifetime > _maxLifetime)
         {
             FadeOut();
         }
@@ -72,10 +81,10 @@ public class GUIResourceChangeWidget : MonoBehaviour
     {
         if (_upPosition < 3)
         {
-            _upAnimationTimer = ANIMATION_TIMER;
+            _upAnimationTimer = _animationTimer;
             _upPosition++;
             _upPosePrevious = transform.localPosition;
-            _upPoseTarget = transform.localPosition + new Vector3(0, 52, 0);
+            _upPoseTarget = transform.localPosition + _goUpAnimationTransform;
         }
         else
             FadeOut();
@@ -83,19 +92,21 @@ public class GUIResourceChangeWidget : MonoBehaviour
     public void FadeOut()
     {
         if(_fadeOutTimer==0)
-            _fadeOutTimer = ANIMATION_TIMER;
+            _fadeOutTimer = _animationTimer;
     }
     public void SetValues(Sprite sprite, int value)
     {
         _resourceIconImage.sprite = sprite;
         if(value>0)
         {
-            _addIndicationImage.color = Color.greenYellow;
+            if(_addIndicationImage != null)
+                _addIndicationImage.color = Color.greenYellow;
             _amoundTextBox.text = "+" + value;
         }
         else
         {
-            _addIndicationImage.color = Color.red;
+            if (_addIndicationImage != null)
+                _addIndicationImage.color = Color.red;
             _amoundTextBox.text = value.ToString();
         }
     }

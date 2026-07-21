@@ -19,3 +19,6 @@ MonoBehaviour:
   Name: Thundering Roar
   Description: 'Unlocks Berserker''s ability: Thundering Roar'
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 5
+  AtlasIcon: 0

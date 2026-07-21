@@ -19,3 +19,6 @@ MonoBehaviour:
   Name: Gladiator
   Description: 'Unlocks Berserker''s ability: Gladiator'
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 10
+  AtlasIcon: 0

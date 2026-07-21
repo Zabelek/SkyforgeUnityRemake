@@ -13,4 +13,8 @@ public class HeroClassSO : ScriptableObject
     public WeaponTypeSO WeaponType;
     [Tooltip("When you draw the weapon, you will move slower/quicker, depending on class")]
     public float CombatMovementSpeedMultiplier;
+    [Tooltip("Displayed where the icon will be small in the interface")]
+    public Sprite SimplifiedIcon;
+    [Tooltip("Displayed where the icon will be big enough to spot the details")]
+    public Sprite RegularIcon;
 }

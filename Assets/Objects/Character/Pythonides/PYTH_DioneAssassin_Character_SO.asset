@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PYTH_DioneAssassin_Character_SO
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
   Name: Dione Assassin
-  MaxHealth: 450
+  Category: {fileID: 11400000, guid: 132a60d5c008d5e4fbb7b205b1ee0d9e, type: 2}
+  CCResistant: 0
+  MaxHealth: 900
   MaxMana: 0
   MovementSpeed: 6
   AttackSpeed: 2
-  BaseDamage: 6
-  Category: {fileID: 11400000, guid: 132a60d5c008d5e4fbb7b205b1ee0d9e, type: 2}
-  CCResistant: 0
+  BaseDamage: 12
+  CriticalChance: 0
+  CombatManaRegen: 0

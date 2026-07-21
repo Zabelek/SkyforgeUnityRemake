@@ -107,7 +107,7 @@ public class CharacterBehaviour : MonoBehaviour
         {
             Stats.ModifyAccordingToDifficultyLevel();
         }
-        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();      
     }
     protected virtual void Start()
     {
@@ -117,7 +117,7 @@ public class CharacterBehaviour : MonoBehaviour
         Selectable = true;
         CanBeDamaged = true;
         _fadeOutTimer = 0;
-        _lastOffCombatHealAmount = 0;
+        _lastOffCombatHealAmount = (int)(Stats.MaxHP * 0.06f);
         _healTimer = 1;
         if (FadedIntoScene)
             _fadeInTimer = _fadeOutTimerMax;
@@ -239,6 +239,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (Globals.Instance.IsCutscenePlaying == false || cutsceneOverride)
         {
             LastDamage = damage;
+            HandleDamageEffects(damage);
             _LastDamageExpireTimer = 3f;
             _effectManager.OnDamageTaken(damage);
             if (this is PlayerBehaviour)
@@ -271,6 +272,21 @@ public class CharacterBehaviour : MonoBehaviour
             }
         }
     }
+
+    private void HandleDamageEffects(Damage damage)
+    {
+        if (Stats.Defense > 0)
+        {
+            damage.Amount = damage.Amount - (int)(damage.Amount * Stats.Defense);
+            if (damage.Amount <= 1)
+                damage.Amount = 1;
+        }
+        if (damage.Source.Stats.Vampirism > 0)
+        {
+            damage.Source.Heal((int)(damage.Source.Stats.Vampirism * damage.Amount), false);
+        }
+    }
+
     public virtual void TakeEmptyDamage()
     {
 
@@ -356,10 +372,17 @@ public class CharacterBehaviour : MonoBehaviour
     {
         if(!IsDead)
         {
+            bool movementNerf = effect.EffectSO.Types.Contains(EffectSO.EffectType.Fear) || effect.EffectSO.Types.Contains(EffectSO.EffectType.MoveAround)
+                    || effect.EffectSO.Types.Contains(EffectSO.EffectType.Slow) || effect.EffectSO.Types.Contains(EffectSO.EffectType.Stun);
+            if(movementNerf && Stats.Stability > 0)
+            {
+                effect.TimeLeft = effect.TimeLeft - effect.TimeLeft * Stats.Stability;
+                if (effect.TimeLeft < 0)
+                    effect.TimeLeft = 0.1f;
+            }
             if (CharacterSO.CCResistant)
             {
-                if (effect.EffectSO.Types.Contains(EffectSO.EffectType.Fear) || effect.EffectSO.Types.Contains(EffectSO.EffectType.MoveAround)
-                    || effect.EffectSO.Types.Contains(EffectSO.EffectType.Slow) || effect.EffectSO.Types.Contains(EffectSO.EffectType.Stun))
+                if (movementNerf)
                 {
 
                 }
@@ -493,7 +516,8 @@ public class CharacterBehaviour : MonoBehaviour
     }
     public virtual int GetEffectiveDamage()
     {
-        return (int)(Stats.BaseDamage * GetDamageModifiers());
+        var randomDamage = UnityEngine.Random.Range(Stats.BaseDamage, Stats.BaseDamage + Stats.MaxDamage);
+        return (int)(randomDamage * GetDamageModifiers());
     }
     public virtual float GetDamageModifiers()
     {

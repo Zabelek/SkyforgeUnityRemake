@@ -22,3 +22,6 @@ MonoBehaviour:
     per second for every common enemy hit and 2.5% for every elite enemy or immortal.
     You can recover up to 5% of health per second.
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 15
+  AtlasIcon: 2

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Berserker_CriticalPotential_Perk_SO
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   ID: Base_Berserker_CriticalPotential
-  Stat: 2
+  Stat: 3
   Value: 0.05
+  IsPercent: 1
   Functional: 0
   Name: Critical Potential
   Description: 
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EidosCost: 2
+  AtlasIcon: 2
+  CustomIcon: {fileID: 0}

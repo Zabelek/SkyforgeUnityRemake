@@ -60,5 +60,36 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 626dd67a36658e74fa6dba8340350c84, type: 2}
   - {fileID: 11400000, guid: 9d10d74ee535a104c9eb77e9833d356d, type: 2}
   - {fileID: 11400000, guid: f893120721110a64f9cdd2cadd1b146c, type: 2}
+  - {fileID: 11400000, guid: 3d0c983ae21546547ab1af77398c9e52, type: 2}
+  - {fileID: 11400000, guid: 39f4f73e0ca5ca948b3d02ba5465c8bd, type: 2}
+  - {fileID: 11400000, guid: e2e8d01de34d8e043a6cd4329cb808d7, type: 2}
+  - {fileID: 11400000, guid: 6ce9f8e7ba3c4af4ebd5bae7636c22e4, type: 2}
+  - {fileID: 11400000, guid: 994459a72f12f0241927671ebd7110ae, type: 2}
+  - {fileID: 11400000, guid: cb0df9fe9992a8043ba369254ec8c963, type: 2}
+  - {fileID: 11400000, guid: e99fab12c40b9794c886984db52638cc, type: 2}
+  - {fileID: 11400000, guid: 957bae633f318d44eb00caebfbbb9212, type: 2}
+  - {fileID: 11400000, guid: df30fe671b54ce045b4e89c2a3e9faa1, type: 2}
+  - {fileID: 11400000, guid: 9fec65c766f708541939979182685756, type: 2}
+  - {fileID: 11400000, guid: 83c626369a08067458e5b958e268fd8f, type: 2}
+  - {fileID: 11400000, guid: 52dc043a335dad44797a13066f03040f, type: 2}
+  - {fileID: 11400000, guid: 386682def96468a4ab8bb895b3ae1226, type: 2}
+  - {fileID: 11400000, guid: c7c7051c473cd67418edf3dad9f88631, type: 2}
+  - {fileID: 11400000, guid: a4bfd84a207ead341b9d12faadf82155, type: 2}
+  - {fileID: 11400000, guid: 0ebaedbdfe526a74e9e90595f435d7df, type: 2}
+  - {fileID: 11400000, guid: 33eea22438e3cb94a827cb7aa2a5ac87, type: 2}
+  - {fileID: 11400000, guid: bdb616f9f75994c4a870612e1f65ff76, type: 2}
+  - {fileID: 11400000, guid: 50f857b1f2723364993c8bb7b9a10ed5, type: 2}
+  - {fileID: 11400000, guid: ebe318ec75fc088468959cddb25c48ce, type: 2}
+  - {fileID: 11400000, guid: b407acbc84d7c12449f6a16ea0dcbd9d, type: 2}
+  - {fileID: 11400000, guid: ea39bbb9b239ba241aa618700275d23f, type: 2}
+  - {fileID: 11400000, guid: 24368ec733a0a964b8dd3b7b9b78c63d, type: 2}
+  - {fileID: 11400000, guid: 3e8dd5f0b48fa19459d9b137a72953cc, type: 2}
+  - {fileID: 11400000, guid: 865ca573d7971b54a9df7ada92ef699b, type: 2}
+  - {fileID: 11400000, guid: c2e23e2138a2de546a16adb0525e62a0, type: 2}
+  - {fileID: 11400000, guid: 9ef687428cfb8d845890450a3361bc70, type: 2}
+  - {fileID: 11400000, guid: 2c5ef91787d11f94a903482f1356f6c3, type: 2}
+  - {fileID: 11400000, guid: 805f5bf812c9847469d1b566f25ddece, type: 2}
+  - {fileID: 11400000, guid: 4981c105a058ac44581119bb65da7575, type: 2}
+  - {fileID: 11400000, guid: 96fc5dd5fb3f3264fa3690625bbf8e56, type: 2}
   PerkSets:
   - {fileID: 11400000, guid: b2a8c8e6631a1d0468e6f443b2111dad, type: 2}

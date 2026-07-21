@@ -219,6 +219,12 @@ MonoBehaviour:
   _addIndicationImage: {fileID: 4669003196280379727}
   _resourceIconImage: {fileID: 5424794911523339547}
   _amoundTextBox: {fileID: 503312470277712167}
+  _initialAnimationTransform: {x: 130, y: 0, z: 0}
+  _goUpAnimationTransform: {x: 0, y: 52, z: 0}
+  _fadeInOnInit: 0
+  _targetAlphaValue: 0.8
+  _maxLifetime: 5
+  _animationTimer: 0.3
 --- !u!1 &2901037412577164302
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Berserker_BattleAdrenaline_Perk_SO
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   ID: Base_Berserker_BattleAdrenaline
-  Stat: 4
+  Stat: 5
   Value: 4
+  IsPercent: 0
   Functional: 0
   Name: Battle Adrenaline
   Description: Increases Rage regeneration per second by 4
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EidosCost: 2
+  AtlasIcon: 1
+  CustomIcon: {fileID: 0}

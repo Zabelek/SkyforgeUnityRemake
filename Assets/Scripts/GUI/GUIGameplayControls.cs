@@ -510,6 +510,7 @@ public class GUIGameplayControls : MonoBehaviour
     #region EventHandlers
     private void PerksChanged(object sender, EventArgs e)
     {
+        
     }
     private void MenuOpenClose(object sender, EventArgs e)
     {

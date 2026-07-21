@@ -27,7 +27,7 @@ public class GUIGameMenu : MonoBehaviour
     [Header("MenuTabs")]
     [SerializeField] private CanvasGroup _settingsControlsGroup;
     [SerializeField] private CanvasGroup _systemControlsGroup;
-    [SerializeField] private CanvasGroup _charAtlasControlsGroup;
+    [SerializeField] private GUIAscensionAtlasControls _atlasControlsGroup;
     private List<CanvasGroup> _controlGroups;
     [Header("Settings")]
     [SerializeField] private SettingsManager _settingsManager;
@@ -61,7 +61,7 @@ public class GUIGameMenu : MonoBehaviour
         _controlGroups = new();
         _controlGroups.Add(_settingsControlsGroup);
         _controlGroups.Add(_systemControlsGroup);
-        _controlGroups.Add(_charAtlasControlsGroup);
+        _controlGroups.Add(_atlasControlsGroup.GetComponent<CanvasGroup>());
     }
     private void OnDestroy()
     {
@@ -98,7 +98,9 @@ public class GUIGameMenu : MonoBehaviour
         _atlasCinemachineBrain.Priority = 5;
         _emptyCinemachineBrain.Priority = 1;
         CloseAllControlGroups();
-        _charAtlasControlsGroup.gameObject.SetActive(true);
+        _atlasControlsGroup.gameObject.SetActive(true);
+        _atlasControlsGroup.UpdateClassButton();
+        _atlasControlsGroup.SwitchToCharacterAtlas(true);
         _characterAtlasTopButton.SetToggled(true);
         MenuButton_DeselectRest(_characterAtlasTopButton, EventArgs.Empty);
     }

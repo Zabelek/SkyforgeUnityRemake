@@ -17,6 +17,7 @@ public class UserProfile
     public string FileName { get; set; }
     public List<PerkState> AcquiredPerks { get; set; }
     public GameplayResources GameplayResources { get; set; }
+    public string CurrentlyPickedClass { get; set; }
 
     public UserProfile()
     {

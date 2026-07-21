@@ -21,3 +21,6 @@ MonoBehaviour:
     vulnerable to damage from Berserker's attacks for 25 seconds and reduce the movement
     speed by 50% for 5 seconds.
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 15
+  AtlasIcon: 2

@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class PlayerBehaviour : HeroBehaviour
 {
+    public const int BASE_DASH_CHARGE_MAX = 25;
+    public const float BASE_COMPANION_CHARGE_MAX = 17;
+
     #region Variables
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
     [SerializeField] private Camera _camera;
@@ -438,7 +440,9 @@ public class PlayerBehaviour : HeroBehaviour
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
                     var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
-                    if (perkSO.HeroClass == null || perkSO.HeroClass.ID == GetHeroClass().HeroClassSO.ID)
+                    if (perkSO == null)
+                        Debug.Log("WARNING! Some perks haven't been added to perk registry! Expect errors!");
+                    if (perkSO.HeroClass == null || perkSO.HeroClass?.ID == GetHeroClass().HeroClassSO.ID)
                     {
                         AddPerk(perkSO, perkState.Enabled);
                     }
@@ -449,7 +453,9 @@ public class PlayerBehaviour : HeroBehaviour
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
                     var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
-                    if (perkSO.HeroClass == null || perkSO.HeroClass.ID == GetHeroClass().HeroClassSO.ID)
+                    if(perkSO == null)
+                        Debug.Log("WARNING! Some perks haven't been added to perk registry! Expect errors!");
+                    if (perkSO.HeroClass == null || perkSO.HeroClass?.ID == GetHeroClass().HeroClassSO.ID)
                     {
                         var perkToOvwerwrite = _perks.FirstOrDefault(p => p.Perk == perkSO);
                         if (perkToOvwerwrite == null)
@@ -496,6 +502,53 @@ public class PlayerBehaviour : HeroBehaviour
     {
         yield return new WaitForSeconds(2);
         SyncPerks(false);
+    }
+    protected override void ChangeClass(HeroClassBehaviour nextClass)
+    {
+        base.ChangeClass(nextClass);
+        if (SkyforgeLoader.CurrentProfile != null)
+            SkyforgeLoader.CurrentProfile.CurrentlyPickedClass = nextClass.HeroClassSO.ID;
+    }
+    protected override void ResetPerkEffects()
+    {
+        DashChargeMax = BASE_DASH_CHARGE_MAX;
+        CompanionChargeMax = BASE_COMPANION_CHARGE_MAX;
+        foreach (var perk in GetAllPerks())
+        {
+            if ((perk.Perk.HeroClass?.ID == GetHeroClass().HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
+            {
+                if (!perk.Perk.Functional)
+                {
+                    if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
+                        CompanionChargeMax += perk.Perk.Value;
+                    else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
+                        DashChargeMax += perk.Perk.Value;
+                }
+            }
+        }
+        base.ResetPerkEffects();
+    }
+    protected override void ManagePerkChange(LockablePerk perk)
+    {
+        if(!perk.Perk.Functional && perk.Enabled)
+        {
+            if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
+                CompanionChargeMax += perk.Perk.Value;
+            else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
+                DashChargeMax += perk.Perk.Value;
+        }
+        base.ManagePerkChange(perk);
+    }
+    protected override void ManagePerkRemoval(LockablePerk perk)
+    {
+        if (!perk.Perk.Functional && perk.Enabled)
+        {
+            if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
+                CompanionChargeMax -= perk.Perk.Value;
+            else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
+                DashChargeMax -= perk.Perk.Value;
+        }
+        base.ManagePerkRemoval(perk);
     }
     #endregion
 }

@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class GUICommonButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -12,6 +14,7 @@ public class GUICommonButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] protected CanvasGroup _normalBackground, _greyBackground, _highlight;
     private bool _isMouseOver, _isLocked;
     public bool LockedAtStart;
+    [SerializeField] protected SoundEffectSO _clickSound;
     #endregion
 
     #region Mono
@@ -73,6 +76,7 @@ public class GUICommonButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             if (_isMouseOver)
             {
+                SoundManager.UIInstance.PlayGlobalSFX(_clickSound);
                 _highlight.alpha = 0.06f;
                 OnClick?.Invoke(this, EventArgs.Empty);
             }

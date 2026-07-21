@@ -13,6 +13,7 @@ public static class SkyforgeLoader
     public static UserProfile CurrentProfile;
     public static OutfitRegistry OutfitRegistry;
     public static PerkRegistry PerkRegistry;
+    public static ClassRegistry ClassRegistry;
     //Used so that both loaded scene and the loading screen can notify each other they're ready to switch
     public static bool LoadingScreenReady, LoadedSceneReady;
     public static SettingsSet SettingsSet;
@@ -39,6 +40,7 @@ public static class SkyforgeLoader
         await SceneManager.LoadSceneAsync("LoadingScene");
         _targetSceneName = sceneName;
         await LoadPerkRegistry();
+        await LoadClassRegistry();
     }
     public static async Task LoadScene(string currentScene, MapSO map)
     {
@@ -89,6 +91,18 @@ public static class SkyforgeLoader
             if (handle != null && handle.TryGetComponent<PerkRegistry>(out PerkRegistry registry) == true)
             {
                 PerkRegistry = registry;
+            }
+        }
+    }
+    private static async Task LoadClassRegistry()
+    {
+        //First check if the class registry was initialized
+        if (ClassRegistry == null)
+        {
+            var handle = await Addressables.LoadAssetAsync<GameObject>("ClassRegistry").Task;
+            if (handle != null && handle.TryGetComponent<ClassRegistry>(out ClassRegistry registry) == true)
+            {
+                ClassRegistry = registry;
             }
         }
     }

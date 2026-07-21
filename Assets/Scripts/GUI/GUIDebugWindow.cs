@@ -21,23 +21,26 @@ public class GUIDebugWindow : MonoBehaviour
     {
         _checkboxes = new();
         _terraCheckboxes = new();
-        var a9perk = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == "Base_Berserker_BurningChain");
-        foreach (var perk in SkyforgeLoader.PerkRegistry.Perks)
+        if(SkyforgeLoader.PerkRegistry != null)
         {
-            if(perk != a9perk && !SkyforgeLoader.PerkRegistry.PerkSets[0].Perks.Contains(perk))
+            /*var a9perk = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == "Base_Berserker_BurningChain");
+            foreach (var perk in SkyforgeLoader.PerkRegistry.Perks)
             {
-                var checkbox = Instantiate(_patternChechbox, _checkboxeGroup.transform);
-                checkbox.SetPerk(perk);
-                _checkboxes.Add(checkbox);
+                if (perk != a9perk && !SkyforgeLoader.PerkRegistry.PerkSets[0].Perks.Contains(perk))
+                {
+                    var checkbox = Instantiate(_patternChechbox, _checkboxeGroup.transform);
+                    checkbox.SetPerk(perk);
+                    _checkboxes.Add(checkbox);
+                }
             }
-        }
-        _a9ComboBox.SetPerk(a9perk);
-        foreach (var perk in SkyforgeLoader.PerkRegistry.PerkSets[0].Perks)
-        {
-            var checkbox = Instantiate(_patternChechbox, _terraCheckboxGroup.transform);
-            checkbox.SetPerk(perk);
-            _terraCheckboxes.Add(checkbox);
-            checkbox.OnChange += TerraPerk_Changed;
+            _a9ComboBox.SetPerk(a9perk);*/
+            foreach (var perk in SkyforgeLoader.PerkRegistry.PerkSets[0].Perks)
+            {
+                var checkbox = Instantiate(_patternChechbox, _terraCheckboxGroup.transform);
+                checkbox.SetPerk(perk);
+                _terraCheckboxes.Add(checkbox);
+                checkbox.OnChange += TerraPerk_Changed;
+            }
         }
         _patternChechbox.gameObject.SetActive(false);
         _quitButton.OnClick += QuitButton_Clicked;
@@ -61,12 +64,12 @@ public class GUIDebugWindow : MonoBehaviour
     }
     private void UnlockButton_Clicked(object sender, EventArgs e)
     {
-        foreach (var checkBox in _checkboxes)
+        /*foreach (var checkBox in _checkboxes)
         {
             checkBox.Check();
         }
+        _a9ComboBox.Check();*/
         _terraCheckboxes[0].Check();
-        _a9ComboBox.Check();
     }
     private void QuitButton_Clicked(object sender, EventArgs e)
     {

@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Hell  Of  A  Big  Entid
   Category: {fileID: 11400000, guid: d49b24a76446c6241a0cd62cb73c7ad7, type: 2}
   CCResistant: 1
-  MaxHealth: 6400
+  MaxHealth: 12800
   MaxMana: 0
   MovementSpeed: 2.5
   AttackSpeed: 0.5
-  BaseDamage: 12
+  BaseDamage: 24
   CriticalChance: 0
   CombatManaRegen: 0

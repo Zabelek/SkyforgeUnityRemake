@@ -7,6 +7,21 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     #region Variables
+    private static SoundManager _uiInstance;
+    public static SoundManager UIInstance
+    {
+        get
+        {
+            if (Globals.Instance?.SoundManager?.isActiveAndEnabled == true)
+                return Globals.Instance.SoundManager;
+            else
+                return _uiInstance;
+        }
+        set
+        {
+            _uiInstance = value;
+        }
+    }
     private AudioSource _sfxAudioSource, _voiceAudioSource, _musicAudioSource;
     [Header("Pool Settings")]
     [Tooltip("The amount of sounds that can play simultaneously")]
@@ -29,6 +44,7 @@ public class SoundManager : MonoBehaviour
         _voiceAudioSource.outputAudioMixerGroup = _voiceGroup;
         _musicAudioSource = gameObject.AddComponent<AudioSource>();
         _musicAudioSource.outputAudioMixerGroup = _musicGroup;
+        UIInstance = this;
     }
     #endregion
 

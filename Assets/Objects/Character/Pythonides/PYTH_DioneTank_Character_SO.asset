@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PYTH_DioneTank_Character_SO
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
   Name: Dione Tank
-  MaxHealth: 1200
+  Category: {fileID: 11400000, guid: e64d242872eb93b42bd28377a443bba4, type: 2}
+  CCResistant: 1
+  MaxHealth: 240
   MaxMana: 0
   MovementSpeed: 4
   AttackSpeed: 1
-  BaseDamage: 3
-  Category: {fileID: 11400000, guid: e64d242872eb93b42bd28377a443bba4, type: 2}
-  CCResistant: 1
+  BaseDamage: 6
+  CriticalChance: 0
+  CombatManaRegen: 0

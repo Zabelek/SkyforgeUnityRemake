@@ -21,6 +21,7 @@ public class StatBarBehaviour : MonoBehaviour
     //To prevent difference animation play at the start of the game
     private bool _firstTime = true;
     private int _previous = 0;
+    private int _previousMax = 0;
     #endregion
 
     #region Mono
@@ -59,8 +60,9 @@ public class StatBarBehaviour : MonoBehaviour
     }
     public void SetValue(int current, int max)
     {
-        if (_previous != current)
+        if (_previous != current || _previousMax != max)
         {
+            _previousMax = max;
             float percentCurrent = (float)current / (float)max;
             float percentPrevious = (float)_previous / (float)max;
             _fillBar.fillAmount = percentCurrent;

@@ -17,11 +17,7 @@ public class AtlasViewBackgroundStarBehaviour : MonoBehaviour
     }
     private void Update()
     {
-        if(_lightUpTimer == 0 && Random.Range(0,10000)==0)
-        {
-            _lightUpTimer = LIGHT_UP_TIME;
-        }
-        else if (_lightUpTimer > 0)
+        if (_lightUpTimer > 0)
         {
             _lightUpTimer -= Time.deltaTime;
             _renderer.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, _lightUpTimer / LIGHT_UP_TIME));
@@ -41,6 +37,13 @@ public class AtlasViewBackgroundStarBehaviour : MonoBehaviour
                 _lightDownTimer = 0;
                 _renderer.color = new Color(1, 1, 1, 0);
             }
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (_lightUpTimer == 0 && Random.Range(0, 4000) == 0)
+        {
+            _lightUpTimer = LIGHT_UP_TIME;
         }
     }
     #endregion

@@ -43,8 +43,25 @@ public class GUIProfileViewInterface : MonoBehaviour
         _viewButtonPlay.OnClick += ViewButtonPlay_Clicked;
         _createButton.onClick.AddListener(CreateButton_Clicked);
         Profiles = SaveManager.LoadAllProfiles();
+        foreach(var profile in Profiles)
+        {
+            UpdateProfileToCurrentVersion(profile);
+        }
         if (_registeredButtons == null)
             _registeredButtons = new();
+    }
+    private void UpdateProfileToCurrentVersion(UserProfile profile)
+    {
+        if(profile.CurrentlyPickedClass == null || profile.CurrentlyPickedClass.Length == 0)
+        {
+            profile.CurrentlyPickedClass = "Base_Berserker";
+        }
+        if(profile.AcquiredPerks.Count == 0)
+        {
+            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Regular_Immortal", Enabled = true });
+            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
+            profile.GameplayResources.Credits = 1000;
+        }
     }
     private void Update()
     {

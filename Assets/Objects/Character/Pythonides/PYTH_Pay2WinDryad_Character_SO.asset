@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PYTH_Pay2WinDryad_Character_SO
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
   Name: Pay to Win Dryad
-  MaxHealth: 10400
+  Category: {fileID: 11400000, guid: d49b24a76446c6241a0cd62cb73c7ad7, type: 2}
+  CCResistant: 1
+  MaxHealth: 20800
   MaxMana: 0
   MovementSpeed: 5
   AttackSpeed: 1
-  BaseDamage: 75
-  Category: {fileID: 11400000, guid: d49b24a76446c6241a0cd62cb73c7ad7, type: 2}
-  CCResistant: 1
+  BaseDamage: 150
+  CriticalChance: 0
+  CombatManaRegen: 0

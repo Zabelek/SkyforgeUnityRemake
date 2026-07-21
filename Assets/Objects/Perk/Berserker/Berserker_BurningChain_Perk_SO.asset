@@ -22,3 +22,6 @@ MonoBehaviour:
     the Berserker for 15 seconds, which increases the damage of the next Crippling
     Blow by 150%.
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EscapeCooldown: 0
+  EidosCost: 20
+  AtlasIcon: 0

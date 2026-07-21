@@ -17,3 +17,5 @@ MonoBehaviour:
   Icon: {fileID: 0}
   WeaponType: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}
   CombatMovementSpeedMultiplier: 0.7
+  SimplifiedIcon: {fileID: 21300000, guid: 178ccf8d8e3af2240ac29798a3276696, type: 3}
+  RegularIcon: {fileID: 21300000, guid: 603a9c07388540c45ad6432b9e9c7a2f, type: 3}

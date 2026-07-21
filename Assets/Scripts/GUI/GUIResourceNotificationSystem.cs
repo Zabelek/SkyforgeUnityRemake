@@ -6,18 +6,12 @@ using UnityEngine;
 
 public class GUIResourceNotificationSystem : MonoBehaviour
 {
-    public class ResourceChangeEventArgs : EventArgs
-    {
-        public string ResourceType;
-        public int Amount;
-    }
-
     #region Variables
+    private static Queue<GameplayResources.ResourceChangeEventArgs> _queuedChanges;
     [SerializeField] private GUIResourceChangeWidget _widgetBase;
     [Tooltip("For now ann resource icons have to be referenced here")]
     [SerializeField] private Sprite _iconAelionEidos, _iconCredits;
     private List<GUIResourceChangeWidget> _spawnedWidgets;
-    private Queue<ResourceChangeEventArgs> _queuedChanges;
     private float _nextWidgetTimer;
     #endregion
 
@@ -38,14 +32,14 @@ public class GUIResourceNotificationSystem : MonoBehaviour
         if (_nextWidgetTimer>0)
         {
             _nextWidgetTimer -= Time.deltaTime;
-            if(_nextWidgetTimer<=0)
+            if(_nextWidgetTimer<=0 && _queuedChanges.Count>0)
             {
                 var newResArgs = _queuedChanges.Dequeue();
                 var widget = Instantiate(_widgetBase, this.transform);
                 Sprite sprite = null;
-                if (newResArgs.ResourceType == "AelionEidoses")
+                if (newResArgs.ResourceType == GameplayResources.ResourceType.AelionEidos)
                     sprite = _iconAelionEidos;
-                else if (newResArgs.ResourceType == "Credits")
+                else if (newResArgs.ResourceType == GameplayResources.ResourceType.Credits)
                     sprite = _iconCredits;
                 widget.SetValues(sprite, newResArgs.Amount);
                 widget.OnDestroyed += WidgetDestroyed;
@@ -92,12 +86,16 @@ public class GUIResourceNotificationSystem : MonoBehaviour
     private void WidgetDestroyed(object sender, EventArgs e)
     {
         if (sender is GUIResourceChangeWidget)
+        {
             _spawnedWidgets.Remove(sender as GUIResourceChangeWidget);
+            ((GUIResourceChangeWidget)sender).OnDestroyed -= WidgetDestroyed;
+        }
     }
-    private void ResourcesChanged(object sender, ResourceChangeEventArgs e)
+    private void ResourcesChanged(object sender, GameplayResources.ResourceChangeEventArgs e)
     {
         //When the player profile is changed, the change itself enter the queue to be displayed on the screen
-        _queuedChanges.Enqueue(e);
+        if(!_queuedChanges.Contains(e))
+            _queuedChanges.Enqueue(e);
         if (_nextWidgetTimer == 0)
             _nextWidgetTimer = 1f;
     }

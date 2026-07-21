@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PYTH_SpoiledDioneChild_Character_SO
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
   Name: Spoiled Dione Child
-  MaxHealth: 200
+  Category: {fileID: 11400000, guid: deb65f0697a90104e97429f00d55a55b, type: 2}
+  CCResistant: 0
+  MaxHealth: 400
   MaxMana: 0
   MovementSpeed: 6.5
   AttackSpeed: 2.5
-  BaseDamage: 2
-  Category: {fileID: 11400000, guid: deb65f0697a90104e97429f00d55a55b, type: 2}
-  CCResistant: 0
+  BaseDamage: 4
+  CriticalChance: 0
+  CombatManaRegen: 0

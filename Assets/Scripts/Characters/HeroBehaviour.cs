@@ -123,16 +123,17 @@ public class HeroBehaviour : CharacterBehaviour
         }
         SyncPerks(false);
     }
-    private void ResetPerkEffects()
+    protected virtual void ResetPerkEffects()
     {
         Stats.Reset(CharacterSO);
         foreach (var perk in GetAllPerks())
         {
-            if ((perk.Perk.HeroClass.ID == _heroClass.HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
+            if ((perk.Perk.HeroClass?.ID == _heroClass.HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
             {
                 if(perk.Perk.Functional)
                 {
-                    _heroClass.ManageAddedPerk(perk.Perk);
+                    if (perk.Perk.HeroClass?.ID == _heroClass.HeroClassSO.ID)
+                        _heroClass.ManageAddedPerk(perk.Perk);
                 }
                 else
                 {
@@ -142,13 +143,14 @@ public class HeroBehaviour : CharacterBehaviour
         }
         OnPerkChange?.Invoke(this, null);
     }
-    private void ManagePerkChange(LockablePerk perk)
+    protected virtual void ManagePerkChange(LockablePerk perk)
     {
         if(perk.Enabled)
         {
             if (perk.Perk.Functional)
             {
-                _heroClass.ManageAddedPerk(perk.Perk);
+                if(perk.Perk.HeroClass?.ID == _heroClass.HeroClassSO.ID)
+                    _heroClass.ManageAddedPerk(perk.Perk);
             }
             else
             {
@@ -167,13 +169,14 @@ public class HeroBehaviour : CharacterBehaviour
             }
         }
     }
-    private void ManagePerkRemoval(LockablePerk perk)
+    protected virtual void ManagePerkRemoval(LockablePerk perk)
     {
         if (perk.Enabled)
         {
             if (perk.Perk.Functional)
             {
-                _heroClass.ManageRemovedPerk(perk.Perk);
+                if (perk.Perk.HeroClass?.ID == _heroClass.HeroClassSO.ID)
+                    _heroClass.ManageRemovedPerk(perk.Perk);
             }
             else
             {

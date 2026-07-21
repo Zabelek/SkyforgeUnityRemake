@@ -1579,6 +1579,7 @@ MonoBehaviour:
   _greyBackground: {fileID: 1729850377652914994}
   _highlight: {fileID: 5497406521034075241}
   LockedAtStart: 0
+  _clickSound: {fileID: 11400000, guid: dc9961e99fc123b4bbb15f84c5fa0632, type: 2}
 --- !u!1 &5066676408158969818
 GameObject:
   m_ObjectHideFlags: 0

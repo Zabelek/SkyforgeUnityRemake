@@ -15,10 +15,10 @@ MonoBehaviour:
   Name: Yummy Triffid
   Category: {fileID: 11400000, guid: 9393b34e79b810b49bb3fc24f899363c, type: 2}
   CCResistant: 0
-  MaxHealth: 400
+  MaxHealth: 800
   MaxMana: 0
   MovementSpeed: 2
   AttackSpeed: 2
-  BaseDamage: 6
+  BaseDamage: 12
   CriticalChance: 0
   CombatManaRegen: 0

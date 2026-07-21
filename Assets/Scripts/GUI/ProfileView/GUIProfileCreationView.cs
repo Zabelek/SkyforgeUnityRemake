@@ -19,6 +19,7 @@ public class GUIProfileCreationView : MonoBehaviour
     [SerializeField] GUIProfileViewInterface _profileView;
     private int _currentHatNumber, _currentDiffNumber, _hatAmount;
     private List<DifficultyLevel> _diffLevels;
+    [SerializeField] private SoundEffectSO _switchSound;
     #endregion
 
     #region Mono
@@ -68,6 +69,9 @@ public class GUIProfileCreationView : MonoBehaviour
         ret.Prestige = 0;
         ret.GameplayResources.Credits = 1000;
         ret.GameplayResources.AelionEidoses = 0;
+        ret.CurrentlyPickedClass = "Base_Berserker";
+        ret.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Regular_Immortal", Enabled = true });
+        ret.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
         return ret;
     }
     private async Task UpdateHat()
@@ -96,6 +100,7 @@ public class GUIProfileCreationView : MonoBehaviour
     {
         if (_currentDiffNumber < _diffLevels.Count - 1)
         {
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
             _currentDiffNumber++;
             UpdateDifficulty();
         }
@@ -104,6 +109,7 @@ public class GUIProfileCreationView : MonoBehaviour
     {
         if (_currentDiffNumber > 0)
         {
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
             _currentDiffNumber--;
             UpdateDifficulty();
         }
@@ -117,6 +123,7 @@ public class GUIProfileCreationView : MonoBehaviour
         }
         if (_currentHatNumber < _hatAmount - 1)
         {
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
             _currentHatNumber++;
             _ = UpdateHat();
         }
@@ -130,6 +137,7 @@ public class GUIProfileCreationView : MonoBehaviour
         }
         if (_currentHatNumber > 0)
         {
+            SoundManager.UIInstance.PlayGlobalSFX(_switchSound);
             _currentHatNumber--;
             _ = UpdateHat();
         }

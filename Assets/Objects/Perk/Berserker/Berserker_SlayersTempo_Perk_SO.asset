@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Berserker_SlayersTempo_Perk_SO
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   ID: Base_Berserker_SlayersTempo
-  Stat: 3
+  Stat: 4
   Value: 0.1
+  IsPercent: 1
   Functional: 0
   Name: Slayer's Tempo
   Description: 
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
+  EidosCost: 2
+  AtlasIcon: 2
+  CustomIcon: {fileID: 0}

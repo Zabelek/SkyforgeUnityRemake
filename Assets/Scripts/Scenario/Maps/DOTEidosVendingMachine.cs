@@ -15,7 +15,7 @@ public class DOTEidosVendingMachine : MonoBehaviour, IPlayerInteractable
     {
         if(SkyforgeLoader.CurrentProfile != null)
         {
-            if(SkyforgeLoader.CurrentProfile.GameplayResources.Credits >5)
+            if(SkyforgeLoader.CurrentProfile.GameplayResources.Credits >= 5)
             {
                 SkyforgeLoader.CurrentProfile.GameplayResources.Credits -= 5;
                 SkyforgeLoader.CurrentProfile.GameplayResources.AelionEidoses += 1;

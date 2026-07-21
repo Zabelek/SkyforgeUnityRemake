@@ -528,6 +528,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408680462}
   m_CullTransparentMesh: 1
+--- !u!1 &748394162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 748394164}
+  - component: {fileID: 748394163}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &748394163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748394162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80b1ccb56ff8dc4f99768b9d7a7838a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  PoolSize: 10
+  _sfxGroup: {fileID: 2629667319204713942, guid: 17fced88dad68a041b772c89df12e0bb, type: 2}
+  _voiceGroup: {fileID: 3744768210166784905, guid: 17fced88dad68a041b772c89df12e0bb, type: 2}
+  _musicGroup: {fileID: 1597284664548302416, guid: 17fced88dad68a041b772c89df12e0bb, type: 2}
+--- !u!4 &748394164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748394162}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 557.59814, y: -1490.7876, z: -2.89458}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1025448065
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _group: {fileID: 1139757857}
+  CustomFadeTime: 0
 --- !u!225 &1139757857
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1732,3 +1781,4 @@ SceneRoots:
   - {fileID: 1570228640}
   - {fileID: 1153965323}
   - {fileID: 1303588455}
+  - {fileID: 748394164}
