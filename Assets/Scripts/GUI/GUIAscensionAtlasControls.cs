@@ -8,12 +8,19 @@ public class GUIAscensionAtlasControls : MonoBehaviour
 {
     private enum DisplayAtlasState { None, Character, Class }
     #region Variables
+    [Tooltip("Object in the scene that contains all atlases")]
     [SerializeField] private AscensionAtlasScene _atlasScene;
+    [Tooltip("Buttons in the bottom-left side of the screen that switch between atlasts")]
     [SerializeField] private Button _characterAtlasButton, _classAtlasButton;
+    [Tooltip("The same that is references in the game menu")]
     [SerializeField] private GUISceneBlackFade _blackFade;
+    [Tooltip("Text box with the name of the current class")]
     [SerializeField] private TextMeshProUGUI _classButtonText;
+    [Tooltip("Image with the icon of the current class")]
     [SerializeField] private Image _classButtonImage;
+    //set so that the view can switch for just one atlas at a time, preventing multi-clicks
     private bool _isSwitching;
+    //telling what atlas is now displayed
     private DisplayAtlasState _displayAtlasState;
     #endregion
 
@@ -24,6 +31,9 @@ public class GUIAscensionAtlasControls : MonoBehaviour
         _characterAtlasButton.onClick.AddListener(SwitchToCharacterAtlas);
         _classAtlasButton.onClick.AddListener(SwitchToClassAtlas);
     }
+    #endregion
+
+    #region Methods
     public void SwitchToClassAtlas()
     {
         if(!_isSwitching && _displayAtlasState != DisplayAtlasState.Class)

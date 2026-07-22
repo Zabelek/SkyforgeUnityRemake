@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Dione Tank
   Category: {fileID: 11400000, guid: e64d242872eb93b42bd28377a443bba4, type: 2}
   CCResistant: 1
-  MaxHealth: 240
+  MaxHealth: 1920
   MaxMana: 0
   MovementSpeed: 4
   AttackSpeed: 1

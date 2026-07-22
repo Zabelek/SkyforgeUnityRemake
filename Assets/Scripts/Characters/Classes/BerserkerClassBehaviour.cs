@@ -9,6 +9,7 @@ public class BerserkerClassBehaviour : HeroClassBehaviour
     [Tooltip("Reference of Thrill of Victory to add to the player if they have a proper perk enabled")]
     [SerializeField] private GameplayEffectBehaviour _thrillOfVictoryEffect;
     #endregion
+
     #region Mono
     protected override void Awake()
     {
@@ -114,19 +115,32 @@ public class BerserkerClassBehaviour : HeroClassBehaviour
     }
     protected override void Hero_OnPerkChange(object sender, HeroBehaviour.PerkChangeEventArgs e)
     {
+        if(e?.PerkSO.ID == "Base_Berserker_ThrillOfVictory")
+        {
+            if (e.Enabled == true)
+            {
+                if (_thrillOfVictoryEffect != null && !_hero.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Thrill of Victory Cast"))
+                    _hero.AddEffect(_thrillOfVictoryEffect);
+            }
+            else
+            {
+                if (_thrillOfVictoryEffect != null && _hero.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Thrill of Victory Cast"))
+                    _hero.RemoveEffect(_thrillOfVictoryEffect);
+            }
+        }
     }
     public override void ManageAddedPerk(PerkSO perk)
     {
         if (perk.ID == "Base_Berserker_CripplingBlow")
-            UnlockAbilityFromPerk("Base_Berserker_CripplingBlow", "Crippling Blow");
+            UnlockAbilityFromPerk(perk.ID, "Crippling Blow");
         if (perk.ID == "Base_Berserker_TectonicBlast")
-            UnlockAbilityFromPerk("Base_Berserker_TectonicBlast", "Tectonic Blast");
+            UnlockAbilityFromPerk(perk.ID, "Tectonic Blast");
         if (perk.ID == "Base_Berserker_ThirstFforBattle")
-            UnlockAbilityFromPerk("Base_Berserker_ThirstFforBattle", "Thirst for Battle");
+            UnlockAbilityFromPerk(perk.ID, "Thirst for Battle");
         if (perk.ID == "Base_Berserker_ThunderingRoar")
-            UnlockAbilityFromPerk("Base_Berserker_ThunderingRoar", "Thundering Roar");
+            UnlockAbilityFromPerk(perk.ID, "Thundering Roar");
         if (perk.ID == "Base_Berserker_Gladiator")
-            UnlockAbilityFromPerk("Base_Berserker_Gladiator", "Gladiator");
+            UnlockAbilityFromPerk(perk.ID, "Gladiator");
         if(perk.ID == "Base_Berserker_Firestorm")
         {
             if (_hero.GetPerk("Base_Berserker_Firestorm")?.Enabled == true)

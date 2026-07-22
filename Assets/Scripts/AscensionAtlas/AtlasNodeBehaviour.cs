@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using static UserProfile;
 
 public class AtlasNodeBehaviour : MonoBehaviour
 {
     public const float DOUBLE_CLICK_TIME = 0.3f;
+    public static Color ACTIVE_COLOR = new Color(1, 0.988f, 0.694f, 1);
+    public static Color INACTIVE_COLOR = new Color(0.792f, 0.792f, 0.792f, 1);
 
     #region Variables
     public EventHandler OnActivation;
@@ -27,9 +28,9 @@ public class AtlasNodeBehaviour : MonoBehaviour
     {
         if(PerkSO != null)
         {
-            if(PerkSO.CustomIcon != null)
+            if(PerkSO.CustomAtlasIcon != null)
             {
-                _regularSprite = PerkSO.CustomIcon;
+                _regularSprite = PerkSO.CustomAtlasIcon;
             }
             else if (PerkSO.AtlasIcon == PerkSO.AtlasIconType.Ball)
             {
@@ -71,6 +72,7 @@ public class AtlasNodeBehaviour : MonoBehaviour
     #region Methods
     private void SetDisplayIconSprite()
     {
+        //Sprite Renderers have different sizes based on the image resolution. It needs to be rescaled to stay in bounds of the node
         Quaternion oldRotation = _displayIcon.transform.rotation;
         _displayIcon.transform.rotation = Quaternion.Euler(0, 0, 0);
         Vector3 oldSize = _displayIcon.bounds.size;
@@ -86,8 +88,8 @@ public class AtlasNodeBehaviour : MonoBehaviour
         if(active)
         {
             IsActive = true;
-            if (PerkSO.CustomIcon != null)
-                _displayIcon.color = new Color(1, 0.988f, 0.694f, 1);
+            if (PerkSO.CustomAtlasIcon != null)
+                _displayIcon.color = ACTIVE_COLOR;
             else
                 _displayIcon.sprite = _activatedSprite;
             if (_activeBorderIcon != null)
@@ -98,8 +100,8 @@ public class AtlasNodeBehaviour : MonoBehaviour
         else
         {
             IsActive = false;
-            if (PerkSO.CustomIcon != null)
-                _displayIcon.color = new Color(0.792f, 0.792f, 0.792f, 1);
+            if (PerkSO.CustomAtlasIcon != null)
+                _displayIcon.color = INACTIVE_COLOR;
             else
                 _displayIcon.sprite = _regularSprite;
             if (_activeBorderIcon != null)
@@ -149,7 +151,7 @@ public class AtlasNodeBehaviour : MonoBehaviour
             {
                 var effect = Instantiate(_unlockEffectBase, _atlas.transform);
                 effect.transform.position = this.transform.position;
-                var perkState = new PerkState() { PerkID = PerkSO.ID, Enabled = true };
+                var perkState = new UserProfile.PerkState() { PerkID = PerkSO.ID, Enabled = true };
                 SoundManager.UIInstance.PlayGlobalSFX(_unlockSound);
                 SkyforgeLoader.CurrentProfile.AcquiredPerks.Add(perkState);
                 SkyforgeLoader.CurrentProfile.GameplayResources.AelionEidoses -= PerkSO.EidosCost;

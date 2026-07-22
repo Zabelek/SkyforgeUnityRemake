@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class GUIResourceChangeWidget : MonoBehaviour
 {
-
     #region Variables
     public EventHandler OnDestroyed;
     [SerializeField] private Image _addIndicationImage, _resourceIconImage;
-    [SerializeField] private TextMeshProUGUI _amoundTextBox;
+    [SerializeField] private TextMeshProUGUI _amountTextBox;
     private float _initAnimationTimer, _upAnimationTimer, _fadeOutTimer, _currentLifetime;
     private Vector3 _defaultPos, _initialPos, _upPosePrevious, _upPoseTarget;
     private short _upPosition;
     private CanvasGroup _canvasGroup;
+    [Tooltip("Vectors by which this tooltip is moved on init or on going up")]
     [SerializeField] private Vector3 _initialAnimationTransform, _goUpAnimationTransform;
     [SerializeField] private bool _fadeInOnInit;
     [SerializeField] private float _targetAlphaValue, _maxLifetime, _animationTimer;
@@ -101,13 +101,13 @@ public class GUIResourceChangeWidget : MonoBehaviour
         {
             if(_addIndicationImage != null)
                 _addIndicationImage.color = Color.greenYellow;
-            _amoundTextBox.text = "+" + value;
+            _amountTextBox.text = "+" + value;
         }
         else
         {
             if (_addIndicationImage != null)
                 _addIndicationImage.color = Color.red;
-            _amoundTextBox.text = value.ToString();
+            _amountTextBox.text = value.ToString();
         }
     }
     #endregion

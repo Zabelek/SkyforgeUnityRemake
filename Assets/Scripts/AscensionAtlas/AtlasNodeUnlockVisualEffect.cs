@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AtlasNodeUnlockVisualEffect : MonoBehaviour
 {
+    //this class should be forbidden by the Geneva Convention
     #region Variables
     [SerializeField] private SpriteRenderer _effect1Sprite, _effect2Sprite, _effect3Sprite, _effect4Sprite;
     [SerializeField] private ParticleSystem _particles;
@@ -24,6 +25,7 @@ public class AtlasNodeUnlockVisualEffect : MonoBehaviour
     }
     private void Update()
     {
+        //Absolutely glorious animation code because I didn't want to create another state machine lol
         _timer += Time.deltaTime;
         //Effect1
         if (_timer < _effect1StartFadeOutTime)

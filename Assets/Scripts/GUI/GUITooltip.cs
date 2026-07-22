@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GUITooltip : MonoBehaviour
@@ -16,11 +14,8 @@ public class GUITooltip : MonoBehaviour
     [SerializeField] Transform _costPanel, _costLayout, _costOpsitionTemplate;
     private float _fadeInTimer, _waitUntilAppearTimer;
     private CanvasGroup _group;
-
     [SerializeField] private RectTransform _tooltip;
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private Vector2 _offset = new Vector2(10f, 10f);
-    private RectTransform _canvasRect;
     #endregion
 
     #region Mono
@@ -38,8 +33,7 @@ public class GUITooltip : MonoBehaviour
     }
     private void Update()
     {
-        //Vector2 mouse = Mouse.current.position.ReadValue();
-        //this.transform.position = mouse;
+        //waiting 0.1 seconds after canvas init to avoid display bugs
         if (_waitUntilAppearTimer>0)
         {
             _waitUntilAppearTimer -= Time.deltaTime;
@@ -57,17 +51,13 @@ public class GUITooltip : MonoBehaviour
     private void LateUpdate()
     {
         PositionTooltip();
-    }
-
-    
+    } 
     #endregion
 
     #region Methods
     public void SetTitle(string title)
     {
         _titleText.text = title;
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(this.transform as RectTransform);
-        //Canvas.ForceUpdateCanvases();
     }
     public void SetDescription(string description)
     {
@@ -77,7 +67,7 @@ public class GUITooltip : MonoBehaviour
     }
     private IEnumerator RebuildLayout()
     {
-        //For reasons unknown to me, this must be done to rebuild the layout, as it goes bonkers every time a text ius set.It works in the editor, but doesn't work at runtime. No idea why.
+        //For reasons unknown to me, this must be done to rebuild the layout, as it goes bonkers every time a text is set. It works in the editor, but doesn't work at runtime. No idea why.
         //This function may change when a better solution is discovered.
         yield return new WaitForSeconds(0.05f);
         GetComponent<VerticalLayoutGroup>().reverseArrangement = false;
@@ -89,7 +79,6 @@ public class GUITooltip : MonoBehaviour
     public void SetCanvas(Canvas canvas)
     {
         _canvas = canvas;
-        _canvasRect = _canvas.GetComponent<RectTransform>();
     }
     public void AddCost(Sprite costIcon, int costAmount)
     {
@@ -124,8 +113,5 @@ public class GUITooltip : MonoBehaviour
             leftOffset += size.x;
         _tooltip.anchoredPosition = new Vector2(defaultPosition.x + leftOffset, defaultPosition.y + topOffset);
     }
-    #endregion
-
-    #region EventHandlers
     #endregion
 }

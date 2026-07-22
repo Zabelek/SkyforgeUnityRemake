@@ -9,6 +9,7 @@ public class AtlasNodeConnectionBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer _startSprite;
     [SerializeField] private SpriteRenderer _centerSprite;
     [SerializeField] private SpriteRenderer _endSprite;
+    //need to properly rescale the connection's sprites
     private float _startWidth, _endWidth, _centerWidth;
     [SerializeField] private Sprite _regularStart, _regularCentr, _activeStart, _activeCenter;
     #endregion
@@ -29,6 +30,7 @@ public class AtlasNodeConnectionBehaviour : MonoBehaviour
     #region Methods
     public void DetermineConnectionBounds()
     {
+        //Scale, place and rotate all connections' sprites. If you want to reuse this code, be aware that the Y is flipped with Z here
         _startWidth = _startSprite.GetComponent<SpriteRenderer>().bounds.size.x;
         _endWidth = _endSprite.GetComponent<SpriteRenderer>().bounds.size.x;
         _centerWidth = _centerSprite.GetComponent<SpriteRenderer>().bounds.size.z;
@@ -65,13 +67,20 @@ public class AtlasNodeConnectionBehaviour : MonoBehaviour
     }
     public void SetNodes(AtlasNodeBehaviour parent, AtlasNodeBehaviour child)
     {
+        //In case the connection already had different nodes. it should never be the case, but wonders happen when your PC hates you
+        if(ParentNode != null)
+            ParentNode.OnActivation -= CheckActivation;
+        if (ChildNode != null)
+            ChildNode.OnActivation -= CheckActivation;
         ParentNode = parent;
         ChildNode = child;
         ParentNode.OnActivation += CheckActivation;
         ChildNode.OnActivation += CheckActivation;
         DetermineConnectionBounds();
     }
+    #endregion
 
+    #region EventHandlers
     private void CheckActivation(object sender, EventArgs e)
     {
         SetActivated(ParentNode.IsActive && ChildNode.IsActive);

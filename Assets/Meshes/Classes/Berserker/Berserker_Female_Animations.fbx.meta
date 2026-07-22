@@ -1253,7 +1253,7 @@ ModelImporter:
       takeName: Player_Rig|Menu_Idle
       internalID: 8948315461549793033
       firstFrame: 0
-      lastFrame: 355
+      lastFrame: 365
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1281,8 +1281,8 @@ ModelImporter:
       name: Player_Rig|Menu_Idle
       takeName: Player_Rig|Menu_Idle
       internalID: -8565239012765399638
-      firstFrame: 355
-      lastFrame: 555
+      firstFrame: 365
+      lastFrame: 565
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

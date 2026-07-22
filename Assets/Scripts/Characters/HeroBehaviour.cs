@@ -168,6 +168,7 @@ public class HeroBehaviour : CharacterBehaviour
                 Stats.ModifyAccordingToPerk(perk.Perk, -1);
             }
         }
+        OnPerkChange?.Invoke(this, new PerkChangeEventArgs { PerkSO = perk.Perk, Enabled = perk.Enabled });
     }
     protected virtual void ManagePerkRemoval(LockablePerk perk)
     {
@@ -183,6 +184,7 @@ public class HeroBehaviour : CharacterBehaviour
                 Stats.ModifyAccordingToPerk(perk.Perk, -1);
             }
         }
+        OnPerkChange?.Invoke(this, new PerkChangeEventArgs { PerkSO = perk.Perk, Enabled = false });
     }
     public override int GetEffectiveDamage()
     {

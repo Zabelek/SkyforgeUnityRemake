@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 {
     #region Variables
     private static SoundManager _uiInstance;
+    //for the simple scenes that don't have Globals component
     public static SoundManager UIInstance
     {
         get

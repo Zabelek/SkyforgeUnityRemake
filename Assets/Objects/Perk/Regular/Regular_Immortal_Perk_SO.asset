@@ -23,4 +23,5 @@ MonoBehaviour:
   HeroClass: {fileID: 0}
   EidosCost: 0
   AtlasIcon: 0
-  CustomIcon: {fileID: 21300000, guid: 18c9fdc4bb7f838458e4fd92263223ab, type: 3}
+  CustomAtlasIcon: {fileID: 21300000, guid: 18c9fdc4bb7f838458e4fd92263223ab, type: 3}
+  SymbolIcon: {fileID: 0}

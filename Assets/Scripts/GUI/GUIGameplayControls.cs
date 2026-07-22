@@ -20,14 +20,6 @@ public class GUIGameplayControls : MonoBehaviour
     [Tooltip("Player Input Behaviour should be a child of System object on the scene")]
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
     [Header("Effects and Stat Bars")]
-    [Tooltip("Text Box on the left inside an HP Box")]
-    [SerializeField] private TextMeshProUGUI _hpAmountText;
-    [Tooltip("Text Box on the right inside an HP Box")]
-    [SerializeField] private TextMeshProUGUI _hpPercentText;
-    [Tooltip("Text Box on the left inside a Mana Box")]
-    [SerializeField] private TextMeshProUGUI _manaAmountText;
-    [Tooltip("Text Box on the right inside a Mana Box")]
-    [SerializeField] private TextMeshProUGUI _manaPercentText;
     [Tooltip("The whole HP bar (parent of the other components)")]
     [SerializeField] private StatBarBehaviour _hpBar;
     [Tooltip("The whole Mana bar (parent of the other components)")]
@@ -130,7 +122,6 @@ public class GUIGameplayControls : MonoBehaviour
         }
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _player.OnPerkChange += PerksChanged;
         _playerEffects.SetCharacter(_player);
         if(_volume != null)
         {
@@ -336,7 +327,7 @@ public class GUIGameplayControls : MonoBehaviour
     }
     private void UpdatePlayerStatus()
     {
-        if (_player.Stats.CurrentHP > 0)
+        if (!_player.IsDead)
         {
             if (_hpBar.gameObject.activeSelf == false)
                 _hpBar.gameObject.SetActive(true);
@@ -508,10 +499,6 @@ public class GUIGameplayControls : MonoBehaviour
     #endregion
 
     #region EventHandlers
-    private void PerksChanged(object sender, EventArgs e)
-    {
-        
-    }
     private void MenuOpenClose(object sender, EventArgs e)
     {
         if (gameObject.activeSelf && !Globals.Instance.IsCutscenePlaying && _menuOpenDelay<=0)

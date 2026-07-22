@@ -239,6 +239,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (Globals.Instance.IsCutscenePlaying == false || cutsceneOverride)
         {
             LastDamage = damage;
+            //For now, only defense and vampirism calculation
             HandleDamageEffects(damage);
             _LastDamageExpireTimer = 3f;
             _effectManager.OnDamageTaken(damage);
@@ -272,21 +273,21 @@ public class CharacterBehaviour : MonoBehaviour
             }
         }
     }
-
     private void HandleDamageEffects(Damage damage)
     {
         if (Stats.Defense > 0)
         {
-            damage.Amount = damage.Amount - (int)(damage.Amount * Stats.Defense);
+            float blockedDamage = damage.Amount * Stats.Defense;
+            damage.Amount -= (int)(blockedDamage);
             if (damage.Amount <= 1)
                 damage.Amount = 1;
         }
         if (damage.Source.Stats.Vampirism > 0)
         {
-            damage.Source.Heal((int)(damage.Source.Stats.Vampirism * damage.Amount), false);
+            float vampValue = damage.Source.Stats.Vampirism * damage.Amount;
+            damage.Source.Heal((int)(vampValue), false);
         }
     }
-
     public virtual void TakeEmptyDamage()
     {
 
@@ -376,7 +377,7 @@ public class CharacterBehaviour : MonoBehaviour
                     || effect.EffectSO.Types.Contains(EffectSO.EffectType.Slow) || effect.EffectSO.Types.Contains(EffectSO.EffectType.Stun);
             if(movementNerf && Stats.Stability > 0)
             {
-                effect.TimeLeft = effect.TimeLeft - effect.TimeLeft * Stats.Stability;
+                effect.TimeLeft -= effect.TimeLeft * Stats.Stability;
                 if (effect.TimeLeft < 0)
                     effect.TimeLeft = 0.1f;
             }

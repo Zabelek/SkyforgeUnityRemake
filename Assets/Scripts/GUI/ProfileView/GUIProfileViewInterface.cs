@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,8 +6,6 @@ using UnityEngine.UI;
 
 public class GUIProfileViewInterface : MonoBehaviour
 {
-    private const float REGULAR_FADE_TIME = 1;
-
     #region Variables
     [SerializeField] private GUIProfileCreationView _creationView;
     [SerializeField] private GUIProfilePickView _pickView;

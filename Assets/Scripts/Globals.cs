@@ -5,10 +5,6 @@ public class Globals : MonoBehaviour
 {
     #region Variables
     public static Globals Instance;
-    [Tooltip("Basically all perks that would appear in the game have to be added here")]
-    public PerkSO[] RegisteredPerks;
-    [Tooltip("Perk Sets are groups of perks in which only one can be picked at the time, for example, Terra perks")]
-    public PerkSetSO[] RegisteredPerkSets;
     [Tooltip("Sound effect used commonly across many scripts can be added here, for easy access")]
     public SoundEffectSO[] CommonSoundEffects;
     [Tooltip("Script responsible of managing all the sounds in the game")]

@@ -8,10 +8,13 @@ public class GUIGameMenuResourcesPanel : MonoBehaviour
     #region Variables
     [SerializeField] private TextMeshProUGUI _creditsTextBox;
     [SerializeField] private TextMeshProUGUI _aelionEidosesTextBox;
+    [Tooltip("Parent transform of each notification, to determine their initial position on the screen")]
     [SerializeField] private Transform _creditsNotificationPosition, _aelionEidosNotificationPosition;
+    [Tooltip("Base prefab to spawn notifications")]
     [SerializeField] private GUIResourceChangeWidget _widgetBase;
     [SerializeField] private Sprite _iconAelionEidos, _iconCredits;
     private GUIResourceChangeWidget _currentCreditsWidget, _currentAelionEidosWidget;
+    //needed to set text of numbers properly, with spaces between 000s
     private CultureInfo _cultureInfo;
     #endregion
 
@@ -51,6 +54,7 @@ public class GUIGameMenuResourcesPanel : MonoBehaviour
             if (e.ResourceType == GameplayResources.ResourceType.Credits)
             {
                 _creditsTextBox.text = SkyforgeLoader.CurrentProfile.GameplayResources.Credits.ToString();
+                //the old current widget reference can be easily overwritten, as the game menu still listens to its destruction, which will happen after fading out
                 if (_currentCreditsWidget != null)
                     _currentCreditsWidget.FadeOut();
                 _currentCreditsWidget = Instantiate(_widgetBase, _creditsNotificationPosition);

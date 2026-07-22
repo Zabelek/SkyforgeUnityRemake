@@ -27,12 +27,12 @@ public class PlayerBehaviour : HeroBehaviour
     //placeholder for companion. To remove once companion system is introduced
     public int companionDamage = 5;
     public event EventHandler OnCompanionAttack;
-    public float CompanionCharge;
-    public float CompanionChargeMax;
+    public float CompanionCharge { get; set; }
+    public float CompanionChargeMax { get; private set; }
     //dash
     public event EventHandler OnDash;
-    public float DashCharge;
-    public float DashChargeMax;
+    public float DashCharge { get; set; }
+    public float DashChargeMax { get; private set; }
     public Vector3 LastMovementDirection;
     public float LastMovementDirectionExpire;
     public event EventHandler OnFinisher;
@@ -65,14 +65,10 @@ public class PlayerBehaviour : HeroBehaviour
         }
         _emoteInterrupted = false;
         _emoteDelayTimer = 0;
-        //SyncPerks(false);
-        //ChangeClass(GetHeroClass());
     }
     protected override void Start()
     {
         base.Start();
-        //_outfitManager.EquipOutfit(_armor.GetComponent<OutfitBehaviour>());
-        //_outfitManager.EquipOutfit(_hood.GetComponent<OutfitBehaviour>());
         ChangeClass(GetHeroClass());
     }
     protected override void FixedUpdate()
@@ -435,7 +431,9 @@ public class PlayerBehaviour : HeroBehaviour
             if (!addOnly)
             {
                 Stats.Reset(CharacterSO);
-                AddRegisteredPerkSets();
+                //these two are player only, so they're not in the casual Stats class. They need to be zeroed here
+                DashChargeMax = BASE_DASH_CHARGE_MAX;
+                CompanionChargeMax = BASE_COMPANION_CHARGE_MAX;
                 _perks.Clear();
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
@@ -450,6 +448,7 @@ public class PlayerBehaviour : HeroBehaviour
             }
             else
             {
+                //addOnly prevents from resetting everything and doing redundant iterations on perks that weren't changed
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
                     var perkSO = SkyforgeLoader.PerkRegistry.Perks.FirstOrDefault(p => p.ID == perkState.PerkID);
@@ -470,22 +469,6 @@ public class PlayerBehaviour : HeroBehaviour
                                 DisablePerk(perkSO);
                         }
                     }
-                }
-            }
-        }
-    }
-    protected override void AddRegisteredPerkSets()
-    {
-        if (SkyforgeLoader.PerkRegistry != null && SkyforgeLoader.CurrentProfile != null)
-        {
-            _perkSets.Clear();
-            foreach (var perkSetSO in SkyforgeLoader.PerkRegistry.PerkSets)
-            {
-                if(perkSetSO.HeroClassSO == null || perkSetSO.HeroClassSO == GetHeroClass().HeroClassSO)
-                {
-                    var perkSet = new ChoosablePerkSet(perkSetSO);
-                    perkSet.ClearPerks();
-                    _perkSets.Add(perkSet);
                 }
             }
         }

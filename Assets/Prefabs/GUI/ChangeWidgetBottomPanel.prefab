@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GUIResourceChangeWidget
   _addIndicationImage: {fileID: 0}
   _resourceIconImage: {fileID: 157320235688077503}
-  _amoundTextBox: {fileID: 6600300093414585763}
+  _amountTextBox: {fileID: 6600300093414585763}
   _initialAnimationTransform: {x: 0, y: -52, z: 0}
   _goUpAnimationTransform: {x: 0, y: 0, z: 0}
   _fadeInOnInit: 1

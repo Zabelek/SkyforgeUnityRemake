@@ -28,7 +28,12 @@ public class PerkSO : ScriptableObject
     [Tooltip("If the perks applies to a specific class, it'll be active only when the player has this class picked")]
     public HeroClassSO HeroClass;
     [Header("AscensionAtlas")]
+    [Tooltip("For now just Aeliok Eidoses, in the future, many kinds will be available.")]
     public short EidosCost;
     public AtlasIconType AtlasIcon;
-    public Sprite CustomIcon;
+    [Tooltip("Instead of one of the basic icons available to kich as an atlas icon, this perk will display a custom icon.")]
+    public Sprite CustomAtlasIcon;
+    [Header("GUI")]
+    [Tooltip("If the perk unlocks a symbol that can be picked from the Abilities menu")]
+    public Sprite SymbolIcon;
 }

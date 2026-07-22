@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class CharacterStats
 {
@@ -22,11 +23,11 @@ public class CharacterStats
     //max bonus value that the character can inflict. Every hit, the character inflicts a random damage betwen Base damage and Base damage + Max damage;
     public int MaxDamage { get; set; }
     public int CombatManaRegen { get; set; }
-    //healing percent of the character each time they deal damage. 100 vampirism meant that they will heal by 100% of dealt damage
+    //healing percent of the character each time they deal damage. 1 vampirism means that they will heal by 100% of dealt damage
     public float Vampirism { get; set; }
     //Percent damage reduction of the character
     public float Defense { get; set; }
-    //percent negative effect reduction of the character
+    //percent negative effect duration reduction of the character
     public float Stability { get; set; }
     #endregion
 
@@ -40,6 +41,10 @@ public class CharacterStats
         CriticalChance = baseSO.CriticalChance;
         BaseDamage = baseSO.BaseDamage;
         CombatManaRegen = baseSO.CombatManaRegen;
+        MaxDamage = baseSO.MaxDamage;
+        Defense = baseSO.Defense;
+        Vampirism = baseSO.Vampirism;
+        Stability = baseSO.Stability;
         if (CurrentHP > MaxHP)
             CurrentHP = MaxHP;
         if (CurrentMana > MaxMana)
@@ -90,12 +95,15 @@ public class CharacterStats
     {
         if(SkyforgeLoader.CurrentProfile!=null)
         {
-            MaxHP = (int)(MaxHP * SkyforgeLoader.CurrentProfile.Difficulty.EnemyHPMod);
-            BaseDamage = (int)(BaseDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod);
+            float valueHP = MaxHP * SkyforgeLoader.CurrentProfile.Difficulty.EnemyHPMod;
+            MaxHP = (int)(valueHP);
+            float valueDamage = BaseDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
+            BaseDamage = (int)(valueDamage);
             if (BaseDamage == 0)
                 BaseDamage = 1;
             var initiammaxDamage = MaxDamage;
-            MaxDamage = (int)(MaxDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod);
+            float valueMaxDamage = MaxDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
+            MaxDamage = (int)(valueMaxDamage);
             if (MaxDamage == 0 && initiammaxDamage != 0)
                 MaxDamage = 1;
             if (CurrentHP != MaxHP)

@@ -39,7 +39,7 @@ public class GUIProfilePickView : MonoBehaviour
     #endregion
 
     #region Methods
-    public async Task SetProfile(UserProfile userProfile, bool animateRigfhtAway)
+    public async Task SetProfile(UserProfile userProfile, bool animateRig)
     {
         _nameTextBox.text = userProfile.Name;
         _difficultyTextBox.text = userProfile.Difficulty.Name;
@@ -47,7 +47,7 @@ public class GUIProfilePickView : MonoBehaviour
         var task1 = _profileView.OutfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Body);
         var task2 = _profileView.OutfitManager.EquipOutfit(userProfile.HatNumber, OutfitSO.OutfitSlot.Head);
         await Task.WhenAll(task1, task2);
-        if (animateRigfhtAway)
+        if (animateRig)
         {
             _profileView.PlayerVisualization.PlayAnimation("MenuStart", true);
             _profileView.PlayerVisualization.ResetAnimation();

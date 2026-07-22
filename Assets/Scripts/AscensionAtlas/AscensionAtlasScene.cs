@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AscensionAtlasScene : MonoBehaviour
@@ -9,6 +7,7 @@ public class AscensionAtlasScene : MonoBehaviour
     #region Variables
     private List<AscensionAtlasBehaviour> _atlases;
     private AscensionAtlasBehaviour _currentlyDisplayedAtlas;
+    [Tooltip("Cinemachine brain that will move the cametra in the AtlasView. It's of type SimpleStayInsideCollider not to cross the bounds of the atlas.")]
     [SerializeField] private SimpleStayInsideCollider _cinemachineTarget; 
     #endregion
 
@@ -19,6 +18,7 @@ public class AscensionAtlasScene : MonoBehaviour
         foreach (var atlas in GetComponentsInChildren<AscensionAtlasBehaviour>())
         {
             _atlases.Add(atlas);
+            atlas.gameObject.SetActive(false);
         }
     }
     #endregion
@@ -28,13 +28,13 @@ public class AscensionAtlasScene : MonoBehaviour
     {
         _currentlyDisplayedAtlas.UpdateUnlockedNodes();
     }
-
     public void ShowCharacterAtlas()
     {
         foreach(var atlasToDisable in _atlases)
         {
             atlasToDisable.gameObject.SetActive(false);
         }
+        //Only the character atlast should have this field = null
         var atlas = _atlases.FirstOrDefault(a => a.HeroClassSO == null);
         ShowAtlas(atlas);
     }

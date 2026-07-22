@@ -15,12 +15,14 @@ MonoBehaviour:
   ID: Base_Berserker_RageIncarnate
   Stat: 0
   Value: 0
+  IsPercent: 0
   Functional: 1
   Name: Rage Incarnate
   Description: The less Rage the Berserker has at the moment of transformation into
     a Gladiator, the more damage they will deal in that form (the maximum bonus is
     150% of damage). Every Gladiator Strike retores 50 points of Rage.
   HeroClass: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
-  EscapeCooldown: 0
   EidosCost: 15
   AtlasIcon: 2
+  CustomAtlasIcon: {fileID: 0}
+  SymbolIcon: {fileID: 21300000, guid: e598c22aec8b9704f922dd14c16725d8, type: 3}

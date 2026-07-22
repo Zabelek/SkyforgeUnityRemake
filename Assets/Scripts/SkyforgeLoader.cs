@@ -11,6 +11,7 @@ public static class SkyforgeLoader
     #region Variables
     private static string _targetSceneName;
     public static UserProfile CurrentProfile;
+    //Used when the full access to all [you name it] available in the game is needed
     public static OutfitRegistry OutfitRegistry;
     public static PerkRegistry PerkRegistry;
     public static ClassRegistry ClassRegistry;
@@ -165,6 +166,7 @@ public static class SkyforgeLoader
                     }
                 }
             }
+            PerksChanged = true;
         }
     }
     #endregion

@@ -8,29 +8,35 @@ public class AscensionAtlasBehaviour : MonoBehaviour
 {
     #region Variables
     public HeroClassSO HeroClassSO;
+    [Header("Sprites")]
+    [SerializeField] private Sprite _aelionEidosSprite;
     public Sprite IconBoxSprite, IconCrossSprite, IconBallSprite;
     public Sprite IconBoxSpriteSelected, IconCrossSpriteSelected, IconBallSpriteSelected;
-    [SerializeField] private Sprite _aelionEidosSprite;
     public AtlasNodeSelection NodeSelectionSprite;
     private List<AtlasNodeBehaviour> _currentlyDisplayedNodes;
     private AtlasNodeBehaviour _previouslyHoveredNode;
+    [Header("Scene")]
     [SerializeField] private Camera _atlasCamera;
     [SerializeField] private Transform _tooltipLayer, _connectionsLayer;
-    private float _untilTooltipDisplaytimer;
-    [SerializeField] private GUITooltip _tooltipBase;
-    private GUITooltip _currentTooltip;
     [SerializeField] private Canvas _tooltipCanvas;
-    [SerializeField] private AtlasNodeConnectionBehaviour _connectionBase;
-    private List<AtlasNodeConnectionBehaviour> _currentlyDisplayedConnections;
+    private float _untilTooltipDisplaytimer;
+    [Tooltip("The atlas camera can move only inside this collider. Make sure the collider is not on the Default layer, as it may block mouse collision with nodes")]
     public Collider AtlasBounds;
+    [Tooltip("The point at which the canvas camera will reset. Best is to put it near the start noe of the atlas")]
     public Transform OriginPoint;
+    [Header("Base Prefabs")]
+    [Tooltip("Prefab used to spawn GUI tooltips on node hover")]
+    [SerializeField] private GUITooltip _tooltipBase;
+    [Tooltip("Prefab used to spawn new node connections")]
+    [SerializeField] private AtlasNodeConnectionBehaviour _connectionBase;
+    private GUITooltip _currentTooltip;
+    private List<AtlasNodeConnectionBehaviour> _currentlyDisplayedConnections;
     #endregion
 
     #region Mono
     public void Awake()
     {
         NodeSelectionSprite.gameObject.SetActive(false);
-        //temporary!
         _currentlyDisplayedNodes = GetComponentsInChildren<AtlasNodeBehaviour>().ToList();
         _untilTooltipDisplaytimer = 0;
         _currentlyDisplayedConnections = new();
@@ -102,7 +108,7 @@ public class AscensionAtlasBehaviour : MonoBehaviour
             else if (perk.Stat == PerkSO.StatType.Vampirism)
                 ret += "Vampirism by ";
             if (perk.IsPercent)
-                ret += perk.Value.ToString("0%");
+                ret += (perk.Value*100).ToString("0.#") + "%";
             else
                 ret += perk.Value;
             ret += ".";

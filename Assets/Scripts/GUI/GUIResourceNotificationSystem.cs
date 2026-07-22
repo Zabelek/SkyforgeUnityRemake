@@ -93,7 +93,7 @@ public class GUIResourceNotificationSystem : MonoBehaviour
     }
     private void ResourcesChanged(object sender, GameplayResources.ResourceChangeEventArgs e)
     {
-        //When the player profile is changed, the change itself enter the queue to be displayed on the screen
+        //When the player profile is changed, the change itself enters the queue to be displayed on the screen
         if(!_queuedChanges.Contains(e))
             _queuedChanges.Enqueue(e);
         if (_nextWidgetTimer == 0)
