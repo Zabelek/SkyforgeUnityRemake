@@ -160,6 +160,12 @@ Sound Assets used from Pixabay:
 * Laser Charge by GregorQuendel
 * Explosion by morganpurkis (Freesound)
 * 2 x H2O [Hydrogen 128,70 Hz by Golden Ratio] [Oxygen 288,59 Hz by Gold Means] by the_very_Real_Horst (Freesound)
+* Casting Magic (4) by Yodguard
+* Magic Twinkle by Universfield
+* wind magic (5) by Yodguard
+* UI Sound 73 by juniorsoundays
+* UI Interface Sound 16 by SoundReality
+* Switch by studiomandragore (Freesound)
 
 License: Pixabay Content License
 
