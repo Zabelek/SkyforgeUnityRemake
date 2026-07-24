@@ -151,12 +151,12 @@ public static class SkyforgeLoader
             var perkToEnable = CurrentProfile.AcquiredPerks.FirstOrDefault(p => p.PerkID == perkSO.ID);
             if (perkToEnable != null)
                 perkToEnable.Enabled = true;
-            var perkSet = PerkRegistry.PerkSets.FirstOrDefault(ps => ps.Perks.Contains(perkSO));
+            var perkSet = PerkRegistry.PerkSets.FirstOrDefault(ps => ps.Perks.Any(p => p.ID == perkSO.ID));
             if (perkSet != null)
             {
                 foreach(var otherPerkSO in perkSet.Perks)
                 {
-                    if(otherPerkSO != perkSO)
+                    if(otherPerkSO.ID != perkSO.ID)
                     {
                         var perkToDisable = CurrentProfile.AcquiredPerks.FirstOrDefault(p => p.PerkID == otherPerkSO.ID);
                         if(perkToDisable != null && perkToDisable.Enabled == true)
