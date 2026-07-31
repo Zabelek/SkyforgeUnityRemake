@@ -5,7 +5,7 @@ public class OutfitSO : ScriptableObject
 {
     public enum CoverType
     {
-        Full_Body, Nothing, Full_Head
+        Full_Body, Nothing, Full_Head, Legs_Arms_Breast
     }
     public enum OutfitSlot
     {

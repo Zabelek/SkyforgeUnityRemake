@@ -118,7 +118,8 @@ public class AbilityBehaviour : MonoBehaviour
             performer.SetCanAct(true, true);
             if (performer is HeroBehaviour)
             {
-                ((HeroBehaviour)performer).GetHeroClass().SetBlockingAbility(null);
+                if(((HeroBehaviour)performer).GetHeroClass().GetBlockingAbility() == this)
+                    ((HeroBehaviour)performer).GetHeroClass().SetBlockingAbility(null);
                 if (performer is PlayerBehaviour)
                 {
                     ((PlayerBehaviour)performer).CanDash = true;
@@ -127,7 +128,8 @@ public class AbilityBehaviour : MonoBehaviour
         }
         else if (performer is HeroBehaviour)
         {
-            ((HeroBehaviour)performer).GetHeroClass().SetBlockingAbility(null);
+            if (((HeroBehaviour)performer).GetHeroClass().GetBlockingAbility() == this)
+                ((HeroBehaviour)performer).GetHeroClass().SetBlockingAbility(null);
         }
         AbilityCurrentlyLockingControl = false;
     }

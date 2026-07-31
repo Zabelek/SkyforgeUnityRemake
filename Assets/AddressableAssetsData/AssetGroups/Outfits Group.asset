@@ -44,6 +44,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Hats
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ecde1001cec15e4b8cb221b842dbda3
+    m_Address: Armor_DivinePaladinArmor_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Outfits
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f26460ab7410ac94cb59a9f8151fea6e
     m_Address: Armor_CursedArmor_Prefab
     m_ReadOnly: 0

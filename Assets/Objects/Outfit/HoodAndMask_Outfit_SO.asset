@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066ee97fadef1ff4ba2daae008441a4b, type: 3}
   m_Name: HoodAndMask_Outfit_SO
   m_EditorClassIdentifier: Assembly-CSharp::OutfitSO
-  Covers: 2
+  Covers: 1
   Slot: 1
   Name: Hood and Mask
   Address: Armor_HoodAndMask_Prefab

@@ -56,13 +56,6 @@ public class DOTScenarioManager : ScenarioManager
         else if (Stage == 5)
         {
             _currentCutscene = _cutscenes[1];
-            if (_boss1.IsDead)
-            {
-                Stage = 6;
-                _interface.ShowCharacterMessage(_voicelines[3]);
-                _currentCutscene = _cutscenes[2];
-                StartCoroutine(DelayedCharacterRemoval(_boss1, GUISceneBlackFade.FADE_TIME));
-            }
         }
         else if (Stage == 6)
         {
@@ -122,6 +115,13 @@ public class DOTScenarioManager : ScenarioManager
                 StartCoroutine(DelayedScene5Actions());
                 StartCoroutine(DelayedBackToMenu());
             }
+        }
+        if (_boss1.IsDead && Stage < 6)
+        {
+            Stage = 6;
+            _interface.ShowCharacterMessage(_voicelines[3]);
+            _currentCutscene = _cutscenes[2];
+            StartCoroutine(DelayedCharacterRemoval(_boss1, GUISceneBlackFade.FADE_TIME));
         }
     }
     private IEnumerator DelayedBackToMenu()

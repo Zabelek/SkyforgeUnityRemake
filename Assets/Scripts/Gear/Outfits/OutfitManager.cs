@@ -1,6 +1,8 @@
+using EZhex1991.EZSoftBone;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OutfitManager : MonoBehaviour
@@ -10,10 +12,11 @@ public class OutfitManager : MonoBehaviour
     private Transform _rootBone;
     [SerializeField] private CharacterBehaviour _character;
     [SerializeField] private SkinnedMeshRenderer _fullBodyMesh;
+    [SerializeField] private SkinnedMeshRenderer _noLegsAndHandsMesh;
     [SerializeField] private SkinnedMeshRenderer _onlyHeadAndNeckMesh;
     private List<OutfitBehaviour> _wornOutfits;
-    [SerializeField] private CapsuleCollider[] _legColliders;
     public bool _profileSyncAtStart;
+    private List<CapsuleCollider> _currentClothColliders;
     #endregion
 
     #region Mono
@@ -22,6 +25,7 @@ public class OutfitManager : MonoBehaviour
         //everything here is temporary and will be changed once a proper outfit system is implemented
         if (_wornOutfits == null)
             _wornOutfits = new();
+        _currentClothColliders = new();
         _bones = _fullBodyMesh.bones;
         _rootBone = _fullBodyMesh.rootBone;
         if (_profileSyncAtStart && SkyforgeLoader.CurrentProfile!=null)
@@ -50,6 +54,13 @@ public class OutfitManager : MonoBehaviour
                     RemoveExtraRig(extraRigMesh);
                 }
             }
+            foreach (var outfitMesh in previous.OutfitMeshes)
+            {
+                if (outfitMesh.TryGetComponent<Cloth>(out Cloth cloth))
+                {
+                    RemoveExtraCollider(cloth);
+                }
+            }
         }
         Transform[] tempBones = null;
         foreach (var outfitMesh in newMesh.OutfitMeshes)
@@ -59,21 +70,17 @@ public class OutfitManager : MonoBehaviour
             outfitMesh.rootBone = _rootBone;
             if (outfitMesh.TryGetComponent<Cloth>(out Cloth cloth))
             {
-                try
-                {
-                    var capsules = new CapsuleCollider[4];
-                    capsules[0] = _legColliders[0];
-                    capsules[1] = _legColliders[1];
-                    capsules[2] = _legColliders[2];
-                    capsules[3] = _legColliders[3];
-                    cloth.capsuleColliders = capsules;
-                }
-                catch { }
+                AddExtraCollider(cloth);
             }
         }
         if (newMesh.TryGetComponent<ExtraRigMesh>(out ExtraRigMesh rigMesh))
         {
             AddExtraRig(rigMesh, tempBones);
+        }
+        var rigToDestroy = newMesh.transform.GetComponentsInChildren<Transform>().FirstOrDefault(c => c.name.Contains("_Rig"));
+        if(rigToDestroy!= null)
+        {
+            Destroy(rigToDestroy.gameObject);
         }
         _wornOutfits.Add(newMesh);
         CheckCoverTypes();
@@ -90,45 +97,144 @@ public class OutfitManager : MonoBehaviour
             foreach (Transform bone in mesh.ExtraRigRoot.GetComponentsInChildren<Transform>())
             {
                 bone.name = bone.name.Replace("(Clone)", "");
+                if (bone.TryGetComponent<EZSoftBone>(out EZSoftBone softbone))
+                {
+                    AddExtraCollider(softbone);
+                }
             }
+            bool first = true;
             foreach (var outfitMesh in mesh.OutfitBehaviour.OutfitMeshes)
             {
-                var newBones = outfitMesh.bones.ToList();
-                foreach (var childbone in mesh.ExtraRigRoot.GetComponentsInChildren<Transform>())
-                    newBones.Add(childbone);
-                for(int i=0; i<tempBones.Length; i++)
+                if(first)
                 {
-                    tempBones[i] = newBones.FirstOrDefault(b => b.name == tempBones[i].name);
+                    var newBones = outfitMesh.bones.ToList();
+                    foreach (var childbone in mesh.ExtraRigRoot.GetComponentsInChildren<Transform>())
+                        newBones.Add(childbone);
+                    for (int i = 0; i < tempBones.Length; i++)
+                    {
+                        tempBones[i] = newBones.FirstOrDefault(b => b.name == tempBones[i].name);
+                    }
+                    first = false;
                 }
                 outfitMesh.bones = tempBones;
+            }
+        }
+    }
+    private void AddExtraCollider(EZSoftBone softbone)
+    {
+        //EZ soft bone has to reference the colliders that are in the character's main skeleton, not in the prefab's skeleton
+        CapsuleCollider[] capsules = new CapsuleCollider[softbone.extraColliders.Count];
+        for (int i = 0; i <softbone.extraColliders.Count; i++)
+        {
+            capsules[i] = (softbone.extraColliders[i] as CapsuleCollider);
+        }
+        capsules = AssignColliders(capsules.ToList());
+        softbone.extraColliders.Clear();
+        foreach (var capsule in capsules)
+        {
+            softbone.extraColliders.Add(capsule);
+        }
+    }
+    private void AddExtraCollider(Cloth cloth)
+    {
+        //Cloth component has to reference the colliders that are in the character's main skeleton, not in the prefab's skeleton
+        cloth.capsuleColliders = AssignColliders(cloth.capsuleColliders.ToList());
+    }
+    private CapsuleCollider[] AssignColliders(List<CapsuleCollider> capsuleColliders)
+    {
+        CapsuleCollider[] capsules = new CapsuleCollider[capsuleColliders.Count];
+        for (int i = 0; i < capsuleColliders.Count(); i++)
+        {
+            var destinationBone = _bones.FirstOrDefault(b => b.name == capsuleColliders[i].transform.parent.name);
+            if (destinationBone != null)
+            {
+                var currentCol = _currentClothColliders.FirstOrDefault(c => c.name == capsuleColliders[i].name);
+                if (currentCol == null)
+                {
+                    capsules[i] = Instantiate(capsuleColliders[i], destinationBone);
+                    capsules[i].name = capsules[i].name.Replace("(Clone)", "");
+                    _currentClothColliders.Add(capsules[i]);
+                }
+                else
+                    capsules[i] = currentCol;
+            }
+            else
+            {
+                Debug.Log("ERROR! Bone names don't match in the outfit!");
+            }
+        }
+        return capsules;
+    }
+    private void RemoveExtraCollider(Cloth cloth)
+    {
+        foreach (var collider in cloth.capsuleColliders)
+        {
+            if (!collider.IsDestroyed())
+            {
+                _currentClothColliders.Remove(collider);
+                Destroy(collider.gameObject);
+            }
+        }
+    }
+    private void RemoveExtraCollider(EZSoftBone softbone)
+    {
+        foreach (var collider in softbone.extraColliders)
+        {
+            if (!collider.IsDestroyed())
+            {
+                _currentClothColliders.Remove(collider as CapsuleCollider);
+                Destroy(collider.gameObject);
             }
         }
     }
     private void RemoveExtraRig(ExtraRigMesh mesh)
     {
         //On custom-rigged outfit peace destruction,it's additional bones have to be removed as well to keep the skeleton clean
+        var softboneList = mesh.ExtraRigRoot.gameObject.GetComponentsInChildren<EZSoftBone>();
+        foreach(var softbone in softboneList)
+        {
+            RemoveExtraCollider(softbone);
+        }
         Destroy(mesh.ExtraRigRoot.gameObject);
     }
     private void CheckCoverTypes()
     {
         //In the future, here will be more complex script that will decide what type of body and hair mesh has to be activated, based on the clothing to prevent clipping through
         bool fullBodyCovered = false;
+        bool handsLegsBreastCovered = false;
+        bool headCovered = false;
         foreach(var outfit in _wornOutfits)
         {
             if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Full_Body)
             {
                 fullBodyCovered = true;
             }
+            if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Legs_Arms_Breast)
+            {
+                handsLegsBreastCovered = true;
+            }
+            if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Full_Head)
+            {
+                headCovered = true;
+            }
         }
-        if (fullBodyCovered)
+        _fullBodyMesh.gameObject.SetActive(false);
+        _noLegsAndHandsMesh.gameObject.SetActive(false);
+        if(handsLegsBreastCovered)
         {
-            _fullBodyMesh.gameObject.SetActive(false);
-            _onlyHeadAndNeckMesh.gameObject.SetActive(true);
+            _noLegsAndHandsMesh.gameObject.SetActive(true);
+        }
+        else if(fullBodyCovered==false)
+        {
+            _fullBodyMesh.gameObject.SetActive(true);
+        }
+        if (headCovered)
+        {
+            _onlyHeadAndNeckMesh.gameObject.SetActive(false);
         }
         else
         {
-            _fullBodyMesh.gameObject.SetActive(true);
-            _onlyHeadAndNeckMesh.gameObject.SetActive(false);
+            _onlyHeadAndNeckMesh.gameObject.SetActive(true);
         }
     }
     #endregion

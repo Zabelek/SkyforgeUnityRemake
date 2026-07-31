@@ -72,6 +72,10 @@ public class HeroClassBehaviour : MonoBehaviour
         if (ability == null)
             _blockingAbility = null;
     }
+    public AbilityBehaviour GetBlockingAbility()
+    {
+        return _blockingAbility;
+    }
     public void ClearCurrentBlockingAbility()
     {
         if(_blockingAbility?.AbilityCurrentlyLockingControl == true)
