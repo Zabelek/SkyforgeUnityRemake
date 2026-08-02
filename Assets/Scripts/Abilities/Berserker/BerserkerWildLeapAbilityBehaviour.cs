@@ -16,6 +16,7 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
     [SerializeField] private ParticleSystem _particles;
     private bool _chainswordSoundPlayed, _groundImpactSoundPlayed;
     private ParticleSystem _currentParticles;
+    private CharacterBehaviour _targetCharacter;
     //timers
     [SerializeField] private float _startLeapTimerBase, _chainswordSoundTimerBase, _groundImpactSoundTimerBase, _effectTimerStartBase;
     private float _startLeapTimer, _chainswordSoundTimer, _groundImpactSoundTimer, _effectTimerStart;
@@ -44,6 +45,8 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
                 if(_rigidbody!=null)
                 {
                     var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
+                    if (_targetCharacter != null)
+                        RecalculateDestination(performer);
                     var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
                     var addValue = Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
                     if (addValue > 0)
@@ -139,6 +142,7 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
         }
         else
         {
+            _targetCharacter = target;
             if ((target.transform.position - performer.transform.position).magnitude > 24)
             {
                 var targetDest = (performer.transform.position + (target.transform.position - performer.transform.position).normalized * 24);
@@ -151,7 +155,9 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
             }
             else
             {
-                var targetDest = target.transform.position;
+                var targetDest = target.transform.position 
+                    - (target.transform.position - performer.transform.position).normalized 
+                    * (target.DefaultRadius + performer.DefaultRadius);
                 if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
                 {
                     _destinationVector = new Vector3(newhit.position.x, newhit.position.y + 0.5f, newhit.position.z);
@@ -161,6 +167,18 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
             }
         }
     }
+    private void RecalculateDestination(CharacterBehaviour performer)
+    {
+        var targetDest = _targetCharacter.transform.position
+            - (_targetCharacter.transform.position - performer.transform.position).normalized
+            * (_targetCharacter.DefaultRadius + performer.DefaultRadius);
+        if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
+        {
+            _destinationVector = new Vector3(newhit.position.x, newhit.position.y + 0.5f, newhit.position.z);
+            return;
+        }
+        _destinationVector = performer.transform.position;
+    }    
     private void PullPerformerToTheGround(CharacterBehaviour performer)
     {
         if (NavMesh.SamplePosition(performer.transform.position, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
@@ -214,6 +232,7 @@ public class BerserkerWildLeapAbilityBehaviour : EscapeAbilityBehaviour
         _chainswordSoundPlayed = false;
         _groundImpactSoundPlayed = false;
         _rigidbody = null;
+        _targetCharacter = null;
     }
     #endregion
 }

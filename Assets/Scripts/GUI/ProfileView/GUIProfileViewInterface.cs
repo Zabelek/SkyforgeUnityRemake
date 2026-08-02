@@ -47,19 +47,6 @@ public class GUIProfileViewInterface : MonoBehaviour
         if (_registeredButtons == null)
             _registeredButtons = new();
     }
-    private void UpdateProfileToCurrentVersion(UserProfile profile)
-    {
-        if(profile.CurrentlyPickedClass == null || profile.CurrentlyPickedClass.Length == 0)
-        {
-            profile.CurrentlyPickedClass = "Base_Berserker";
-        }
-        if(profile.AcquiredPerks.Count == 0)
-        {
-            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Regular_Immortal", Enabled = true });
-            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
-            profile.GameplayResources.Credits = 1000;
-        }
-    }
     private void Update()
     {
         //to change after SceneLoadReady is implemented
@@ -85,6 +72,24 @@ public class GUIProfileViewInterface : MonoBehaviour
     #endregion
 
     #region Methods
+    private void UpdateProfileToCurrentVersion(UserProfile profile)
+    {
+        if (profile.CurrentlyPickedClass == null || profile.CurrentlyPickedClass.Length == 0)
+        {
+            profile.CurrentlyPickedClass = "Base_Berserker";
+        }
+        if (profile.AcquiredPerks.Count == 0)
+        {
+            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Regular_Immortal", Enabled = true });
+            profile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
+            profile.GameplayResources.Credits = 1000;
+        }
+        if(profile.Inventory == null)
+        {
+            profile.Inventory = new Inventory(84, 42);
+        }
+    }
+
     private async Task InitActions()
     {
         PlayerVisualization.SetAnimationState("Menu", true);

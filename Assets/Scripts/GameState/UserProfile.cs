@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 public class UserProfile
@@ -17,6 +18,25 @@ public class UserProfile
     public List<PerkState> AcquiredPerks { get; set; }
     public GameplayResources GameplayResources { get; set; }
     public string CurrentlyPickedClass { get; set; }
+    private Inventory _inventory;
+    public Inventory Inventory {
+
+        get
+        {
+            return _inventory;
+        }
+        set
+        {
+            foreach (var invSlot in value.Slots)
+            {
+                if (invSlot.Item != null)
+                {
+                    invSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == invSlot.Item.ID);
+                }
+            }
+            _inventory = value;
+        }
+    }
 
     public UserProfile()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skyforge Scriptable Objects/WeaponSO")]
-public class WeaponSO : ScriptableObject
+[CreateAssetMenu(menuName = "Skyforge Scriptable Objects/ItemSO/WeaponSO")]
+public class WeaponSO : ItemSO
 {
     #region Variables
     [Tooltip("Type of the weapon tells for example which class it is for")]
@@ -10,8 +10,7 @@ public class WeaponSO : ScriptableObject
     [SerializeField] private Transform _meshRenderer;
     [Tooltip("damage modifier of the weapon. It'll be added to hero's damage when calculating output damage for each skill")]
     [SerializeField] private int _baseDamage;
-    [Tooltip("Name your weapon whatever you want, just don't name them Doris. Doris is not a good name for a weapon.")]
-    public string Name;
+    [Tooltip("Name your weapon whatever you want, just don't name it Doris. Doris is not a good name for a weapon.")]
     #endregion
 
     #region Getters

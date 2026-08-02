@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d09bfe50d8d0ee4ebdad41421440cc6, type: 3}
+  m_Name: CursedArmor_Armor_SO
+  m_EditorClassIdentifier: Assembly-CSharp::ArmorSO
+  ID: Base_Armor_CursedArmor
+  Name: Cursed Armor
+  Description: One would say it's cursed. The other would say it's blessed. Hard
+    to tell.
+  InterfaceSprite: {fileID: 21300000, guid: b6206eb14d37c3845b2e92465e019b75, type: 3}
+  IsStackable: 0
+  Rarity: 1
+  OutfitSO: {fileID: 11400000, guid: ac16a2a678cbdba4c9a988682f831fa7, type: 2}
+  BaseDefense: 0.2

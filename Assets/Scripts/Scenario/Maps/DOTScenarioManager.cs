@@ -105,23 +105,20 @@ public class DOTScenarioManager : ScenarioManager
                     SkyforgeLoader.HardestDiffBeaten = true;
             }
         }
-        else if (Stage == 9)
-        {
-            if (_boss2.IsDead)
-            {
-                Stage = 10;
-                _currentCutscene = _cutscenes[4];
-                StartCoroutine(DelayedCharacterRemoval(_boss2, GUISceneBlackFade.FADE_TIME));
-                StartCoroutine(DelayedScene5Actions());
-                StartCoroutine(DelayedBackToMenu());
-            }
-        }
         if (_boss1.IsDead && Stage < 6)
         {
             Stage = 6;
             _interface.ShowCharacterMessage(_voicelines[3]);
             _currentCutscene = _cutscenes[2];
             StartCoroutine(DelayedCharacterRemoval(_boss1, GUISceneBlackFade.FADE_TIME));
+        }
+        if (_boss2.IsDead && Stage < 10)
+        {
+            Stage = 10;
+            _currentCutscene = _cutscenes[4];
+            StartCoroutine(DelayedCharacterRemoval(_boss2, GUISceneBlackFade.FADE_TIME));
+            StartCoroutine(DelayedScene5Actions());
+            StartCoroutine(DelayedBackToMenu());
         }
     }
     private IEnumerator DelayedBackToMenu()

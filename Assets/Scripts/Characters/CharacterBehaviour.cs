@@ -87,6 +87,9 @@ public class CharacterBehaviour : MonoBehaviour
     [Tooltip("If this variable is set to true, the character will be killed f they fall too low.")]
     public bool KillBelowScene = true;
     private Rigidbody _rigidbody;
+    public float StartCombatProtectionTimer;
+    //helps unify the physical radius reference
+    public float DefaultRadius { get; private set; }
     #endregion
 
     #region Mono
@@ -107,7 +110,26 @@ public class CharacterBehaviour : MonoBehaviour
         {
             Stats.ModifyAccordingToDifficultyLevel();
         }
-        _rigidbody = GetComponent<Rigidbody>();      
+        _rigidbody = GetComponent<Rigidbody>();
+        if(TryGetComponent<NavMeshAgent>(out var agent))
+        {
+            DefaultRadius = agent.radius;
+        }
+        else if(GetComponentInChildren<Collider>() != null)
+        {
+            if(GetComponentInChildren<Collider>() is CapsuleCollider)
+            {
+                DefaultRadius = (GetComponentInChildren<Collider>() as CapsuleCollider).radius;
+            }
+            else
+            {
+                DefaultRadius = GetComponentInChildren<Collider>().transform.localScale.x;
+            }
+        }
+        else
+        {
+            DefaultRadius = 1;
+        }
     }
     protected virtual void Start()
     {
@@ -148,6 +170,12 @@ public class CharacterBehaviour : MonoBehaviour
         if(KillBelowScene && transform.position.y < INSTANT_DEATH_HEIGHT && !IsDead)
         {
             KillOffCombat();
+        }
+        if(StartCombatProtectionTimer>0)
+        {
+            StartCombatProtectionTimer -= Time.fixedDeltaTime;
+            if (StartCombatProtectionTimer < 0)
+                StartCombatProtectionTimer = 0;
         }
     }
     protected virtual void OnDestroy()
@@ -349,6 +377,7 @@ public class CharacterBehaviour : MonoBehaviour
             rig.isKinematic = false;
         }
         LeaveCombat();
+        StartCombatProtectionTimer = 5f;
         OnResurrect?.Invoke(this, EventArgs.Empty);
     }
     public virtual void Heal(int healAmount, bool effect)

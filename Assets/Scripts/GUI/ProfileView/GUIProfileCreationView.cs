@@ -72,6 +72,10 @@ public class GUIProfileCreationView : MonoBehaviour
         ret.CurrentlyPickedClass = "Base_Berserker";
         ret.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Regular_Immortal", Enabled = true });
         ret.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
+        ret.Inventory = new Inventory(84, 42);
+        ret.Inventory.AddItem("Base_Weapon_IronHeart");
+        ret.Inventory.AddItem("Base_Armor_CursedArmor");
+        ret.Inventory.AddItem("Base_Armor_DivinePaladinArmor");
         return ret;
     }
     private async Task UpdateHat()

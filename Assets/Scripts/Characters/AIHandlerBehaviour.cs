@@ -226,10 +226,13 @@ public class AIHandlerBehaviour : MonoBehaviour
                 {
                     if (CharacterBehaviour.FindEnemyCharacterInCollider(hit, _character, out CharacterBehaviour character) == true)
                     {
-                        _currentEnemy = character;
-                        _character.EnterCombat(_currentEnemy, false);
-                        _currentEnemy.EnterCombat(_character, false);
-                        break;
+                        if (character.StartCombatProtectionTimer <= 0)
+                        {
+                            _currentEnemy = character;
+                            _character.EnterCombat(_currentEnemy, false);
+                            _currentEnemy.EnterCombat(_character, false);
+                            break;
+                        }
                     }
                 }
             }

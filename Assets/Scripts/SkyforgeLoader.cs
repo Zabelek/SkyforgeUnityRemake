@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -15,6 +14,7 @@ public static class SkyforgeLoader
     public static OutfitRegistry OutfitRegistry;
     public static PerkRegistry PerkRegistry;
     public static ClassRegistry ClassRegistry;
+    public static ItemRegistry ItemRegistry;
     //Used so that both loaded scene and the loading screen can notify each other they're ready to switch
     public static bool LoadingScreenReady, LoadedSceneReady;
     public static SettingsSet SettingsSet;
@@ -31,6 +31,7 @@ public static class SkyforgeLoader
     #region Methods
     public static async Task LoadScene(string currentScene, string sceneName)
     {
+        await LoadItemRegistry();
         if (string.IsNullOrWhiteSpace(sceneName))
         {
             Debug.LogError("WARNING! Empty name scene loading attempt!");
@@ -107,6 +108,18 @@ public static class SkyforgeLoader
             }
         }
     }
+    private static async Task LoadItemRegistry()
+    {
+        //First check if the item registry was initialized
+        if(ItemRegistry == null)
+        {
+            var handle = await Addressables.LoadAssetAsync<GameObject>("ItemRegistry").Task;
+            if (handle != null && handle.TryGetComponent<ItemRegistry>(out ItemRegistry registry) == true)
+            {
+                ItemRegistry = registry;
+            }
+        }
+    }
     public static async Task<OutfitBehaviour> LoadOutfit(int outfitID, OutfitSO.OutfitSlot slot, Transform parent)
     {
         await LoadOutfitRegistry();
@@ -121,6 +134,12 @@ public static class SkyforgeLoader
         }
         Debug.Log("No outfit found for address" + address + "!");
         return null;
+    }
+    public static async Task<ItemSO> LoadItem(string itemID)
+    {
+        if (ItemRegistry == null)
+            await LoadItemRegistry();
+        return SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == itemID);
     }
     public static async Task UnloadGameMenu()
     {

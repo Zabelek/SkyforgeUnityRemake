@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +11,8 @@ public class GUITooltip : MonoBehaviour
 
     #region Variables
     [SerializeField] protected Image _titleImage;
-    [SerializeField] protected TextMeshProUGUI _titleText, _descriptionText;
-    [SerializeField] Transform _costPanel, _costLayout, _costOpsitionTemplate;
+    [SerializeField] protected TextMeshProUGUI _titleText, _descriptionText, _specialDescriptionText;
+    [SerializeField] Transform _costPanel, _costLayout, _costOpsitionTemplate, _statBonusPanel, _specialDescriptionPanel, _statLineBase;
     private float _fadeInTimer, _waitUntilAppearTimer;
     private CanvasGroup _group;
     [SerializeField] private RectTransform _tooltip;
@@ -24,6 +25,18 @@ public class GUITooltip : MonoBehaviour
         if(_costPanel!= null)
         {
             _costPanel.gameObject.SetActive(false);
+        }
+        if (_specialDescriptionPanel != null)
+        {
+            _specialDescriptionPanel.gameObject.SetActive(false);
+        }
+        if (_statLineBase != null)
+        {
+            _statLineBase.gameObject.SetActive(false);
+        }
+        if (_statBonusPanel != null)
+        {
+            _statBonusPanel.gameObject.SetActive(false);
         }
         _fadeInTimer = 0;
         _waitUntilAppearTimer = APPEAR_DELAY;
@@ -65,6 +78,13 @@ public class GUITooltip : MonoBehaviour
         GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
         StartCoroutine(RebuildLayout());
     }
+    public void SetSpecialDescription(string description)
+    {
+        _specialDescriptionPanel.gameObject.SetActive(true);
+        _specialDescriptionText.text = description;
+        GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
+        StartCoroutine(RebuildLayout());
+    }
     private IEnumerator RebuildLayout()
     {
         //For reasons unknown to me, this must be done to rebuild the layout, as it goes bonkers every time a text is set. It works in the editor, but doesn't work at runtime. No idea why.
@@ -79,6 +99,17 @@ public class GUITooltip : MonoBehaviour
     public void SetCanvas(Canvas canvas)
     {
         _canvas = canvas;
+    }
+    public void AddStatBonus(string statBonusName, float statBonus, bool isPercent)
+    {
+        _statBonusPanel.gameObject.SetActive(true);
+        var newLine = Instantiate(_statLineBase, _statBonusPanel);
+        newLine.gameObject.SetActive(true);
+        newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatName").text = statBonusName;
+        if(isPercent)
+            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = (statBonus * 100).ToString("0.00") + "%";
+        else
+            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = statBonus.ToString();
     }
     public void AddCost(Sprite costIcon, int costAmount)
     {

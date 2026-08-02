@@ -56,6 +56,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                     if (_rigidbody != null)
                     {
                         var timeMod = (_performingTimer - _startLeapTimer) / (_untilHitTimer - _startLeapTimer);
+                        DetermineDestinationVector(performer);
                         var vec = Vector3.Lerp(_initialPlayerPosition, _destinationVector, timeMod);
                         var addValue = Mathf.Sin((timeMod * 1.1f) * Mathf.PI) * _archHeight;
                         if (addValue > 0)
@@ -169,40 +170,17 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
         }
         return false;
     }
-    private void DetermineDestinationVector(CharacterBehaviour player)
+    private void DetermineDestinationVector(CharacterBehaviour performer)
     {
-        if ((_casuality.transform.position - player.transform.position).magnitude > 24)
+        var targetDest = _casuality.transform.position
+            - (_casuality.transform.position - performer.transform.position).normalized
+            * (_casuality.DefaultRadius + performer.DefaultRadius);
+        if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
         {
-            var targetDest = (player.transform.position + (_casuality.transform.position - player.transform.position).normalized * 24);
-            float enemyWidth = 0;
-            try { enemyWidth += _casuality.GetComponentInChildren<Collider>().transform.localScale.x; } catch { }
-            if(enemyWidth>0)
-            {
-                targetDest -= targetDest.normalized * enemyWidth;
-            }
-            if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
-            {
-                _destinationVector = new Vector3(newhit.position.x, newhit.position.y, newhit.position.z);
-                return;
-            }
-            _destinationVector = player.transform.position;
+            _destinationVector = new Vector3(newhit.position.x, newhit.position.y, newhit.position.z);
+            return;
         }
-        else
-        {
-            var targetDest = _casuality.transform.position;
-            float enemyWidth = 0;
-            try { enemyWidth += _casuality.GetComponentInChildren<Collider>().transform.localScale.x; } catch { }
-            if (enemyWidth > 0)
-            {
-                targetDest -= (targetDest - player.transform.position).normalized * enemyWidth;
-            }
-            if (NavMesh.SamplePosition(targetDest, out NavMeshHit newhit, 5f, LayerMask.GetMask("Default")))
-            {
-                _destinationVector = new Vector3(newhit.position.x, newhit.position.y, newhit.position.z); 
-                return;
-            }
-            _destinationVector = player.transform.position;
-        }
+        _destinationVector = performer.transform.position;
     }
     public override void PerformHit(CharacterBehaviour player)
     {

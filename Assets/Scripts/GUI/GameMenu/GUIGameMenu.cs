@@ -17,6 +17,7 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private GUIGameMenuTopSwitchButton _systemTopButton;
     [SerializeField] private GUIGameMenuTopSwitchButton _characterAtlasTopButton;
     [SerializeField] private GUIGameMenuTopSwitchButton _abilitiesTopButton;
+    [SerializeField] private GUIGameMenuTopSwitchButton _bagTopButton;
     private List<GUIGameMenuTopSwitchButton> _topSwitchButtons;
     [Header("Cameras")]
     [Tooltip("Some views have 3D scene to display so that the proper Cinemachine Brain has to be set to a higher priority on the view enter.")]
@@ -32,6 +33,7 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private GUIAscensionAtlasControls _atlasControlsGroup;
     [Tooltip("Parent of all abilities view GUI elements placed inside Canvas")]
     [SerializeField] private GUIGameMenuAbilitiesPanelControls _abilitiesControlGroup;
+    [SerializeField] private GUIBagControls _bagControlGroup;
     private List<CanvasGroup> _controlGroups;
     [Header("Settings")]
     [SerializeField] private SettingsManager _settingsManager;
@@ -56,11 +58,13 @@ public class GUIGameMenu : MonoBehaviour
         _systemTopButton.OnClick += SystemTopButton_Clicked;
         _characterAtlasTopButton.OnClick += CharacterAtlasTopButton_Clicked;
         _abilitiesTopButton.OnClick += AbilitiesTopButton_Clicked;
+        _bagTopButton.OnClick += BagTopButton_Clicked;
         _topSwitchButtons = new();
         _topSwitchButtons.Add(_settingsTopButton);
         _topSwitchButtons.Add(_systemTopButton);
         _topSwitchButtons.Add(_characterAtlasTopButton);
         _topSwitchButtons.Add(_abilitiesTopButton);
+        _topSwitchButtons.Add(_bagTopButton);
         foreach (var button in _topSwitchButtons)
         {
             button.OnClick += MenuButton_DeselectRest;
@@ -69,8 +73,10 @@ public class GUIGameMenu : MonoBehaviour
         _controlGroups.Add(_settingsControlsGroup);
         _controlGroups.Add(_systemControlsGroup);
         _controlGroups.Add(_atlasControlsGroup.GetComponent<CanvasGroup>());
-        _controlGroups.Add(_abilitiesControlGroup.GetComponent<CanvasGroup>());
+        _controlGroups.Add(_abilitiesControlGroup.GetComponent<CanvasGroup>());        
+        _controlGroups.Add(_bagControlGroup.GetComponent<CanvasGroup>());
     }
+
     private void OnDestroy()
     {
         SkyforgeLoader.GUIGameMenu = null;
@@ -146,6 +152,17 @@ public class GUIGameMenu : MonoBehaviour
         MenuButton_DeselectRest(_settingsTopButton, EventArgs.Empty);
         _ =  _blackFade.StartFadeOut();
     }
+    public void ShowBagView()
+    {
+        _atlasCinemachineBrain.Priority = 1;
+        _emptyCinemachineBrain.Priority = 5;
+        _characterCinemachineBrain.Priority = 1;
+        CloseAllControlGroups();
+        _bagControlGroup.gameObject.SetActive(true);
+        _bagControlGroup.UpdateView();
+        _bagTopButton.SetToggled(true);
+        MenuButton_DeselectRest(_bagTopButton, EventArgs.Empty);
+    }
     private void CloseAllControlGroups()
     {
         foreach (var controlGroup in _controlGroups)
@@ -176,6 +193,10 @@ public class GUIGameMenu : MonoBehaviour
     private void AbilitiesTopButton_Clicked(object sender, EventArgs e)
     {
         _ = ShowAbilitiesView();
+    }
+    private void BagTopButton_Clicked(object sender, EventArgs e)
+    {
+        ShowBagView();
     }
     private void MenuButton_DeselectRest(object sender, EventArgs e)
     {
