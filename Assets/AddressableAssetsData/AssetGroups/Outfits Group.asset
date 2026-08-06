@@ -32,6 +32,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43654e4218475e440beb15ee94fa33f9
+    m_Address: Outfit_CasualWear01_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Outfits
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e6dccddc288b1a42bb10ac48d24f6f2
     m_Address: Armor_FoilHat_Prefab
     m_ReadOnly: 0

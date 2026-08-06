@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c29895c0b8a4b41bae37057d147058, type: 3}
+  m_Name: RustyOldChainsword_Weapon_SO
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
+  ID: Base_Weapon_RustyOldChainsword
+  Name: Rusty Old Chainsword
+  Description: It's ugly, it's weak, it's AI generated. You probably don't want to
+    even tuch it.
+  InterfaceSprite: {fileID: 21300000, guid: 7e1ca2b3a56f7aa4b86ce71913bd79a0, type: 3}
+  IsStackable: 0
+  Rarity: 0
+  Type: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}
+  _weaponPrefab: {fileID: 8041945922122025714, guid: 62a126ea59bae9e45bdfc3a9fed724de, type: 3}
+  _baseDamage: 0

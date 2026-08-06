@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -36,61 +37,70 @@ public class EffectManager
     }
     public void AddEffect(GameplayEffectBehaviour effect)
     {
-        GameplayEffectBehaviour existingEffect = null;
-        bool stacks = false;
-        foreach(var existingEff in _effects)
+        if (_effects != null)
         {
-            if(existingEff.GetType() == effect.GetType())
+            GameplayEffectBehaviour existingEffect = null;
+            bool stacks = false;
+            foreach (var existingEff in _effects)
             {
-                if (existingEff.EffectSO.IsStackable)
+                if (existingEff.GetType() == effect.GetType())
                 {
-                    stacks = true;
+                    if (existingEff.EffectSO.IsStackable)
+                    {
+                        stacks = true;
+                    }
+                    existingEffect = existingEff;
                 }
-                existingEffect = existingEff;
             }
-        }
-        if(existingEffect != null)
-        {
-            if(stacks)
+            if (existingEffect != null)
             {
-                existingEffect.OnStackAdded(_character);
+                if (stacks)
+                {
+                    existingEffect.OnStackAdded(_character);
+                }
+                else
+                {
+                    RemoveEffect(existingEffect);
+                }
             }
-            else
+            if (stacks == false)
             {
-                RemoveEffect(existingEffect);
+                var newEffect = GameObject.Instantiate(effect);
+                _effects.Add(newEffect);
+                newEffect.OnApply(_character);
             }
-        }
-        if(stacks == false)
-        {
-            var newEffect = GameObject.Instantiate(effect);
-            _effects.Add(newEffect);
-            newEffect.OnApply(_character);
-        }
+        }     
     }
     public void RemoveEffect(GameplayEffectBehaviour effect)
     {
-        if(effect!=null)
+        if (_effects != null)
         {
-            var effectToRemove = _effects.FirstOrDefault(e => e.GetType() == effect.GetType());
-            if (effectToRemove != null)
+            if (effect != null)
             {
-                effectToRemove.TimeLeft = 0;
-                _effects.Remove(effectToRemove);
-                effectToRemove.OnRemove(_character);
-                try { GameObject.Destroy(effectToRemove.gameObject); } catch { }
+                var effectToRemove = _effects.FirstOrDefault(e => e.GetType() == effect.GetType());
+                if (effectToRemove != null)
+                {
+                    effectToRemove.TimeLeft = 0;
+                    _effects.Remove(effectToRemove);
+                    effectToRemove.OnRemove(_character);
+                    try { GameObject.Destroy(effectToRemove.gameObject); } catch { }
+                }
             }
-        }
-        else
-        {
-            _effects.Remove(effect);
+            else
+            {
+                _effects.Remove(effect);
+            }
         }
     }
     public void ClearEffects()
     {
-        var effectsList = _effects.ToList();
-        foreach(var effect in effectsList)
+        if (_effects != null)
         {
-            RemoveEffect(effect);
+            var effectsList = _effects.ToList();
+            foreach (var effect in effectsList)
+            {
+                RemoveEffect(effect);
+            }
         }
     }
     public List<GameplayEffectBehaviour> GetActiveEffects()
@@ -102,6 +112,39 @@ public class EffectManager
         _effects.Clear();
         _effects = null;
         _character = null;
+    }
+    public void AddEffectStacks(GameplayEffectBehaviour effect, short stacksToAdd, short maxAmount)
+    {
+        if (effect != null && _effects != null)
+        {
+            var effectToIncrease = _effects.FirstOrDefault(e => e.GetType() == effect.GetType());
+            if (effectToIncrease != null)
+            {
+                for (int i = 0; i < stacksToAdd; i++)
+                {
+                    if(effectToIncrease.Stacks < maxAmount)
+                        effectToIncrease.OnStackAdded(_character);
+                }
+            }
+        }
+    }
+    public void RemoveEffectStacks(GameplayEffectBehaviour effect, short stacksToRemove, bool preserveOne)
+    {
+        if (effect != null && _effects != null)
+        {
+            var effectToDecrease = _effects.FirstOrDefault(e => e.GetType() == effect.GetType());
+            if (effectToDecrease != null)
+            {
+                effectToDecrease.Stacks -= stacksToRemove;
+                if(effectToDecrease.Stacks <= 0)
+                {
+                    if (preserveOne)
+                        effectToDecrease.Stacks = 1;
+                    else
+                        RemoveEffect(effect);
+                }
+            }
+        }
     }
     #endregion
 

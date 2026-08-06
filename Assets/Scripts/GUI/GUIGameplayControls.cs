@@ -171,6 +171,10 @@ public class GUIGameplayControls : MonoBehaviour
         {
             _player.SyncPerks(true);
         }
+        if (SkyforgeLoader.EquipmentChanged)
+        {
+            _player.SyncEquipment();
+        }
         await _menuBlackFade.StartFadeOut();
     }
     public async Task OpenMenu()

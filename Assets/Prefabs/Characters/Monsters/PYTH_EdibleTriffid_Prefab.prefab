@@ -4883,7 +4883,7 @@ MonoBehaviour:
   _voiceLines:
   - {fileID: 11400000, guid: 839e06b84c6bf7f468434fb82b0f121b, type: 2}
   - {fileID: 11400000, guid: 1cb3ec83ee9333a4aafd6694bf06390b, type: 2}
-  _character: {fileID: 6830700518041082228}
+  _character: {fileID: 6548383687691171441}
 --- !u!1001 &4615024599812327315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5171,6 +5171,8 @@ MonoBehaviour:
   _renderers:
   - {fileID: 6384831457052551211}
   FadedIntoScene: 1
+  KillBelowScene: 1
+  StartCombatProtectionTimer: 0
   BaseAttack: {fileID: 0}
   SpecialAttack: {fileID: 0}
   CurrentlyUpdatedAbilities: []

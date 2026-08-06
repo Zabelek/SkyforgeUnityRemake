@@ -182,14 +182,14 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
         }
         _destinationVector = performer.transform.position;
     }
-    public override void PerformHit(CharacterBehaviour player)
+    public override void PerformHit(CharacterBehaviour performer)
     {
         if(_leap || _hitPerformed == false)
         {
-            OnAbilityHit?.Invoke(this, EventArgs.Empty);
+            OnAbilityHit?.Invoke(this, new AbilityStateEventArgs(performer));
         }
         _hitPerformed = true;
-        var rageIncarnateEffect = player.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Rage Incarnate");
+        var rageIncarnateEffect = performer.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Rage Incarnate");
         float rageIncarnateMultiplier = 1;
         if(rageIncarnateEffect!=null)
         {
@@ -199,11 +199,11 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
         {
             if(_leap)
             {
-                var damage = CalculateDamage(new Damage(player, (int)(player.GetEffectiveDamage() * 3 * rageIncarnateMultiplier), false, false), player.GetEffectiveCriticalChance());
+                var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * 3 * rageIncarnateMultiplier), false, false), performer.GetEffectiveCriticalChance());
                 _casuality.TakeDamage(damage);
                 if(rageIncarnateEffect != null)
                 {
-                    player.Stats.CurrentMana += 50;
+                    performer.Stats.CurrentMana += 50;
                 }
             }
             else
@@ -211,19 +211,19 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 var oldDamage = _currentDamages?.FirstOrDefault(dam => dam == _casuality.LastDamage);
                 if (oldDamage != null)
                 {
-                    var newDamageAmount = CalculateDamageForMultishot(new Damage(player, (int)(player.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), oldDamage);
+                    var newDamageAmount = CalculateDamageForMultishot(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), oldDamage);
                     oldDamage.AddMultishot(newDamageAmount);
                     _casuality.TakeDamage(oldDamage);
                 }
                 else
                 {
                     _currentDamages = new();
-                    var damage = CalculateDamage(new Damage(player, (int)(player.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), player.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), performer.GetEffectiveCriticalChance());
                     _casuality.TakeDamage(damage);
                     _currentDamages.Add(damage);
                     if (rageIncarnateEffect != null)
                     {
-                        player.Stats.CurrentMana += 50;
+                        performer.Stats.CurrentMana += 50;
                     }
                 }
             }

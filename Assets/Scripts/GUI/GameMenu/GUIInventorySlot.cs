@@ -17,7 +17,7 @@ public class GUIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     #region Methods
     public void UpdateSlot()
     {
-        if(InventorySlot.IsLocked == true)
+        if(InventorySlot == null || InventorySlot.IsLocked == true)
         {
             _itemImage.gameObject.SetActive(false);
             _lockIcon.gameObject.SetActive(true);

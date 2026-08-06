@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: Berserker_BurningChain_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_Berserker_BurningChain
   Types: 
   Name: Burning Chain
   Description: Increases the damage of the next Crippling Blow by 150%.

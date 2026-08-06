@@ -1,20 +1,34 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GUIBagControls : MonoBehaviour
 {
+    private const float DOUBLE_CLICK_TRESHOLD = 0.2f;
+
     #region Variables
-    [SerializeField] private Transform _slotsParent, _tooltipsParent;
+    [SerializeField] private GUIGameMenuEquipmentControls _equipmentControls;
+    [Header("Slots")]
+    [Tooltip("Prefab used to spawn new slots")]
     [SerializeField] private GUIInventorySlot _slotPattern;
+    [Tooltip("Where slots will be spawned")]
+    [SerializeField] private Transform _slotsParent;
     private List<GUIInventorySlot> _currentSlots;
-    [SerializeField] private GUITooltip _tooltipBase;
-    private GUITooltip _currentTooltip;
-    [SerializeField] private Canvas _tooltipCanvas;
-    [SerializeField] private Image _visualItemGhost;
     private GUIInventorySlot _currentlyDraggedSlot, _currentDragTargetSlot;
+    [Tooltip("icon displayed when the item is dragged")]
+    [SerializeField] private Image _visualItemGhost;
+    [Header("Tooltips")]
+    [Tooltip("Prefab used to spawn tooltips")]
+    [SerializeField] private GUITooltip _tooltipBase;
+    [Tooltip("Canvas reference needed for tooltips to be correctly positioned")]
+    [SerializeField] private Canvas _tooltipCanvas;
+    [Tooltip("Where tooltips will be spawned")]
+    [SerializeField] private Transform _tooltipsParent;
+    private GUITooltip _currentTooltip;
+    //mouse related variables
+    private Vector3 _mouseOffsetFromFirstClick;
+    private float _doubleClickTimer;
     #endregion
 
     #region Mono
@@ -47,6 +61,15 @@ public class GUIBagControls : MonoBehaviour
             _visualItemGhost.gameObject.SetActive(false);
         }
     }
+    private void FixedUpdate()
+    {
+        if(_doubleClickTimer > 0)
+        {
+            _doubleClickTimer -= Time.fixedDeltaTime;
+            if(_doubleClickTimer < 0)
+                _doubleClickTimer = 0;
+        }
+    }
     public void OnDestroy()
     {
         foreach(var slot in _currentSlots)
@@ -56,6 +79,10 @@ public class GUIBagControls : MonoBehaviour
             slot.OnPointerUpEvent -= SlotPointerUpAction;
             slot.OnPointerDownEvent -= SlotPointerDownAction;
         }
+    }
+    public void OnDisable()
+    {
+        _currentTooltip?.gameObject.SetActive(false);
     }
     #endregion
 
@@ -67,6 +94,7 @@ public class GUIBagControls : MonoBehaviour
             slot.UpdateSlot();
         }
     }
+    //To be moved into Tooltip class
     private void SetUpNewTooltip(ItemSO itemSO)
     {
         _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
@@ -82,16 +110,40 @@ public class GUIBagControls : MonoBehaviour
             {
                 _currentTooltip.SetSpecialDescription(itemSO.Description);
             }
+            else
+            {
+                _currentTooltip.SetDescription(((WeaponSO)itemSO).Type.Name + "\n" + itemSO.Description);
+            }
         }
         else if(itemSO is ArmorSO)
         {
-            _currentTooltip.AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseDefense, true);
+            _currentTooltip.AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseArmorAmount, true);
         }
     }
     private void PositionItemGhost()
     {
+        if ((_mouseOffsetFromFirstClick - Input.mousePosition).magnitude > 0.01f && _visualItemGhost.gameObject.activeSelf == false)
+        {
+            _visualItemGhost.gameObject.SetActive(true);
+        }
         Vector2 mousePos = new Vector2(Input.mousePosition.x / Screen.width * _tooltipCanvas.renderingDisplaySize.x, Input.mousePosition.y / Screen.height * _tooltipCanvas.renderingDisplaySize.y);
         _visualItemGhost.rectTransform.anchoredPosition = new Vector2(mousePos.x, mousePos.y);
+    }
+    //to be moved into Item class
+    private void ActivateItem(InventorySlot inventorySlot)
+    {
+        if (inventorySlot?.Item != null)
+        {
+            if (inventorySlot.Item.ItemSO is WeaponSO)
+            {
+                inventorySlot.Item = SkyforgeLoader.CurrentProfile.Equip(inventorySlot.Item, Equipment.InventoryType.Weapon);
+            }
+            else if (inventorySlot.Item.ItemSO is ArmorSO)
+            {
+                inventorySlot.Item = SkyforgeLoader.CurrentProfile.Equip(inventorySlot.Item, Equipment.InventoryType.Armor);
+            }
+            _equipmentControls.UpdateValues();
+        }
     }
     #endregion
 
@@ -120,8 +172,20 @@ public class GUIBagControls : MonoBehaviour
         if (sender is GUIInventorySlot && (sender as GUIInventorySlot).InventorySlot.Item != null)
         {
             _currentlyDraggedSlot = sender as GUIInventorySlot;
-            _visualItemGhost.gameObject.SetActive(true);
+            _mouseOffsetFromFirstClick = Input.mousePosition;
             _visualItemGhost.sprite = (sender as GUIInventorySlot).InventorySlot.Item.ItemSO.InterfaceSprite;
+        }
+        if(_doubleClickTimer == 0)
+        {
+            _doubleClickTimer = DOUBLE_CLICK_TRESHOLD;
+        }
+        else
+        {
+            if (sender is GUIInventorySlot)
+            {
+                ActivateItem((sender as GUIInventorySlot).InventorySlot);
+                (sender as GUIInventorySlot).UpdateSlot();
+            }
         }
     }
     private void SlotPointerUpAction(object sender, EventArgs e)

@@ -3,8 +3,12 @@ using System.Linq;
 
 public class Inventory
 {
+    #region Variables
     public string Name { get; set; }
     public List<InventorySlot> Slots { get; set; }
+    #endregion
+
+    #region Constructors
     public Inventory()
     {
         Slots = new();
@@ -26,6 +30,9 @@ public class Inventory
                 Slots.Add(new InventorySlot());
         }
     }
+    #endregion
+
+    #region Methods
     public int CountItems()
     {
         return Slots.Where(s => s.Item != null).Count();
@@ -90,4 +97,31 @@ public class Inventory
     {
         return AddItem(itemID, 1);
     }
+    public InventorySlot GetQuickAccessItem(Item.QuickAccessSlot slot)
+    {
+        foreach (var invSlot in Slots)
+        {
+            if (invSlot.Item != null && invSlot.Item.ItemSO.CanBeQuickAccessed == true && invSlot.Item.QASlotType == slot)
+            {
+                return invSlot;
+            }
+        }
+        return null;
+    }
+    public void AssignQuickAccessSlot(Item.QuickAccessSlot slot, Item item)
+    {
+        if(slot != Item.QuickAccessSlot.None)
+        {
+            var currentSlot = GetQuickAccessItem(slot);
+            if (currentSlot != null)
+            {
+                currentSlot.Item.QASlotType = Item.QuickAccessSlot.None;
+            }
+        }
+        if(item.ItemSO.CanBeQuickAccessed)
+        {
+            item.QASlotType = slot;
+        }
+    }
+    #endregion
 }

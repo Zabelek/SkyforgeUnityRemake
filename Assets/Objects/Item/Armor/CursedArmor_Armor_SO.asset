@@ -18,6 +18,8 @@ MonoBehaviour:
     to tell.
   InterfaceSprite: {fileID: 21300000, guid: b6206eb14d37c3845b2e92465e019b75, type: 3}
   IsStackable: 0
-  Rarity: 1
+  Rarity: 2
+  CanBeQuickAccessed: 0
   OutfitSO: {fileID: 11400000, guid: ac16a2a678cbdba4c9a988682f831fa7, type: 2}
-  BaseDefense: 0.2
+  BaseArmorAmount: 0.2
+  _prefab: {fileID: 7985944662189006442, guid: 5a04ad4c39d9eda44ae96a5c0b877bca, type: 3}

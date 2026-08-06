@@ -126,7 +126,6 @@ public class DOTScenarioManager : ScenarioManager
         yield return new WaitForSeconds(21);
         _ = SkyforgeLoader.LoadScene("DivineObservatoryScene", "MainMenuScene");
     }
-
     protected override IEnumerator DelayedInitSequence(float delay)
     {
         yield return new WaitForSeconds(delay);

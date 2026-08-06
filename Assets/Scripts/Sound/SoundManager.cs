@@ -66,8 +66,8 @@ public class SoundManager : MonoBehaviour
         if (src != null)
         {
             src.transform.SetParent(parent);
-            src.transform.localPosition = Vector3.zero;
             src.outputAudioMixerGroup = _sfxGroup;
+            src.transform.localPosition = Vector3.zero;
         }
         return src;
     }
@@ -116,6 +116,7 @@ public class SoundManager : MonoBehaviour
         {
             src.transform.SetParent(parent);
             src.outputAudioMixerGroup = _voiceGroup;
+            src.transform.localPosition = Vector3.zero;
         }
         return src;
     }
@@ -159,7 +160,7 @@ public class SoundManager : MonoBehaviour
         go.AddComponent<AudioSource>();
         AudioSource src = go.GetComponent<AudioSource>();
         src.playOnAwake = false;
-        src.spatialBlend = 0.8f;
+        src.spatialBlend = 1f;
         _pool.Enqueue(src);
     }
     public IEnumerator FadeOut(AudioSource source, float fadeDuration)

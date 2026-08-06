@@ -20,9 +20,9 @@ public class GUIGameMenuAbilitiesPanelControls : MonoBehaviour
     #region Methods
     public async Task UpdateCharacterForView(bool animateRig)
     {
-        var task1 = _outfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Body);
+        _playerVisualization.SyncEquipment();
         var task2 = _outfitManager.EquipOutfit(SkyforgeLoader.CurrentProfile.HatNumber, OutfitSO.OutfitSlot.Head);
-        await Task.WhenAll(task1, task2);
+        await Task.WhenAll(task2);
         if (animateRig)
         {
             //this first line is needed so that the player immediately starts from the correct animation, not overriding it by anything

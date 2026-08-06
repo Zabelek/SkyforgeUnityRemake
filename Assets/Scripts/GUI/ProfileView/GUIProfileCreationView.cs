@@ -57,6 +57,16 @@ public class GUIProfileCreationView : MonoBehaviour
             _backButton.gameObject.SetActive(false);
         }
     }
+    public void Reset()
+    {
+        _profileView.PlayerVisualization.SyncEquipment(null);
+        _ = _profileView.OutfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Head);
+        _currentDiffNumber = 0;
+        _currentHatNumber = 0;
+        UpdateDifficulty();
+        _ = UpdateHat();
+        _nameInputBox.text = "";
+    }
     #endregion
 
     #region Methods
@@ -74,8 +84,10 @@ public class GUIProfileCreationView : MonoBehaviour
         ret.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = "Base_Berserker", Enabled = true });
         ret.Inventory = new Inventory(84, 42);
         ret.Inventory.AddItem("Base_Weapon_IronHeart");
+        ret.Inventory.AddItem("Base_Weapon_Ragnar");
         ret.Inventory.AddItem("Base_Armor_CursedArmor");
         ret.Inventory.AddItem("Base_Armor_DivinePaladinArmor");
+        ret.Equip(new Item("Base_Weapon_RustyOldChainsword"), Equipment.InventoryType.Weapon);
         return ret;
     }
     private async Task UpdateHat()
@@ -86,16 +98,6 @@ public class GUIProfileCreationView : MonoBehaviour
     private void UpdateDifficulty()
     {
         _diffDisplayText.text = _diffLevels[_currentDiffNumber].Name;
-    }
-    public void Reset()
-    {
-        _ = _profileView.OutfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Body);
-        _ = _profileView.OutfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Head);
-        _currentDiffNumber = 0;
-        _currentHatNumber = 0;
-        UpdateDifficulty();
-        _ = UpdateHat();
-        _nameInputBox.text = "";
     }
     #endregion
 

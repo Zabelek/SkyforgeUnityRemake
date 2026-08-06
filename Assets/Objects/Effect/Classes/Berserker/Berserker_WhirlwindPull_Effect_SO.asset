@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: Berserker_WhirlwindPull_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_Berserker_WhirlwindPull
   Types: 06000000
   Name: Whirlwind Pull Effect
   Description: Character is pulled towards Berserker.
   Image: {fileID: 21300000, guid: 3ec8e986024735d43b0a872aed1774ec, type: 3}
   IsHidden: 1
+  IsStackable: 0

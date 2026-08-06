@@ -18,6 +18,7 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private GUIGameMenuTopSwitchButton _characterAtlasTopButton;
     [SerializeField] private GUIGameMenuTopSwitchButton _abilitiesTopButton;
     [SerializeField] private GUIGameMenuTopSwitchButton _bagTopButton;
+    [SerializeField] private GUIGameMenuTopSwitchButton _equipmentTopButton;
     private List<GUIGameMenuTopSwitchButton> _topSwitchButtons;
     [Header("Cameras")]
     [Tooltip("Some views have 3D scene to display so that the proper Cinemachine Brain has to be set to a higher priority on the view enter.")]
@@ -34,6 +35,7 @@ public class GUIGameMenu : MonoBehaviour
     [Tooltip("Parent of all abilities view GUI elements placed inside Canvas")]
     [SerializeField] private GUIGameMenuAbilitiesPanelControls _abilitiesControlGroup;
     [SerializeField] private GUIBagControls _bagControlGroup;
+    [SerializeField] private GUIGameMenuEquipmentControls _equipmentControls;
     private List<CanvasGroup> _controlGroups;
     [Header("Settings")]
     [SerializeField] private SettingsManager _settingsManager;
@@ -44,6 +46,9 @@ public class GUIGameMenu : MonoBehaviour
     [SerializeField] private GUIGameMenuStatsPanel _statsPanel;
     [Tooltip("Bottom panel with resources")]
     [SerializeField] private GUIGameMenuResourcesPanel _resourcesPanel;
+    [Header("Player Positions")]
+    [SerializeField] private Transform _playerScene;
+    [SerializeField] private Transform _playerAbilitiesPosition, _playerEquipmentPosition;
     #endregion
 
     #region Mono
@@ -59,12 +64,14 @@ public class GUIGameMenu : MonoBehaviour
         _characterAtlasTopButton.OnClick += CharacterAtlasTopButton_Clicked;
         _abilitiesTopButton.OnClick += AbilitiesTopButton_Clicked;
         _bagTopButton.OnClick += BagTopButton_Clicked;
+        _equipmentTopButton.OnClick += EquipmentTopButton_Clicked;
         _topSwitchButtons = new();
         _topSwitchButtons.Add(_settingsTopButton);
         _topSwitchButtons.Add(_systemTopButton);
         _topSwitchButtons.Add(_characterAtlasTopButton);
         _topSwitchButtons.Add(_abilitiesTopButton);
         _topSwitchButtons.Add(_bagTopButton);
+        _topSwitchButtons.Add(_equipmentTopButton);
         foreach (var button in _topSwitchButtons)
         {
             button.OnClick += MenuButton_DeselectRest;
@@ -73,10 +80,10 @@ public class GUIGameMenu : MonoBehaviour
         _controlGroups.Add(_settingsControlsGroup);
         _controlGroups.Add(_systemControlsGroup);
         _controlGroups.Add(_atlasControlsGroup.GetComponent<CanvasGroup>());
-        _controlGroups.Add(_abilitiesControlGroup.GetComponent<CanvasGroup>());        
+        _controlGroups.Add(_abilitiesControlGroup.GetComponent<CanvasGroup>());
         _controlGroups.Add(_bagControlGroup.GetComponent<CanvasGroup>());
+        _controlGroups.Add(_equipmentControls.GetComponent<CanvasGroup>());
     }
-
     private void OnDestroy()
     {
         SkyforgeLoader.GUIGameMenu = null;
@@ -99,6 +106,10 @@ public class GUIGameMenu : MonoBehaviour
         {
             _settingsManager.ApplySceneSettings();
             _settingsWindow.LoadFromSettings();
+        }
+        if(SkyforgeLoader.EquipmentChanged)
+        {
+            _equipmentControls.UpdateValues();
         }
         _ = _blackFade.StartFadeOut();
     }
@@ -150,6 +161,9 @@ public class GUIGameMenu : MonoBehaviour
         await _abilitiesControlGroup.UpdateView(true);
         _abilitiesTopButton.SetToggled(true);
         MenuButton_DeselectRest(_settingsTopButton, EventArgs.Empty);
+        _playerScene.transform.SetParent(_playerAbilitiesPosition);
+        _playerScene.localPosition = Vector3.zero;
+        _playerScene.localRotation = Quaternion.Euler(Vector3.zero);
         _ =  _blackFade.StartFadeOut();
     }
     public void ShowBagView()
@@ -162,6 +176,22 @@ public class GUIGameMenu : MonoBehaviour
         _bagControlGroup.UpdateView();
         _bagTopButton.SetToggled(true);
         MenuButton_DeselectRest(_bagTopButton, EventArgs.Empty);
+    }
+    private async Task ShowEquipmentView()
+    {
+        await _blackFade.StartFadeIn();
+        _atlasCinemachineBrain.Priority = 1;
+        _emptyCinemachineBrain.Priority = 1;
+        _characterCinemachineBrain.Priority = 5;
+        CloseAllControlGroups();
+        _equipmentControls.gameObject.SetActive(true);
+        _equipmentControls.UpdateValues();
+        _equipmentTopButton.SetToggled(true);
+        MenuButton_DeselectRest(_equipmentTopButton, EventArgs.Empty);
+        _playerScene.transform.SetParent(_playerEquipmentPosition);
+        _playerScene.localPosition = Vector3.zero;
+        _playerScene.localRotation = Quaternion.Euler(Vector3.zero);
+        _ = _blackFade.StartFadeOut();
     }
     private void CloseAllControlGroups()
     {
@@ -197,6 +227,10 @@ public class GUIGameMenu : MonoBehaviour
     private void BagTopButton_Clicked(object sender, EventArgs e)
     {
         ShowBagView();
+    }
+    private void EquipmentTopButton_Clicked(object sender, EventArgs e)
+    {
+        _ = ShowEquipmentView();
     }
     private void MenuButton_DeselectRest(object sender, EventArgs e)
     {

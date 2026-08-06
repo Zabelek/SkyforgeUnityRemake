@@ -23,6 +23,7 @@ public static class SkyforgeLoader
     public static GUIGameplayControls GUIGameplayControls;
     public static bool SettingsChanged;
     public static bool PerksChanged;
+    public static bool EquipmentChanged;
     //variables used only for the main menu to see of the player just finished the game, so that the Argus end lines can play
     public static bool HardestDiffBeaten = false;
     public static bool GameBeaten = false;
@@ -161,6 +162,7 @@ public static class SkyforgeLoader
             }
             SettingsChanged = false;
             PerksChanged = false;
+            EquipmentChanged = false;
         }
     }
     public static void EnablePerk(PerkSO perkSO)

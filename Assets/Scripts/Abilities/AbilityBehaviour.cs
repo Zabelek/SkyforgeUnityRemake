@@ -25,7 +25,15 @@ public class AbilityBehaviour : MonoBehaviour
     //Used when UpdateAbility in inheriting abilities needs to know if base.UpdateAbility ended the ability in the current iteration.
     [HideInInspector] public bool Finishing;
     //events
-    public EventHandler OnAbilityStart, OnAbilityEnd, OnAbilityHit;
+    public EventHandler<AbilityStateEventArgs> OnAbilityStart, OnAbilityEnd, OnAbilityHit;
+    public class AbilityStateEventArgs : EventArgs
+    {
+        public CharacterBehaviour Performer;
+        public AbilityStateEventArgs(CharacterBehaviour performer)
+        {
+            Performer = performer;
+        }
+    }
     #endregion
 
     #region Methods
@@ -90,7 +98,7 @@ public class AbilityBehaviour : MonoBehaviour
             else
                 ((MonsterBehaviour)performer).CurrentlyUpdatedAbilities.Add(this);
         }
-        OnAbilityStart?.Invoke(this, EventArgs.Empty);
+        OnAbilityStart?.Invoke(this, new AbilityStateEventArgs(performer));
     }
     protected virtual void LockControl(CharacterBehaviour performer)
     {
@@ -149,7 +157,7 @@ public class AbilityBehaviour : MonoBehaviour
             ((MonsterBehaviour)performer).RecentlyFinishedAbilities.Add(this);
         }
         Finishing = true;
-        OnAbilityEnd?.Invoke(this, EventArgs.Empty);
+        OnAbilityEnd?.Invoke(this, new AbilityStateEventArgs(performer));
     }
     public virtual bool CheckPerformAvailability(CharacterBehaviour performer)
     {
@@ -164,7 +172,7 @@ public class AbilityBehaviour : MonoBehaviour
     public virtual void PerformHit(CharacterBehaviour performer)
     {
         _hitPerformed = true;
-        OnAbilityHit?.Invoke(this, EventArgs.Empty);
+        OnAbilityHit?.Invoke(this, new AbilityStateEventArgs(performer));
     }
     public virtual void PerformHit(CharacterBehaviour performer, GameObject[] targets)
     {

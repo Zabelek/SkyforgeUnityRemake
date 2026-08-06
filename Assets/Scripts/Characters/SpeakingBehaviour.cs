@@ -7,7 +7,7 @@ public class SpeakingBehaviour : MonoBehaviour
     [Tooltip("Drag all the character's voiceline Sound Effect Scriptable Objects here")]
     [SerializeField] private SoundEffectSO[] _voiceLines;
     [Tooltip("Speaker's Character Behaviour")]
-    [SerializeField] private CharacterBehaviour _character;
+    [SerializeField] private Transform _character;
     #endregion
 
     #region Methods
@@ -16,7 +16,7 @@ public class SpeakingBehaviour : MonoBehaviour
         if(attackWeight > (float)Random.Range(0, 100)/100f)
         {
             var line = _voiceLines.FirstOrDefault(line => line.Name == "Combat_Shout");
-            if(line!=null)
+            if(line!=null && _character != null)
             {
                 Globals.Instance.SoundManager.PlayVoiceFast(line.AudioClips[Random.Range(0, line.AudioClips.Length)], _character.transform, line.VolumeModifier);
             }
@@ -25,7 +25,7 @@ public class SpeakingBehaviour : MonoBehaviour
     public void Sigh()
     {
         var line = _voiceLines.FirstOrDefault(line => line.Name == "Sigh");
-        if (line != null)
+        if (line != null && _character != null)
         {
             Globals.Instance.SoundManager.PlayVoiceFast(line.AudioClips[Random.Range(0, line.AudioClips.Length)], _character.transform, line.VolumeModifier);
         }
@@ -35,7 +35,7 @@ public class SpeakingBehaviour : MonoBehaviour
         if (hurtWeight > (float)Random.Range(0, 100) / 100f)
         {
             var line = _voiceLines.FirstOrDefault(line => line.Name == "Hurt");
-            if (line != null)
+            if (line != null && _character != null)
             {
                 Globals.Instance.SoundManager.PlaySFXFast(line.AudioClips[Random.Range(0, line.AudioClips.Length)], _character.transform, line.VolumeModifier);
             }
@@ -44,7 +44,7 @@ public class SpeakingBehaviour : MonoBehaviour
     public void SpeakLine(string lineName)
     {
         var line = _voiceLines.FirstOrDefault(line => line.Name == lineName);
-        if (line != null)
+        if (line != null && _character != null)
         {
             Globals.Instance.SoundManager.PlayVoiceFast(line.AudioClips[Random.Range(0, line.AudioClips.Length)], _character.transform, line.VolumeModifier);
         }
@@ -54,7 +54,7 @@ public class SpeakingBehaviour : MonoBehaviour
         if (idleWeight > (float)Random.Range(0, 100) / 100f)
         {
             var line = _voiceLines.FirstOrDefault(line => line.Name == "Idle");
-            if (line != null)
+            if (line != null && _character != null)
             {
                 Globals.Instance.SoundManager.PlaySFXFast(line.AudioClips[Random.Range(0, line.AudioClips.Length)], _character.transform, line.VolumeModifier);
             }

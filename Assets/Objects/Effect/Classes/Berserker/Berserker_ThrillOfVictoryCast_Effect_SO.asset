@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: Berserker_ThrillOfVictoryCast_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_Berserker_ThrillOfVictoryCast
   Types: 
   Name: Thrill of Victory Cast
   Description: Next Destructive Attack will make enemies 30% more vulnerable to damage

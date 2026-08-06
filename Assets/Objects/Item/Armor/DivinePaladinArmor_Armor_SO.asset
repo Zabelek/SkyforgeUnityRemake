@@ -17,6 +17,8 @@ MonoBehaviour:
   Description: Maybe a divine, but with such a short skirt, definitely not saint...
   InterfaceSprite: {fileID: 21300000, guid: bc47189d189d0344687dc10cd321904c, type: 3}
   IsStackable: 0
-  Rarity: 1
+  Rarity: 2
+  CanBeQuickAccessed: 0
   OutfitSO: {fileID: 11400000, guid: 1179431a14ad72c4982ccadbc4b02b90, type: 2}
-  BaseDefense: 0.2
+  BaseArmorAmount: 0.2
+  _prefab: {fileID: 8862405662896891928, guid: be5669c4b551f144ab40f7aca027d4e3, type: 3}

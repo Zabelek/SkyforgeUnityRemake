@@ -25,7 +25,7 @@ public class WeaponBehaviour : MonoBehaviour
     #endregion
 
     #region Mono
-    private void Start()
+    protected void Awake()
     {
         SetTrail(false);
         if (!StartDrawn)
@@ -70,18 +70,21 @@ public class WeaponBehaviour : MonoBehaviour
     #endregion
 
     #region Methods
-    public virtual void Equip(HeroBehaviour hero, Transform slot)
+    public virtual void Equip(HeroBehaviour hero, Transform slot, bool onlyVisual)
     {
         transform.SetParent(slot);
         gameObject.SetActive(true);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         transform.localScale = new Vector3(1, 1, 1);
+        if (hero.CombatStance)
+            SetWeaponDraw();
     }
-    public virtual void Unequip(HeroBehaviour hero)
+    public virtual void Unequip(HeroBehaviour hero, bool onlyVisual)
     {
         transform.SetParent(null);
         gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
     public void PlaySound(string soundName)
     {

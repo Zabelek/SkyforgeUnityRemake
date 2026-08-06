@@ -11,10 +11,10 @@ public class PlayerBehaviour : HeroBehaviour
     #region Variables
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
     [SerializeField] private Camera _camera;
-    //to remove once equipment system is introduced
+    //to remove once character customization is introduced
     [SerializeField] private WeaponSO _debugWeaponSlot;
-    [SerializeField] private GameObject _armor;
-    [SerializeField] private GameObject _hood;
+    [SerializeField] private OutfitSO _debugOutfitSlot;
+    [SerializeField] private OutfitSO _debugHeadwearSlot;
     public event EventHandler OnPlayerRessurected;
     //emotes
     public EmoteSO DebugSleepEmote;
@@ -42,7 +42,7 @@ public class PlayerBehaviour : HeroBehaviour
     protected new void Awake()
     {
         base.Awake();
-        EquipWeapon(Instantiate(_debugWeaponSlot.GetMesh().GetComponent<WeaponBehaviour>()));
+        EquipWeapon(Instantiate(_debugWeaponSlot.GetPrefab().GetComponent<WeaponBehaviour>()));
         CombatStance = false;
         if(_inputBehaviour!= null)
         {
@@ -82,7 +82,7 @@ public class PlayerBehaviour : HeroBehaviour
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        EquippedWeapon.Unequip(this);
+        EquippedWeapon.Unequip(this, _isMenuPreview);
     }
     #endregion
 
@@ -424,6 +424,9 @@ public class PlayerBehaviour : HeroBehaviour
         if(canMove == false)
             IsRunning = false;
     }
+    #endregion
+
+    #region ProfileSyncMethods
     public override void SyncPerks(bool addOnly)
     {
         if(SkyforgeLoader.PerkRegistry != null && SkyforgeLoader.CurrentProfile != null)
@@ -484,7 +487,11 @@ public class PlayerBehaviour : HeroBehaviour
     public IEnumerator DelayedInitSequence()
     {
         yield return new WaitForSeconds(2);
-        SyncPerks(false);
+        if(SkyforgeLoader.CurrentProfile != null)
+        {
+            SyncPerks(false);
+            SyncEquipment();
+        }
     }
     protected override void ChangeClass(HeroClassBehaviour nextClass)
     {
@@ -532,6 +539,48 @@ public class PlayerBehaviour : HeroBehaviour
                 DashChargeMax -= perk.Perk.Value;
         }
         base.ManagePerkRemoval(perk);
+    }
+    public override void EnemyKilled(CharacterBehaviour enemy)
+    {
+        base.EnemyKilled(enemy);
+        SkyforgeLoader.CurrentProfile.Prestige += 69;
+    }
+    public void SyncEquipment()
+    {
+        SyncEquipment(SkyforgeLoader.CurrentProfile);
+    }
+    public void SyncEquipment(UserProfile profile)
+    {
+        if(profile == null)
+        {
+            EquipWeapon(_debugWeaponSlot.GetPrefab());
+            if (EquippedArmor != null)
+                _ = EquipArmor(null);
+            _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
+        }
+        else
+        {
+            var weapon = profile.GetEquipment(Equipment.InventoryType.Weapon);
+            if (weapon != null)
+            {
+                EquipWeapon((weapon.ItemSO as WeaponSO)?.GetPrefab());
+            }
+            else
+            {
+                EquipWeapon(_debugWeaponSlot.GetPrefab());
+            }
+            var armor = profile.GetEquipment(Equipment.InventoryType.Armor);
+            if (armor != null)
+            {
+                _ = EquipArmor((armor.ItemSO as ArmorSO)?.GetPrefab());
+            }
+            else
+            {
+                if (EquippedArmor != null)
+                    _ = EquipArmor(null);
+                _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
+            }
+        }
     }
     #endregion
 }

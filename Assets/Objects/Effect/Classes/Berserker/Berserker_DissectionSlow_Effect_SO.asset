@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: Berserker_DissectionSlow_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_Berserker_DissectionSlow
   Types: 01000000
   Name: Dissection Slow
   Description: Movement speed is decreased by 90%
   Image: {fileID: 21300000, guid: 7d787143b0d658e479d731c2209a15e3, type: 3}
   IsHidden: 0
+  IsStackable: 0

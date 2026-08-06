@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c29895c0b8a4b41bae37057d147058, type: 3}
+  m_Name: Ragnar_Weapon_SO
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
+  ID: Base_Weapon_Ragnar
+  Name: Ragnar, Deadly Heat
+  Description: When the berserker kills enemies, they have Bloodlust applied to them,
+    which stacks up to 100 times. The stronger the enemy, the more stacks are applied
+    upon its death. For each level of Bloodlust, the damage of Whirlwind and Firestorm
+    is increased by 4%
+  InterfaceSprite: {fileID: 21300000, guid: 1ef7acdb0b9e6e14a9cd03fb5557c7a6, type: 3}
+  IsStackable: 0
+  Rarity: 4
+  Type: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}
+  _weaponPrefab: {fileID: 4894971061374860798, guid: 2f03542c0e9d10846b2cbf4d352ada18, type: 3}
+  _baseDamage: 5

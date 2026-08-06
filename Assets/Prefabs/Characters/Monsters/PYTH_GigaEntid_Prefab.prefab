@@ -47,7 +47,7 @@ MonoBehaviour:
   _voiceLines:
   - {fileID: 11400000, guid: e20e118a5507e5744ba508e1c7acbfca, type: 2}
   - {fileID: 11400000, guid: 3b0eaea57379fac4b9f428d4ff6f6863, type: 2}
-  _character: {fileID: 8068525531027868093}
+  _character: {fileID: 721600446491105381}
 --- !u!1001 &975340159335726990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -871,6 +871,9 @@ MonoBehaviour:
   Faction: {fileID: 11400000, guid: 63366e57caf6905499a508bc7ee5f3f0, type: 2}
   _renderers:
   - {fileID: 5693019206751730240}
+  FadedIntoScene: 1
+  KillBelowScene: 1
+  StartCombatProtectionTimer: 0
   BaseAttack: {fileID: 5683881205636302792, guid: 329551972ef6fda4dac211f8b321efa9, type: 3}
   SpecialAttack: {fileID: 0}
   CurrentlyUpdatedAbilities: []

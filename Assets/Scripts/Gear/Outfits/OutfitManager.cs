@@ -14,6 +14,7 @@ public class OutfitManager : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _fullBodyMesh;
     [SerializeField] private SkinnedMeshRenderer _noLegsAndHandsMesh;
     [SerializeField] private SkinnedMeshRenderer _onlyHeadAndNeckMesh;
+    [SerializeField] private SkinnedMeshRenderer _handsFeetHalf;
     private List<OutfitBehaviour> _wornOutfits;
     public bool _profileSyncAtStart;
     private List<CapsuleCollider> _currentClothColliders;
@@ -30,7 +31,6 @@ public class OutfitManager : MonoBehaviour
         _rootBone = _fullBodyMesh.rootBone;
         if (_profileSyncAtStart && SkyforgeLoader.CurrentProfile!=null)
         {
-            _ = EquipOutfit(0, OutfitSO.OutfitSlot.Body);
             _ = EquipOutfit(SkyforgeLoader.CurrentProfile.HatNumber, OutfitSO.OutfitSlot.Head);
         }
     }
@@ -43,6 +43,15 @@ public class OutfitManager : MonoBehaviour
             _wornOutfits = new();
         var newMesh = await SkyforgeLoader.LoadOutfit(outfitID, slot, _character.transform);
         var previous = _wornOutfits.FirstOrDefault(o => o.OutfitSO.Slot == slot);
+        //Sometimes worn outfits contain destroyed game objects, which are null, but have assigned values in the sane time. They have to be manually removed (Unity is fun)
+        try
+        {
+            if(previous == null && previous.OutfitSO!=null)
+            {
+                _wornOutfits.Remove(previous);
+            }
+        }
+        catch { }
         if (previous != null && newMesh != null)
         {
             _wornOutfits.Remove(previous);
@@ -203,7 +212,8 @@ public class OutfitManager : MonoBehaviour
         bool fullBodyCovered = false;
         bool handsLegsBreastCovered = false;
         bool headCovered = false;
-        foreach(var outfit in _wornOutfits)
+        bool handsFeetHalf = false;
+        foreach (var outfit in _wornOutfits)
         {
             if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Full_Body)
             {
@@ -216,13 +226,22 @@ public class OutfitManager : MonoBehaviour
             if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Full_Head)
             {
                 headCovered = true;
+            }            
+            if (outfit.OutfitSO.Covers == OutfitSO.CoverType.Hands_Feet_Half)
+            {
+                handsFeetHalf = true;
             }
         }
         _fullBodyMesh.gameObject.SetActive(false);
         _noLegsAndHandsMesh.gameObject.SetActive(false);
-        if(handsLegsBreastCovered)
+        _handsFeetHalf.gameObject.SetActive(false);
+        if (handsLegsBreastCovered)
         {
             _noLegsAndHandsMesh.gameObject.SetActive(true);
+        }
+        else if (handsFeetHalf)
+        {
+            _handsFeetHalf.gameObject.SetActive(true);
         }
         else if(fullBodyCovered==false)
         {

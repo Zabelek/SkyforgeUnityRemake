@@ -16,6 +16,15 @@ public class CharacterBehaviour : MonoBehaviour
     public event EventHandler OnDeath;
     public event EventHandler OnResurrect;
     public event EventHandler OnCutscene;
+    public event EventHandler<EnemyKillEventArgs> OnEnemyKill;
+    public class EnemyKillEventArgs : EventArgs
+    {
+        public CharacterBehaviour KilledCharacter;
+        public EnemyKillEventArgs(CharacterBehaviour killedCharacter)
+        {
+            KilledCharacter = killedCharacter;
+        }
+    }
     [Header("Character Related Variables")]
     [Tooltip("Character Scriptable Object with all basic information")]
     [SerializeField] public CharacterBaseSO CharacterSO;
@@ -97,13 +106,7 @@ public class CharacterBehaviour : MonoBehaviour
     {
         Stats = new();
         Stats.Reset(CharacterSO);
-        Stats.CurrentHP = Stats.MaxHP;
         _colliders = GetComponentsInChildren<Collider>();
-        var navAgent = GetComponent<NavMeshAgent>();
-        if (navAgent != null)
-            _orbDroppingCollisionRadius = navAgent.radius;
-        else
-            _orbDroppingCollisionRadius = 1;
         _effectManager = new EffectManager(this);
         ActiveEnemies = new();
         if(this is not PlayerBehaviour)
@@ -130,6 +133,7 @@ public class CharacterBehaviour : MonoBehaviour
         {
             DefaultRadius = 1;
         }
+        _orbDroppingCollisionRadius = DefaultRadius;
     }
     protected virtual void Start()
     {
@@ -301,7 +305,7 @@ public class CharacterBehaviour : MonoBehaviour
             }
         }
     }
-    private void HandleDamageEffects(Damage damage)
+    protected virtual void HandleDamageEffects(Damage damage)
     {
         if (Stats.Defense > 0)
         {
@@ -347,10 +351,7 @@ public class CharacterBehaviour : MonoBehaviour
         {
             aiHandler.enabled = false;
         }
-        if(killer is PlayerBehaviour && SkyforgeLoader.CurrentProfile!=null)
-        {
-            SkyforgeLoader.CurrentProfile.Prestige += 69;
-        }
+        killer.EnemyKilled(this);
     }
     public virtual void KillOffCombat()
     {
@@ -425,6 +426,13 @@ public class CharacterBehaviour : MonoBehaviour
             {
                 _effectManager.AddEffect(effect);
             }
+        }
+    }
+    public void AddEffectStacks(GameplayEffectBehaviour effect, short stacksToAdd, short maxAmount)
+    {
+        if (!IsDead)
+        {
+            _effectManager.AddEffectStacks(effect, stacksToAdd, maxAmount);
         }
     }
     public void RemoveEffect(GameplayEffectBehaviour effect)
@@ -645,6 +653,10 @@ public class CharacterBehaviour : MonoBehaviour
             return _effectManager.CanMove();
         else
             return false;
+    }
+    public virtual void EnemyKilled(CharacterBehaviour enemy)
+    {
+        OnEnemyKill?.Invoke(this, new EnemyKillEventArgs(enemy));
     }
     #endregion
 

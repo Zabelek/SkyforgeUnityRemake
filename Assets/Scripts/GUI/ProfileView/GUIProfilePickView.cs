@@ -44,9 +44,8 @@ public class GUIProfilePickView : MonoBehaviour
         _nameTextBox.text = userProfile.Name;
         _difficultyTextBox.text = userProfile.Difficulty.Name;
         _PrestigeTextBox.text = userProfile.Prestige.ToString();
-        var task1 = _profileView.OutfitManager.EquipOutfit(0, OutfitSO.OutfitSlot.Body);
-        var task2 = _profileView.OutfitManager.EquipOutfit(userProfile.HatNumber, OutfitSO.OutfitSlot.Head);
-        await Task.WhenAll(task1, task2);
+        _profileView.PlayerVisualization.SyncEquipment(userProfile);
+        await _profileView.OutfitManager.EquipOutfit(userProfile.HatNumber, OutfitSO.OutfitSlot.Head);
         if (animateRig)
         {
             _profileView.PlayerVisualization.PlayAnimation("MenuStart", true);

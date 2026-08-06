@@ -10,4 +10,5 @@ public class ItemSO : ScriptableObject
     public Sprite InterfaceSprite;
     public bool IsStackable = false;
     public RarityLevel Rarity;
+    public bool CanBeQuickAccessed = false;
 }

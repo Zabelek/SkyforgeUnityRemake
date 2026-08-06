@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: PYTH_EntidThirdAbilitySlow_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_PYTH_EntidThirdAbilitySlow
   Types: 01000000
   Name: Slow
   Description: Movement speed is reduced by 50%

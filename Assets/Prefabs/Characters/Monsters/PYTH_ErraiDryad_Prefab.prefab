@@ -38962,6 +38962,8 @@ MonoBehaviour:
   - {fileID: 2611044921144872401}
   - {fileID: 4488499470939178170}
   FadedIntoScene: 0
+  KillBelowScene: 1
+  StartCombatProtectionTimer: 0
   BaseAttack: {fileID: 6496215473884992040, guid: d94964254f36bc442b94d705ed20514c, type: 3}
   SpecialAttack: {fileID: 0}
   CurrentlyUpdatedAbilities: []

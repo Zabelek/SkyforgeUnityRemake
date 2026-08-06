@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53da58833f9bd4288fed18de76eb10, type: 3}
   m_Name: Berserker_Gladiator_Effect_SO
   m_EditorClassIdentifier: Assembly-CSharp::EffectSO
+  ID: Base_Berserker_Gladiator
   Types: 
   Name: Gladiator
   Description: 'The Berserker unlocks an attack that deals $X damage to the opponent
@@ -19,3 +20,4 @@ MonoBehaviour:
     Duration: 9 seconds'
   Image: {fileID: 21300000, guid: b40659d636e225245a7aa5f99c0feaa2, type: 3}
   IsHidden: 0
+  IsStackable: 0

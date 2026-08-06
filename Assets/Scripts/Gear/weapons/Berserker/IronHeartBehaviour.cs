@@ -12,42 +12,48 @@ public class IronHeartBehaviour : WeaponBehaviour
     #endregion
 
     #region Methods
-    public override void Equip(HeroBehaviour hero, Transform slot)
+    public override void Equip(HeroBehaviour hero, Transform slot, bool onlyVisual)
     {
-        base.Equip(hero, slot);       
-        if (hero is PlayerBehaviour)
+        base.Equip(hero, slot, onlyVisual);
+        if(!onlyVisual)
         {
-            ((PlayerBehaviour)hero).OnCompanionAttack += CompanionAttack_Performed;
+            if (hero is PlayerBehaviour)
+            {
+                ((PlayerBehaviour)hero).OnCompanionAttack += CompanionAttack_Performed;
+            }
+            _gladiatorAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator");
+            if (_gladiatorAbility != null)
+            {
+                _gladiatorAbility.OnAbilityHit += Gladiator_Enter;
+            }
+            _gladiatorStrikeAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator Strike");
+            {
+                _gladiatorStrikeAbility.OnAbilityHit += GladiatorStrike_Performed;
+            }
+            _hero = hero;
         }
-        _gladiatorAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator");
-        if (_gladiatorAbility != null)
-        {
-            _gladiatorAbility.OnAbilityHit += Gladiator_Enter;
-        }
-        _gladiatorStrikeAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator Strike");
-        {
-            _gladiatorStrikeAbility.OnAbilityHit += GladiatorStrike_Performed; 
-        }
-        _hero = hero;
     }
-    public override void Unequip(HeroBehaviour hero)
+    public override void Unequip(HeroBehaviour hero, bool onlyVisual)
     {
-        base.Unequip(hero);
-        if (hero is PlayerBehaviour)
+        base.Unequip(hero, onlyVisual);
+        if (!onlyVisual)
         {
-            ((PlayerBehaviour)hero).OnCompanionAttack -= CompanionAttack_Performed;
+            if (hero is PlayerBehaviour)
+            {
+                ((PlayerBehaviour)hero).OnCompanionAttack -= CompanionAttack_Performed;
+            }
+            if (_gladiatorAbility != null)
+            {
+                _gladiatorAbility.OnAbilityHit -= Gladiator_Enter;
+            }
+            _gladiatorStrikeAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator Strike");
+            {
+                _gladiatorStrikeAbility.OnAbilityHit -= GladiatorStrike_Performed;
+            }
+            _hero = null;
+            _gladiatorAbility = null;
+            _gladiatorStrikeAbility = null;
         }
-        if(_gladiatorAbility != null)
-        {
-            _gladiatorAbility.OnAbilityHit -= Gladiator_Enter;
-        }
-        _gladiatorStrikeAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Gladiator Strike");
-        {
-            _gladiatorStrikeAbility.OnAbilityHit -= GladiatorStrike_Performed;
-        }
-        _hero = null;
-        _gladiatorAbility = null;
-        _gladiatorStrikeAbility = null;
     }
     #endregion
 

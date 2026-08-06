@@ -113,6 +113,13 @@ public class AIHandlerBehaviour : MonoBehaviour
         ManageStuck();
         AgentToRigidbodyMovement();
     }
+    private void OnDisable()
+    {
+        RegisteredAgents.Remove(_agent);
+    }
+    #endregion
+
+    #region Methods
     private void ManageStuck()
     {
         if (_agentActive == true)
@@ -128,7 +135,7 @@ public class AIHandlerBehaviour : MonoBehaviour
                 _lastPosition = this.transform.position;
                 _unstuckTimer = 0;
             }
-            if (_agent.velocity.magnitude == 0 && (_agent.destination - this.transform.position).magnitude<0.5f)
+            if (_agent.velocity.magnitude == 0 && (_agent.destination - this.transform.position).magnitude < 0.5f)
             {
                 DeactivatenavmeshAgent();
             }
@@ -143,7 +150,7 @@ public class AIHandlerBehaviour : MonoBehaviour
     private void AgentToRigidbodyMovement()
     {
         //new movement method, mot fully tested yet
-        if(_rigidbody.isKinematic == false && _character.CanMove())
+        if (_rigidbody.isKinematic == false && _character.CanMove())
         {
             _agent.nextPosition = _rigidbody.position;
             var yValue = _agent.velocity.y;
@@ -183,13 +190,6 @@ public class AIHandlerBehaviour : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, appliedVector, Time.fixedDeltaTime * _agent.angularSpeed / 70);
         }*/
     }
-    private void OnDisable()
-    {
-        RegisteredAgents.Remove(_agent);
-    }
-    #endregion
-
-    #region Methods
     public virtual void CheckForNewEnemy()
     {
         if (_currentEnemy?.IsDead == true)

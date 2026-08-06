@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class HeroBehaviour : CharacterBehaviour
@@ -24,9 +25,11 @@ public class HeroBehaviour : CharacterBehaviour
     protected List<ChoosablePerkSet> _perkSets;
     public event EventHandler<PerkChangeEventArgs> OnPerkChange;
     public WeaponBehaviour EquippedWeapon { get; protected set; }
+    public ArmorBehaviour EquippedArmor { get; protected set; }
     public bool CanDash { get; set; }
     //to prevent spamming draw/hide weapon aminations
     protected float _nextDrawStateChangeTimer;
+    [SerializeField] protected bool _isMenuPreview;
     #endregion
 
     #region Mono
@@ -195,12 +198,27 @@ public class HeroBehaviour : CharacterBehaviour
     }
     public virtual void EquipWeapon(WeaponBehaviour weapon)
     {
-        if (EquippedWeapon != null)
+        if(weapon != null)
         {
-            EquippedWeapon.Unequip(this);         
+            if (EquippedWeapon != null)
+            {
+                EquippedWeapon.Unequip(this, _isMenuPreview);
+            }
+            EquippedWeapon = Instantiate(weapon, _weaponTransformSlot);
+            EquippedWeapon.Equip(this, _weaponTransformSlot, _isMenuPreview);
         }
-        EquippedWeapon = weapon;       
-        EquippedWeapon.Equip(this, _weaponTransformSlot);
+    }
+    public virtual async Task EquipArmor(ArmorBehaviour armor)
+    {
+        if (EquippedArmor != null)
+        {
+            EquippedArmor.Unequip(this, _isMenuPreview);
+        }
+        if (armor != null)
+        {
+            EquippedArmor = Instantiate(armor, this.transform);
+            EquippedArmor.AssignWornOutfit(await _outfitManager.EquipOutfit(armor.OutfitSO.ObjectID, armor.OutfitSO.Slot));
+        }
     }
     public virtual void ChangeWeaponOutState(object sender, EventArgs e)
     {
@@ -377,6 +395,16 @@ public class HeroBehaviour : CharacterBehaviour
             return base.GetMovementSpeedModifiers() * GetHeroClass().HeroClassSO.CombatMovementSpeedMultiplier;
         else
             return base.GetMovementSpeedModifiers();
+    }
+    protected override void HandleDamageEffects(Damage damage)
+    {
+        base.HandleDamageEffects(damage);
+        if(EquippedArmor!=null)
+        {
+            damage.Amount -= (int)(damage.Amount * EquippedArmor.ArmorSO.BaseArmorAmount);
+            if (damage.Amount < 1)
+                damage.Amount = 1;
+        }
     }
     #endregion
 }
