@@ -189,5 +189,34 @@ public class Equipment
         WeaponSlot = new();
         ArmorSlot = new();
     }
+    public Item Equip(Item item, Equipment.InventoryType invType)
+    {
+        Item ret = null;
+        if (invType == Equipment.InventoryType.Armor)
+        {
+            ret = ArmorSlot.Item;
+            ArmorSlot.Item = item;
+            SkyforgeLoader.EquipmentChanged = true;
+        }
+        else if (invType == Equipment.InventoryType.Weapon)
+        {
+            ret = WeaponSlot.Item;
+            WeaponSlot.Item = item;
+            SkyforgeLoader.EquipmentChanged = true;
+        }
+        return ret;
+    }
+    public Item GetEquipment(Equipment.InventoryType invType)
+    {
+        if (invType == Equipment.InventoryType.Armor)
+        {
+            return ArmorSlot.Item;
+        }
+        else if (invType == Equipment.InventoryType.Weapon)
+        {
+            return WeaponSlot.Item;
+        }
+        else return null;
+    }
     #endregion
 }

@@ -54,7 +54,6 @@ public class ScenarioManager : MonoBehaviour
             child.SetManager(this);
         }
         StartCoroutine(DelayedInitSequence(SceneStartDelay));
-        StartCoroutine(_player.DelayedInitSequence());
         _player.OnPlayerRessurected += Resurrect_Performed;
         _spawnPoint = _player.transform.position;
     }

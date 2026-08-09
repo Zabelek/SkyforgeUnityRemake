@@ -3,8 +3,6 @@ using UnityEngine.AI;
 
 public class DashAbilityBehaviour : AbilityBehaviour
 {
-    protected const float DASH_CHARGE_REQUIREMENT = 10;
-
     #region Variables
     [Header("Dash Ability")]
     [Tooltip("Particles to be spawned on dash")]
@@ -56,10 +54,10 @@ public class DashAbilityBehaviour : AbilityBehaviour
         if(_particleBase != null)
             _currentParticles = Instantiate(_particleBase, performer.transform.position, performer.transform.rotation);
         _initialVector = performer.transform.position;
-        if (performer is PlayerBehaviour)
+        if (performer is HeroBehaviour)
         {
             _destinationVector = performer.transform.position + ((PlayerBehaviour)performer).LastMovementDirection * _dashLength;
-            ((PlayerBehaviour)performer).DashCharge -= DASH_CHARGE_REQUIREMENT;
+            ((HeroStats)(performer.Stats)).CurrentDashCharge -= HeroBehaviour.DASH_COST;
         }
         else
         {
@@ -77,7 +75,7 @@ public class DashAbilityBehaviour : AbilityBehaviour
             {
                 if (performer is PlayerBehaviour)
                 {
-                    if(((PlayerBehaviour)performer).DashCharge >= DASH_CHARGE_REQUIREMENT && ((PlayerBehaviour)performer).LastMovementDirection != Vector3.zero)
+                    if(((HeroStats)(performer.Stats)).CurrentDashCharge >= HeroBehaviour.DASH_COST && ((PlayerBehaviour)performer).LastMovementDirection != Vector3.zero)
                         return base.CheckPerformAvailability(performer);
                 }
                 else

@@ -8,6 +8,8 @@ using UnityEngine;
 public class HeroBehaviour : CharacterBehaviour
 {
     private const float WEAPON_HIDE_DRAW_DURATION_TRESHOLD = 1.5f;
+    public const float DASH_COST = 10;
+    public const float COMPANION_ATTACK_COST = 10;
 
     public class PerkChangeEventArgs : EventArgs
     {
@@ -30,12 +32,24 @@ public class HeroBehaviour : CharacterBehaviour
     //to prevent spamming draw/hide weapon aminations
     protected float _nextDrawStateChangeTimer;
     [SerializeField] protected bool _isMenuPreview;
+
+    protected HeroStats _heroStats;
+    protected HeroBaseSO _heroBaseSO;
     #endregion
 
     #region Mono
     protected override void Awake()
     {
         base.Awake();
+        if (CharacterSO is not HeroBaseSO)
+            Debug.LogError("Player needs HeroStatsSO, not regular CharacterStats SO!");
+        else
+        {
+            Stats = new HeroStats();
+            Stats.Reset(CharacterSO);
+            _heroStats = Stats as HeroStats;
+            _heroBaseSO = CharacterSO as HeroBaseSO;
+        }
         _perks = new();
         _perkSets = new();
         CanDash = true;

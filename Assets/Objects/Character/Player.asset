@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05aa26ef71abf474fb7882d9834677c3, type: 3}
+  m_Script: {fileID: 11500000, guid: e13cc9139f84c194884569d783739791, type: 3}
   m_Name: Player
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterSO
+  m_EditorClassIdentifier: Assembly-CSharp::HeroBaseSO
   Name: Player
   Category: {fileID: 11400000, guid: 5b11e91df1c4e934f8dbfcee5ec7bcf7, type: 2}
   CCResistant: 0
@@ -22,3 +22,10 @@ MonoBehaviour:
   BaseDamage: 0
   CriticalChance: 0
   CombatManaRegen: 1
+  Defense: 0
+  Vampirism: 0
+  Stability: 0
+  MaxDamage: 0
+  DashChargeMax: 25
+  CompanionChargeMax: 17
+  CompanionDamage: 5

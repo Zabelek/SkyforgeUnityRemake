@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skyforge Scriptable Objects/CharacterBaseSO")]
+[CreateAssetMenu(menuName = "Skyforge Scriptable Objects/Character/CharacterBaseSO")]
 public class CharacterBaseSO : ScriptableObject
 {
     #region BaseParameters

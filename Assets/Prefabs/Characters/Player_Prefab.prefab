@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c089960a2c40145917e53244a3bd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PLayerBehaviour
-  CharacterSO: {fileID: 11400000, guid: 6214d678f7179944ea98f82cd4212561, type: 2}
+  CharacterSO: {fileID: 11400000, guid: d9f8168bb675ac9458005431dd974e89, type: 2}
   _visualHitReceiver: {fileID: 6134968886135633701}
   _outfitManager: {fileID: 8466891162552143893}
   RegisteredBones:
@@ -107,7 +107,6 @@ MonoBehaviour:
   _debugOutfitSlot: {fileID: 11400000, guid: daba9ef81c3921545b3f2895113a92d9, type: 2}
   _debugHeadwearSlot: {fileID: 11400000, guid: 1da023793cb2f6c4b82f187f07a7fd06, type: 2}
   DebugSleepEmote: {fileID: 11400000, guid: bec9547af122ab84294232dee2c4d4d0, type: 2}
-  companionDamage: 5
   LastMovementDirection: {x: 0, y: 0, z: 0}
   LastMovementDirectionExpire: 0
 --- !u!136 &7512047856206844083

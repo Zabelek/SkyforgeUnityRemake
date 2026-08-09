@@ -129,19 +129,10 @@ public class GUIBagControls : MonoBehaviour
         Vector2 mousePos = new Vector2(Input.mousePosition.x / Screen.width * _tooltipCanvas.renderingDisplaySize.x, Input.mousePosition.y / Screen.height * _tooltipCanvas.renderingDisplaySize.y);
         _visualItemGhost.rectTransform.anchoredPosition = new Vector2(mousePos.x, mousePos.y);
     }
-    //to be moved into Item class
     private void ActivateItem(InventorySlot inventorySlot)
     {
-        if (inventorySlot?.Item != null)
+        if (inventorySlot!= null && inventorySlot.ActivateItem())
         {
-            if (inventorySlot.Item.ItemSO is WeaponSO)
-            {
-                inventorySlot.Item = SkyforgeLoader.CurrentProfile.Equip(inventorySlot.Item, Equipment.InventoryType.Weapon);
-            }
-            else if (inventorySlot.Item.ItemSO is ArmorSO)
-            {
-                inventorySlot.Item = SkyforgeLoader.CurrentProfile.Equip(inventorySlot.Item, Equipment.InventoryType.Armor);
-            }
             _equipmentControls.UpdateValues();
         }
     }

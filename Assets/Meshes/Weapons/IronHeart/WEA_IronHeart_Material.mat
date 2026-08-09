@@ -55,6 +55,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AmbientOcclusion_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -228,6 +232,7 @@ Material:
     - _AlphaRemapMin: 0
     - _AlphaSrcBlend: 1
     - _Alpha_Value: 1
+    - _AmbientOcclusion_Brightness: 1
     - _Anisotropy: 0
     - _BlendMode: 0
     - _COAT_IOR: 1.4
@@ -254,7 +259,7 @@ Material:
     - _DstBlend: 0
     - _DstBlend2: 0
     - _Emission_Exposure: 1
-    - _Emission_Intensity: 250
+    - _Emission_Intensity: 900
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1100

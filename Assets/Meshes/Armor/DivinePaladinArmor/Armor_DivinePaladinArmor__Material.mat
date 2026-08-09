@@ -305,7 +305,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Roughness_Contrast: 0.9
+    - _Roughness_Contrast: 1
     - _SPECULAR_ANISOTROPY: 0
     - _SPECULAR_IOR: 1.52
     - _SPECULAR_ROTATION: 0

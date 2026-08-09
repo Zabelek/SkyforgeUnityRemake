@@ -5,7 +5,7 @@ public class PerkSO : ScriptableObject
 {
     public enum StatType
     {
-        MaxHP, BaseDamage, MaxDamage, CriticalChance, AttackSpeed, CombatManaRegen, Vampirism, Defense, Stability, CompanionCharges, DashCharges
+        MaxHP, BaseDamage, MaxDamage, CriticalChance, AttackSpeed, CombatManaRegen, Vampirism, Defense, Stability, CompanionCharges, DashCharges, CompanionDamage
     }
     public enum AtlasIconType 
     { 

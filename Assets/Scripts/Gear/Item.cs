@@ -23,4 +23,21 @@ public class Item
         ItemSO = SkyforgeLoader.LoadItem(itemID).Result;
     }
     #endregion
+
+    #region Methods
+    public bool Activate(InventorySlot parent)
+    {
+        if (ItemSO is WeaponSO)
+        {
+            parent.Item = SkyforgeLoader.CurrentProfile.Equipment.Equip(this, Equipment.InventoryType.Weapon);
+            return true;
+        }
+        else if (ItemSO is ArmorSO)
+        {
+            parent.Item = SkyforgeLoader.CurrentProfile.Equipment.Equip(this, Equipment.InventoryType.Armor);
+            return true;
+        }
+        return false;
+    }
+    #endregion
 }

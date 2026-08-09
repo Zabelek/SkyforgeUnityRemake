@@ -14,7 +14,21 @@ public class MouseDrivenDynamicTransform : MonoBehaviour, IDragHandler, IBeginDr
     public float TransformSpeed = 5;
     [Tooltip("Axis on which the object will be moved/rotated/scaled")]
     public Vector3 VectorOfTransform;
+    [Tooltip("When this is checked, the transform position, rotation will be reset to 0, and the scale will be reset to 1, when this object is disabled")]
+    public bool ResetsAfterDisable;
     private float _lastPos;
+    #endregion
+
+    #region Mono
+    private void OnDisable()
+    {
+        if(ResetsAfterDisable && ObjectToRotate!=null)
+        {
+            ObjectToRotate.localScale = new Vector3(1, 1, 1);
+            ObjectToRotate.localPosition = new Vector3(0, 0, 0);
+            ObjectToRotate.localRotation = Quaternion.Euler(Vector3.zero);
+        }
+    }
     #endregion
 
     #region Methods

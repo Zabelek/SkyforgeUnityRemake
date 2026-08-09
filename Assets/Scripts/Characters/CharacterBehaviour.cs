@@ -49,7 +49,7 @@ public class CharacterBehaviour : MonoBehaviour
     private bool _canMove;
     [Tooltip("This overrides the name set in Character Base Scriptable Object, if not empty")]
     public string Name;
-    public CharacterStats Stats { get; private set; }
+    public CharacterStats Stats { get; protected set; }
     [Tooltip("Faction Scriptable Object attached to character")]
     public FactionSO Faction;
     public bool IsInCombat { get; protected set; }
@@ -150,7 +150,6 @@ public class CharacterBehaviour : MonoBehaviour
         else
             _fadeInTimer = 0;
         _droppedHealingOrbsInTheFight = 0;
-        _effectManager.ClearEffects();
     }
     protected virtual void Update()
     {

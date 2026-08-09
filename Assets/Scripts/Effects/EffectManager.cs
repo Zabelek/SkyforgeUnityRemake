@@ -65,7 +65,7 @@ public class EffectManager
             }
             if (stacks == false)
             {
-                var newEffect = GameObject.Instantiate(effect);
+                var newEffect = GameObject.Instantiate(effect, _character.transform);
                 _effects.Add(newEffect);
                 newEffect.OnApply(_character);
             }

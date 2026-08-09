@@ -1,6 +1,6 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -28,12 +28,15 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
         _vampirismDisplay, _defenseDisplay, _armorDisplay, _stabilityDisplay, _movementSpeedDisplay, _maxDashChargesDisplay, _maxCompanionChargesDisplay;
     //used not to re-add all perks on each update
     private bool _firstSync = true;
+    [SerializeField] private GUIItemPickView _itemPickWindowBase;
+    private GUIItemPickView _currentPickWindow;
     #endregion
 
     #region Mono
     private void Awake()
     {
-        if(SkyforgeLoader.CurrentProfile != null)
+        _playerVisual.SetAnimationState("Menu", true);
+        if (SkyforgeLoader.CurrentProfile != null)
         {
             _armorSlot.InventorySlot = SkyforgeLoader.CurrentProfile.Equipment.ArmorSlot;
             _weaponSlot.InventorySlot = SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot;
@@ -76,6 +79,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     public void OnDisable()
     {
         _currentTooltip?.gameObject.SetActive(false);
+
     }
     #endregion
 
@@ -100,6 +104,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     private void UpdateStatDisplay()
     {
         int weaponDamage = 0;
+        var heroStats = (_playerVisual.Stats as HeroStats);
         if (_playerVisual.EquippedWeapon != null)
             weaponDamage = _playerVisual.EquippedWeapon.WeaponSO.GetDamage();
         _damageDisplay.text = (_playerVisual.Stats.BaseDamage + weaponDamage).ToString() + " - " + ((_playerVisual.Stats.BaseDamage + weaponDamage) + _playerVisual.Stats.MaxDamage).ToString();
@@ -107,7 +112,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
         _attackSpeedDisplay.text = (_playerVisual.Stats.AttackSpeed * 100) + "%";
         _criticalChanceDisplay.text = (_playerVisual.Stats.CriticalChance * 100) + "%";
         _criticalDamageBonusDisplay.text = "100%";
-        _companionDamageDisplay.text = _playerVisual.companionDamage.ToString();
+        _companionDamageDisplay.text = heroStats.CompanionDamage.ToString();
         _vampirismDisplay.text = (_playerVisual.Stats.Vampirism * 100) + "%";
         _defenseDisplay.text = (_playerVisual.Stats.Defense * 100) + "%";
         if(_playerVisual.EquippedArmor != null)
@@ -116,8 +121,8 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             _armorDisplay.text = "0%";
         _stabilityDisplay.text = (_playerVisual.Stats.Stability * 100) + "%";
         _movementSpeedDisplay.text = (_playerVisual.Stats.MovementSpeed * 20) + "%";
-        _maxDashChargesDisplay.text = _playerVisual.DashChargeMax.ToString();
-        _maxCompanionChargesDisplay.text = _playerVisual.CompanionChargeMax.ToString();
+        _maxDashChargesDisplay.text = heroStats.DashChargeMax.ToString();
+        _maxCompanionChargesDisplay.text = heroStats.CompanionChargeMax.ToString();
     }
     private void AssignQASlots()
     {
@@ -201,6 +206,43 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     }
     private void SlotPointerUpAction(object sender, EventArgs e)
     {
+        bool valid = false;
+        var itemList = new List<InventorySlot>();
+        string title = "";
+        //first chech what type of items are desired to display in the window
+        if (sender == (object)_armorSlot)
+        {
+            itemList = SkyforgeLoader.CurrentProfile.Inventory.Slots.Where(s => s.Item?.ItemSO is ArmorSO).ToList();
+            valid = true;
+            title = "Armor";
+        }
+        else if(sender == (object)_weaponSlot)
+        {
+            itemList = SkyforgeLoader.CurrentProfile.Inventory.Slots.Where(s => s.Item?.ItemSO is WeaponSO).ToList();
+            valid = true;
+            title = "Weapon";
+        }
+        //display the window only if one of the above are valid
+        if (valid)
+        {
+            if (_currentPickWindow != null)
+                DestroyPickWindow(this, EventArgs.Empty);
+            else
+            {
+                _currentPickWindow = Instantiate(_itemPickWindowBase, this.transform);
+                _currentPickWindow.gameObject.SetActive(true);
+                _currentPickWindow.ItemSlotSelectedEvent += ItenPicked;
+                _currentPickWindow.WindowDestroyEvent += DestroyPickWindow;
+                foreach (var slot in _currentPickWindow.AssignSlots(itemList))
+                {
+                    //so that the items in the view can also display tooltips
+                    slot.OnPointerEnterEvent += SlotPointerEnterAction;
+                    slot.OnPointerExitEvent += SlotPointerExitAction;
+                }
+                _currentPickWindow.transform.position = (sender as GUIInventorySlot).transform.position + new Vector3(200,20,0);
+                _currentPickWindow.SetTitle(title);
+            }
+        }
     }
     private void SlotPointerExitAction(object sender, EventArgs e)
     {
@@ -208,6 +250,33 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
         {
             Destroy(_currentTooltip.gameObject);
             _currentTooltip = null;
+        }
+    }
+    private void DestroyPickWindow(object sender, EventArgs e)
+    {
+        if(_currentPickWindow!=null)
+        {
+            _currentPickWindow.ItemSlotSelectedEvent -= ItenPicked;
+            _currentPickWindow.WindowDestroyEvent -= DestroyPickWindow;
+            foreach (var slot in _currentPickWindow.GetSlots())
+            {
+                slot.OnPointerEnterEvent -= SlotPointerEnterAction;
+                slot.OnPointerExitEvent -= SlotPointerExitAction;
+            }
+            Destroy(_currentPickWindow.gameObject);
+            _currentPickWindow = null;
+        }
+    }
+    private void ItenPicked(object sender, GUIItemPickView.InventorySlotEventArgs e)
+    {
+        //When the item is picked from the additional menu
+        //In the future Activate has to be replaced by a dedicated method for this view, becasue usable items will be used istead of assigned to slots
+        if(e.Slot.Item != null)
+        {
+            e.Slot.Item.Activate(e.Slot);
+            DestroyPickWindow(this, EventArgs.Empty); 
+            SlotPointerExitAction(this, EventArgs.Empty);
+            UpdateValues();
         }
     }
     #endregion

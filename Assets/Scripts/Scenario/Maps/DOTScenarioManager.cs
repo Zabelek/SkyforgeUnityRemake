@@ -100,9 +100,6 @@ public class DOTScenarioManager : ScenarioManager
                 _particlesLaserExp.transform.SetParent(_boss2.transform);
                 _particlesLaserExp.transform.localPosition = Vector3.zero;
                 StartCoroutine(DelayedScene4Actions());
-                SkyforgeLoader.GameBeaten = true;
-                if (SkyforgeLoader.CurrentProfile.Difficulty.Name == "Average Coffin Enjoyer")
-                    SkyforgeLoader.HardestDiffBeaten = true;
             }
         }
         if (_boss1.IsDead && Stage < 6)
@@ -116,6 +113,9 @@ public class DOTScenarioManager : ScenarioManager
         {
             Stage = 10;
             _currentCutscene = _cutscenes[4];
+            SkyforgeLoader.GameBeaten = true;
+            if (SkyforgeLoader.CurrentProfile.Difficulty.Name == "Average Coffin Enjoyer")
+                SkyforgeLoader.HardestDiffBeaten = true;
             StartCoroutine(DelayedCharacterRemoval(_boss2, GUISceneBlackFade.FADE_TIME));
             StartCoroutine(DelayedScene5Actions());
             StartCoroutine(DelayedBackToMenu());

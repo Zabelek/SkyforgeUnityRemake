@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerBehaviour : HeroBehaviour
 {
-    public const int BASE_DASH_CHARGE_MAX = 25;
-    public const float BASE_COMPANION_CHARGE_MAX = 17;
+    //public const int BASE_DASH_CHARGE_MAX = 25;
+    //public const float BASE_COMPANION_CHARGE_MAX = 17;
 
     #region Variables
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
@@ -25,14 +25,14 @@ public class PlayerBehaviour : HeroBehaviour
     //selection related logic
     public CharacterBehaviour SelectedCharacter { get; set; }
     //placeholder for companion. To remove once companion system is introduced
-    public int companionDamage = 5;
+    //public int companionDamage = 5;
     public event EventHandler OnCompanionAttack;
-    public float CompanionCharge { get; set; }
-    public float CompanionChargeMax { get; private set; }
+    //public float CompanionCharge { get; set; }
+    //public float CompanionChargeMax { get; private set; }
     //dash
     public event EventHandler OnDash;
-    public float DashCharge { get; set; }
-    public float DashChargeMax { get; private set; }
+    //public float DashCharge { get; set; }
+    //public float DashChargeMax { get; private set; }
     public Vector3 LastMovementDirection;
     public float LastMovementDirectionExpire;
     public event EventHandler OnFinisher;
@@ -42,7 +42,6 @@ public class PlayerBehaviour : HeroBehaviour
     protected new void Awake()
     {
         base.Awake();
-        EquipWeapon(Instantiate(_debugWeaponSlot.GetPrefab().GetComponent<WeaponBehaviour>()));
         CombatStance = false;
         if(_inputBehaviour!= null)
         {
@@ -70,6 +69,11 @@ public class PlayerBehaviour : HeroBehaviour
     {
         base.Start();
         ChangeClass(GetHeroClass());
+        if (SkyforgeLoader.CurrentProfile != null)
+        {
+            SyncPerks(false);
+            SyncEquipment();
+        }
     }
     protected override void FixedUpdate()
     {
@@ -246,27 +250,13 @@ public class PlayerBehaviour : HeroBehaviour
     #region Methods
     private void UpdateCompanion()
     {
-        if (CompanionChargeMax != 0)
-        {
-            if (CompanionCharge < CompanionChargeMax)
-            {
-                CompanionCharge += Time.fixedDeltaTime;
-                if (CompanionCharge > CompanionChargeMax)
-                    CompanionCharge = CompanionChargeMax;
-            }
-        }
+        if (_heroStats.CompanionChargeMax != 0 && _heroStats.CurrentCompanionCharge < _heroStats.CompanionChargeMax)
+            _heroStats.CurrentCompanionCharge += Time.fixedDeltaTime;
     }
     private void UpdateDash()
     {
-        if (DashChargeMax != 0)
-        {
-            if (DashCharge < DashChargeMax)
-            {
-                DashCharge += Time.fixedDeltaTime;
-                if (DashCharge > DashChargeMax)
-                    DashCharge = DashChargeMax;
-            }
-        }
+        if (_heroStats.DashChargeMax != 0 && _heroStats.CurrentDashCharge < _heroStats.DashChargeMax)
+            _heroStats.CurrentDashCharge += Time.fixedDeltaTime;
     }
     private void UpdateEmoteState()
     {
@@ -379,11 +369,11 @@ public class PlayerBehaviour : HeroBehaviour
         //will be changed once the companion system is introduced
         if(SelectedCharacter != null && SelectedCharacter.Faction != this.Faction && !this.Faction.Allies.Contains(SelectedCharacter.Faction.FactionType))
         {
-            if(CompanionCharge >=10)
+            if(_heroStats.CurrentCompanionCharge >= COMPANION_ATTACK_COST)
             {
-                SelectedCharacter.TakeDamage(new Damage(this, companionDamage));
+                SelectedCharacter.TakeDamage(new Damage(this, _heroStats.CompanionDamage));
                 OnCompanionAttack?.Invoke(this, EventArgs.Empty);
-                CompanionCharge -= 10;
+                _heroStats.CurrentCompanionCharge -= COMPANION_ATTACK_COST;
             }
         }
     }
@@ -434,9 +424,6 @@ public class PlayerBehaviour : HeroBehaviour
             if (!addOnly)
             {
                 Stats.Reset(CharacterSO);
-                //these two are player only, so they're not in the casual Stats class. They need to be zeroed here
-                DashChargeMax = BASE_DASH_CHARGE_MAX;
-                CompanionChargeMax = BASE_COMPANION_CHARGE_MAX;
                 _perks.Clear();
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
@@ -484,61 +471,11 @@ public class PlayerBehaviour : HeroBehaviour
             SkyforgeLoader.CurrentProfile.AcquiredPerks.Add(new UserProfile.PerkState() { PerkID = perkSO.ID, Enabled = true });
         }
     }
-    public IEnumerator DelayedInitSequence()
-    {
-        yield return new WaitForSeconds(2);
-        if(SkyforgeLoader.CurrentProfile != null)
-        {
-            SyncPerks(false);
-            SyncEquipment();
-        }
-    }
     protected override void ChangeClass(HeroClassBehaviour nextClass)
     {
         base.ChangeClass(nextClass);
         if (SkyforgeLoader.CurrentProfile != null)
             SkyforgeLoader.CurrentProfile.CurrentlyPickedClass = nextClass.HeroClassSO.ID;
-    }
-    protected override void ResetPerkEffects()
-    {
-        DashChargeMax = BASE_DASH_CHARGE_MAX;
-        CompanionChargeMax = BASE_COMPANION_CHARGE_MAX;
-        foreach (var perk in GetAllPerks())
-        {
-            if ((perk.Perk.HeroClass?.ID == GetHeroClass().HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
-            {
-                if (!perk.Perk.Functional)
-                {
-                    if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
-                        CompanionChargeMax += perk.Perk.Value;
-                    else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
-                        DashChargeMax += perk.Perk.Value;
-                }
-            }
-        }
-        base.ResetPerkEffects();
-    }
-    protected override void ManagePerkChange(LockablePerk perk)
-    {
-        if(!perk.Perk.Functional && perk.Enabled)
-        {
-            if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
-                CompanionChargeMax += perk.Perk.Value;
-            else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
-                DashChargeMax += perk.Perk.Value;
-        }
-        base.ManagePerkChange(perk);
-    }
-    protected override void ManagePerkRemoval(LockablePerk perk)
-    {
-        if (!perk.Perk.Functional && perk.Enabled)
-        {
-            if (perk.Perk.Stat == PerkSO.StatType.CompanionCharges)
-                CompanionChargeMax -= perk.Perk.Value;
-            else if (perk.Perk.Stat == PerkSO.StatType.DashCharges)
-                DashChargeMax -= perk.Perk.Value;
-        }
-        base.ManagePerkRemoval(perk);
     }
     public override void EnemyKilled(CharacterBehaviour enemy)
     {
@@ -560,7 +497,7 @@ public class PlayerBehaviour : HeroBehaviour
         }
         else
         {
-            var weapon = profile.GetEquipment(Equipment.InventoryType.Weapon);
+            var weapon = profile.Equipment.GetEquipment(Equipment.InventoryType.Weapon);
             if (weapon != null)
             {
                 EquipWeapon((weapon.ItemSO as WeaponSO)?.GetPrefab());
@@ -569,7 +506,7 @@ public class PlayerBehaviour : HeroBehaviour
             {
                 EquipWeapon(_debugWeaponSlot.GetPrefab());
             }
-            var armor = profile.GetEquipment(Equipment.InventoryType.Armor);
+            var armor = profile.Equipment.GetEquipment(Equipment.InventoryType.Armor);
             if (armor != null)
             {
                 _ = EquipArmor((armor.ItemSO as ArmorSO)?.GetPrefab());

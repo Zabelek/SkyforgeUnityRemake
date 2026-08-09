@@ -101,6 +101,7 @@ public class GUIGameplayControls : MonoBehaviour
     [SerializeField] private GUISceneBlackFade _menuBlackFade;
     //so that the player can't open/close menu too fast
     private float _menuOpenDelay = 0.5f;
+    private HeroStats _playerStats;
     #endregion
 
     #region Mono
@@ -270,15 +271,19 @@ public class GUIGameplayControls : MonoBehaviour
     }
     private void UpdateDashAndCompanion()
     {
-        if (!_player.IsDead)
+        if(_playerStats == null)
+        {
+            _playerStats = _player.Stats as HeroStats;
+        }
+        else if (!_player.IsDead)
         {
             if (_comapnionAndDashGroup.gameObject.activeSelf == false)
             {
                 _comapnionAndDashGroup.gameObject.SetActive(true);
             }
-            if (_player.CompanionChargeMax > 0)
+            if (_playerStats.CompanionChargeMax > 0)
             {
-                int availableAttacks = (int)(_player.CompanionCharge / 10);
+                int availableAttacks = (int)(_playerStats.CurrentCompanionCharge / 10);
                 if (availableAttacks > 0)
                 {
                     _companionIconImage.sprite = _companionActiveSprite;
@@ -288,11 +293,11 @@ public class GUIGameplayControls : MonoBehaviour
                     _companionIconImage.sprite = _companionLockedSprite;
                 }
                 _companionNumberText.text = availableAttacks.ToString();
-                _companionFillImage.fillAmount = _player.CompanionCharge / _player.CompanionChargeMax;
+                _companionFillImage.fillAmount = _playerStats.CurrentCompanionCharge / _playerStats.CompanionChargeMax;
             }
-            if (_player.DashChargeMax > 0)
+            if (_playerStats.DashChargeMax > 0)
             {
-                int availableDashes = (int)(_player.DashCharge / 10);
+                int availableDashes = (int)(_playerStats.CurrentDashCharge / 10);
                 if (availableDashes > 0)
                 {
                     _dashIconImage.sprite = _dashActiveSprite;
@@ -302,7 +307,7 @@ public class GUIGameplayControls : MonoBehaviour
                     _dashIconImage.sprite = _dashLockedSprite;
                 }
                 _dashNumberText.text = availableDashes.ToString();
-                _dashFillImage.fillAmount = _player.DashCharge / _player.DashChargeMax;
+                _dashFillImage.fillAmount = _playerStats.CurrentDashCharge / _playerStats.DashChargeMax;
             }
         }
         else

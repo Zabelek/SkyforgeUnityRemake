@@ -32,7 +32,7 @@ public class CharacterStats
     #endregion
 
     #region Methods
-    public void Reset(CharacterBaseSO baseSO)
+    public virtual void Reset(CharacterBaseSO baseSO)
     {
         MaxHP = baseSO.MaxHealth;
         MaxMana = baseSO.MaxMana;
@@ -50,7 +50,7 @@ public class CharacterStats
         if (CurrentMana > MaxMana)
             CurrentMana = MaxMana;
     }
-    public void ModifyAccordingToPerk(PerkSO perk, int modifier)
+    public virtual void ModifyAccordingToPerk(PerkSO perk, int modifier)
     {
         if (perk.Stat == PerkSO.StatType.AttackSpeed)
         {
@@ -91,7 +91,7 @@ public class CharacterStats
             Stability += perk.Value * modifier;
         }
     }
-    public void ModifyAccordingToDifficultyLevel()
+    public virtual void ModifyAccordingToDifficultyLevel()
     {
         if(SkyforgeLoader.CurrentProfile!=null)
         {
