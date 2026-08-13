@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 public class GameplayResources
 {
+    #region Variables
     public enum ResourceType { Credits, AelionEidos }
     public class ResourceChangeEventArgs : EventArgs
     {
@@ -11,7 +12,6 @@ public class GameplayResources
     }
     [XmlIgnore]
     public EventHandler<ResourceChangeEventArgs> ResourceChangedEvent;
-
     //Each new resoure here has to be constructed exactly the way those belowa are. It has to properly trigger events on change, otherwise the GUI may not work as intended
     private int _credits;
     public int Credits {
@@ -39,4 +39,20 @@ public class GameplayResources
             ResourceChangedEvent?.Invoke(this, new ResourceChangeEventArgs() { Amount = ch, ResourceType = ResourceType.AelionEidos });
         }
     }
+    #endregion
+
+    #region Methods
+    public void AddResource(ResourceType resType, int amount)
+    {
+        switch(resType)
+        {
+            case ResourceType.Credits:
+                Credits += amount;
+                break;
+            case ResourceType.AelionEidos:
+                AelionEidoses += amount;
+                break;
+        }
+    }
+    #endregion
 }

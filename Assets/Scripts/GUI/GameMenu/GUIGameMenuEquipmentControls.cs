@@ -30,6 +30,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     private bool _firstSync = true;
     [SerializeField] private GUIItemPickView _itemPickWindowBase;
     private GUIItemPickView _currentPickWindow;
+    private InventorySlot _tempClickedItemSlot;
     #endregion
 
     #region Mono
@@ -103,11 +104,9 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     }
     private void UpdateStatDisplay()
     {
-        int weaponDamage = 0;
         var heroStats = (_playerVisual.Stats as HeroStats);
         if (_playerVisual.EquippedWeapon != null)
-            weaponDamage = _playerVisual.EquippedWeapon.WeaponSO.GetDamage();
-        _damageDisplay.text = (_playerVisual.Stats.BaseDamage + weaponDamage).ToString() + " - " + ((_playerVisual.Stats.BaseDamage + weaponDamage) + _playerVisual.Stats.MaxDamage).ToString();
+        _damageDisplay.text = (_playerVisual.Stats.BaseDamage).ToString() + " - " + ((_playerVisual.Stats.BaseDamage) + _playerVisual.Stats.MaxDamage).ToString();
         _healthDisplay.text = _playerVisual.Stats.MaxHP.ToString();
         _attackSpeedDisplay.text = (_playerVisual.Stats.AttackSpeed * 100) + "%";
         _criticalChanceDisplay.text = (_playerVisual.Stats.CriticalChance * 100) + "%";
@@ -115,10 +114,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
         _companionDamageDisplay.text = heroStats.CompanionDamage.ToString();
         _vampirismDisplay.text = (_playerVisual.Stats.Vampirism * 100) + "%";
         _defenseDisplay.text = (_playerVisual.Stats.Defense * 100) + "%";
-        if(_playerVisual.EquippedArmor != null)
-            _armorDisplay.text = (_playerVisual.EquippedArmor.ArmorSO.BaseArmorAmount*100) +"%";
-        else
-            _armorDisplay.text = "0%";
+        _armorDisplay.text = (_playerVisual.Stats.GearStats.Armor * 100) + "%";
         _stabilityDisplay.text = (_playerVisual.Stats.Stability * 100) + "%";
         _movementSpeedDisplay.text = (_playerVisual.Stats.MovementSpeed * 20) + "%";
         _maxDashChargesDisplay.text = heroStats.DashChargeMax.ToString();
@@ -160,31 +156,11 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             _playerVisual.ChangeWeaponOutState(true);
         }
     }
-    //To be moved into tooltip class
     private void SetUpNewTooltip(ItemSO itemSO)
     {
         _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
         _currentTooltip.SetCanvas(_tooltipCanvas);
-        _currentTooltip.SetTitle(itemSO.Name);
-        _currentTooltip.SetDescription(itemSO.Description);
-        _currentTooltip.SetTitleImage(itemSO.InterfaceSprite);
-        if (itemSO is WeaponSO)
-        {
-            _currentTooltip.AddStatBonus("Damage Bonus: ", ((WeaponSO)itemSO).GetDamage(), false);
-            _currentTooltip.SetDescription(((WeaponSO)itemSO).Type.Name);
-            if (itemSO.Rarity == ItemSO.RarityLevel.Legendary)
-            {
-                _currentTooltip.SetSpecialDescription(itemSO.Description);
-            }
-            else
-            {
-                _currentTooltip.SetDescription(((WeaponSO)itemSO).Type.Name + "\n" + itemSO.Description);
-            }
-        }
-        else if (itemSO is ArmorSO)
-        {
-            _currentTooltip.AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseArmorAmount, true);
-        }
+        _currentTooltip.SetForItem(itemSO);
     }
     #endregion
 
@@ -216,15 +192,30 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             valid = true;
             title = "Armor";
         }
-        else if(sender == (object)_weaponSlot)
+        else if (sender == (object)_weaponSlot)
         {
             itemList = SkyforgeLoader.CurrentProfile.Inventory.Slots.Where(s => s.Item?.ItemSO is WeaponSO).ToList();
             valid = true;
             title = "Weapon";
         }
+        else if (sender == (object)_artifactSlot)
+        {
+            itemList = SkyforgeLoader.CurrentProfile.Inventory.Slots.Where(s => s.Item?.ItemSO is ArtifactSO).ToList();
+            valid = true;
+            title = "Artifact";
+        }
+        if (title != "Weapon")
+        {
+            var emptySlot = SkyforgeLoader.CurrentProfile.Inventory.Slots.FirstOrDefault(s => s.Item == null);
+            if (emptySlot != null)
+            {
+                itemList.Add(emptySlot);
+            }
+        }
         //display the window only if one of the above are valid
         if (valid)
         {
+            _tempClickedItemSlot = (sender as GUIInventorySlot).InventorySlot;
             if (_currentPickWindow != null)
                 DestroyPickWindow(this, EventArgs.Empty);
             else
@@ -277,6 +268,16 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             DestroyPickWindow(this, EventArgs.Empty); 
             SlotPointerExitAction(this, EventArgs.Empty);
             UpdateValues();
+        }
+        else if(_tempClickedItemSlot!=null && _tempClickedItemSlot.Item != null)
+        {
+            e.Slot.Item = _tempClickedItemSlot.Item;
+            _tempClickedItemSlot.Item = null;
+            SkyforgeLoader.EquipmentChanged = true;
+            DestroyPickWindow(this, EventArgs.Empty);
+            SlotPointerExitAction(this, EventArgs.Empty);
+            UpdateValues();
+            _tempClickedItemSlot = null;
         }
     }
     #endregion

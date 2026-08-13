@@ -28,10 +28,11 @@ public class HeroBehaviour : CharacterBehaviour
     public event EventHandler<PerkChangeEventArgs> OnPerkChange;
     public WeaponBehaviour EquippedWeapon { get; protected set; }
     public ArmorBehaviour EquippedArmor { get; protected set; }
+    public GearPeaceBehaviour EquippedArtifact { get; protected set; }
     public bool CanDash { get; set; }
     //to prevent spamming draw/hide weapon aminations
     protected float _nextDrawStateChangeTimer;
-    [SerializeField] protected bool _isMenuPreview;
+    public bool IsMenuPreview;
 
     protected HeroStats _heroStats;
     protected HeroBaseSO _heroBaseSO;
@@ -46,7 +47,7 @@ public class HeroBehaviour : CharacterBehaviour
         else
         {
             Stats = new HeroStats();
-            Stats.Reset(CharacterSO);
+            Stats.ResetBase(CharacterSO);
             _heroStats = Stats as HeroStats;
             _heroBaseSO = CharacterSO as HeroBaseSO;
         }
@@ -142,7 +143,7 @@ public class HeroBehaviour : CharacterBehaviour
     }
     protected virtual void ResetPerkEffects()
     {
-        Stats.Reset(CharacterSO);
+        Stats.ResetBase(CharacterSO);
         foreach (var perk in GetAllPerks())
         {
             if ((perk.Perk.HeroClass?.ID == _heroClass.HeroClassSO.ID || perk.Perk.HeroClass == null) && perk.Enabled)
@@ -203,35 +204,41 @@ public class HeroBehaviour : CharacterBehaviour
         }
         OnPerkChange?.Invoke(this, new PerkChangeEventArgs { PerkSO = perk.Perk, Enabled = false });
     }
-    public override int GetEffectiveDamage()
-    {
-        if(EquippedWeapon!= null)
-            return (int)((Stats.BaseDamage + EquippedWeapon.WeaponSO.GetDamage()) * GetDamageModifiers());
-        else
-            return (int)(Stats.BaseDamage * GetDamageModifiers());
-    }
     public virtual void EquipWeapon(WeaponBehaviour weapon)
     {
         if(weapon != null)
         {
             if (EquippedWeapon != null)
             {
-                EquippedWeapon.Unequip(this, _isMenuPreview);
+                EquippedWeapon.Unequip(this, IsMenuPreview);
             }
             EquippedWeapon = Instantiate(weapon, _weaponTransformSlot);
-            EquippedWeapon.Equip(this, _weaponTransformSlot, _isMenuPreview);
+            EquippedWeapon.Equip(this, _weaponTransformSlot, IsMenuPreview);
         }
     }
     public virtual async Task EquipArmor(ArmorBehaviour armor)
     {
         if (EquippedArmor != null)
         {
-            EquippedArmor.Unequip(this, _isMenuPreview);
+            EquippedArmor.Unequip(this, IsMenuPreview);
         }
         if (armor != null)
         {
             EquippedArmor = Instantiate(armor, this.transform);
+            EquippedArmor.Equip(this, IsMenuPreview);
             EquippedArmor.AssignWornOutfit(await _outfitManager.EquipOutfit(armor.OutfitSO.ObjectID, armor.OutfitSO.Slot));
+        }
+    }
+    public virtual void EquipArtifact(GearPeaceBehaviour artifact)
+    {
+        if (EquippedArtifact != null)
+        {
+            EquippedArtifact.Unequip(this, IsMenuPreview);
+        }
+        if(artifact!=null)
+        {
+            EquippedArtifact = Instantiate(artifact, this.transform);
+            EquippedArtifact.Equip(this, IsMenuPreview);
         }
     }
     public virtual void ChangeWeaponOutState(object sender, EventArgs e)
@@ -378,29 +385,16 @@ public class HeroBehaviour : CharacterBehaviour
     public LockablePerk GetPerk(string perkID)
     {
         return _perks.FirstOrDefault(p => p.Perk.ID == perkID);
-        //if(ret == null && _perkSets.Any())
-        //{
-        //    ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk.ID == name)).Perks.FirstOrDefault(p => p.Perk.ID == name);
-        //}
-        //return ret;
     }
     public LockablePerk GetPerk(PerkSO perkSO)
     {
         return _perks.FirstOrDefault(p => p.Perk == perkSO);
-        //if (ret == null)
-        //{
-        //    ret = _perkSets.FirstOrDefault(s => s.Perks.Any(p => p.Perk == perkSO)).Perks.FirstOrDefault(p => p.Perk == perkSO);
-        //}
-        //return ret;
     }
     public List<LockablePerk> GetAllPerks()
     {
         var ret = new List<LockablePerk>();
         foreach (var perk in _perks)
             ret.Add(perk);
-        //foreach(var perkSet in _perkSets)
-            //foreach(var perk in perkSet.Perks)
-                //ret.Add(perk);
         return ret;
     }
     public override float GetMovementSpeedModifiers()
@@ -410,7 +404,7 @@ public class HeroBehaviour : CharacterBehaviour
         else
             return base.GetMovementSpeedModifiers();
     }
-    protected override void HandleDamageEffects(Damage damage)
+    /*protected override void HandleDamageEffects(Damage damage)
     {
         base.HandleDamageEffects(damage);
         if(EquippedArmor!=null)
@@ -419,6 +413,17 @@ public class HeroBehaviour : CharacterBehaviour
             if (damage.Amount < 1)
                 damage.Amount = 1;
         }
-    }
+    }*/
+    /*public override int GetEffectiveDamage()
+    {
+        int ret = 0;
+        if (EquippedWeapon != null)
+            ret = (int)(((Stats.BaseDamage + EquippedWeapon.WeaponSO.GetDamage()) * GetDamageModifiers()));
+        else
+            ret = (int)(Stats.BaseDamage * GetDamageModifiers());
+        if (EquippedArtifact != null)
+            ret = (int)(ret * (1 + EquippedArtifact.DamageBonus));
+        return ret;
+    }*/
     #endregion
 }

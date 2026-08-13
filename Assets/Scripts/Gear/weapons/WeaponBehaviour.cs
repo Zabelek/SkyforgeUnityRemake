@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponBehaviour : MonoBehaviour
+public class WeaponBehaviour : GearPeaceBehaviour
 {
     #region Variables
     [Header("Weapon Related Variables")]
@@ -25,13 +25,18 @@ public class WeaponBehaviour : MonoBehaviour
     #endregion
 
     #region Mono
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         SetTrail(false);
         if (!StartDrawn)
             SetWeaponHide();
         else
             SetWeaponDraw();
+        if(WeaponSO != null)
+        {
+            GearBonus.DamageBonus += WeaponSO.GetDamage();
+        }
     }
     private void Update()
     {
@@ -70,21 +75,11 @@ public class WeaponBehaviour : MonoBehaviour
     #endregion
 
     #region Methods
-    public virtual void Equip(HeroBehaviour hero, Transform slot, bool onlyVisual)
+    public override void Equip(HeroBehaviour hero, Transform slot, bool onlyVisual)
     {
-        transform.SetParent(slot);
-        gameObject.SetActive(true);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-        transform.localScale = new Vector3(1, 1, 1);
+        base.Equip(hero, slot, onlyVisual);
         if (hero.CombatStance)
             SetWeaponDraw();
-    }
-    public virtual void Unequip(HeroBehaviour hero, bool onlyVisual)
-    {
-        transform.SetParent(null);
-        gameObject.SetActive(false);
-        Destroy(this.gameObject);
     }
     public void PlaySound(string soundName)
     {
@@ -105,7 +100,6 @@ public class WeaponBehaviour : MonoBehaviour
             _drawScheduled = true;
             _isHidden = false;
         }
-
     }
     public void AnimateWeaponHide()
     {

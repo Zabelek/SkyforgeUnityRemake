@@ -4,7 +4,11 @@ using UnityEngine;
 public class CharacterStats
 {
     #region Variables
-    public int MaxHP { get; set; }
+    private int _maxHP;
+    public int MaxHP { 
+        get => (int)((_maxHP + GearStats.HealthBonus) * (1 + GearStats.HealthPercentBonus));
+        set => _maxHP = value;
+    }
     private int _currentHP;
     public int CurrentHP { 
         get => _currentHP;
@@ -19,9 +23,18 @@ public class CharacterStats
     public float MovementSpeed { get; set; }
     public float AttackSpeed { get; set; }
     public float CriticalChance { get; set; }
-    public int BaseDamage { get; set; }
+    private int _baseDamage;
+    public int BaseDamage 
+    { 
+        get => (int)((_baseDamage + GearStats.DamageBonus) * (1 + GearStats.DamagePercentBonus));
+        set => _baseDamage = value; 
+    }
     //max bonus value that the character can inflict. Every hit, the character inflicts a random damage betwen Base damage and Base damage + Max damage;
-    public int MaxDamage { get; set; }
+    public int _maxDamage;
+    public int MaxDamage {
+        get => (int)(_maxDamage * (1 + GearStats.DamagePercentBonus));
+        set => _maxDamage = value;
+    }
     public int CombatManaRegen { get; set; }
     //healing percent of the character each time they deal damage. 1 vampirism means that they will heal by 100% of dealt damage
     public float Vampirism { get; set; }
@@ -29,10 +42,19 @@ public class CharacterStats
     public float Defense { get; set; }
     //percent negative effect duration reduction of the character
     public float Stability { get; set; }
+    public GearBonus GearStats { get; private set; }
+    #endregion
+
+    #region Constructors
+    public CharacterStats()
+    {
+        GearStats = new();
+        GearStats.OnStatsChangedEvernt += GearStatsChanged;
+    }
     #endregion
 
     #region Methods
-    public virtual void Reset(CharacterBaseSO baseSO)
+    public virtual void ResetBase(CharacterBaseSO baseSO)
     {
         MaxHP = baseSO.MaxHealth;
         MaxMana = baseSO.MaxMana;
@@ -45,10 +67,13 @@ public class CharacterStats
         Defense = baseSO.Defense;
         Vampirism = baseSO.Vampirism;
         Stability = baseSO.Stability;
-        if (CurrentHP > MaxHP)
-            CurrentHP = MaxHP;
+        CurrentHP = MaxHP;
         if (CurrentMana > MaxMana)
             CurrentMana = MaxMana;
+    }
+    public virtual void ResetGear()
+    {
+        GearStats.Reset();
     }
     public virtual void ModifyAccordingToPerk(PerkSO perk, int modifier)
     {
@@ -58,11 +83,11 @@ public class CharacterStats
         }
         else if (perk.Stat == PerkSO.StatType.BaseDamage)
         {
-            BaseDamage += (int)(perk.Value) * modifier;
+            _baseDamage += (int)(perk.Value) * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.MaxDamage)
         {
-            MaxDamage += (int)(perk.Value) * modifier;
+            _maxDamage += (int)(perk.Value) * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.CriticalChance)
         {
@@ -70,7 +95,7 @@ public class CharacterStats
         }
         else if (perk.Stat == PerkSO.StatType.MaxHP)
         {
-            MaxHP += (int)(perk.Value) * modifier;
+            _maxHP += (int)(perk.Value) * modifier;
             if (CurrentHP > MaxHP)
                 CurrentHP = MaxHP;
         }
@@ -95,20 +120,28 @@ public class CharacterStats
     {
         if(SkyforgeLoader.CurrentProfile!=null)
         {
-            float valueHP = MaxHP * SkyforgeLoader.CurrentProfile.Difficulty.EnemyHPMod;
+            float valueHP = _maxHP * SkyforgeLoader.CurrentProfile.Difficulty.EnemyHPMod;
             MaxHP = (int)(valueHP);
-            float valueDamage = BaseDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
-            BaseDamage = (int)(valueDamage);
-            if (BaseDamage == 0)
-                BaseDamage = 1;
-            var initiammaxDamage = MaxDamage;
-            float valueMaxDamage = MaxDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
-            MaxDamage = (int)(valueMaxDamage);
-            if (MaxDamage == 0 && initiammaxDamage != 0)
-                MaxDamage = 1;
+            float valueDamage = _baseDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
+            _baseDamage = (int)(valueDamage);
+            if (_baseDamage == 0)
+                _baseDamage = 1;
+            var initiammaxDamage = _maxDamage;
+            float valueMaxDamage = _maxDamage * SkyforgeLoader.CurrentProfile.Difficulty.EnemyDamageMod;
+            _maxDamage = (int)(valueMaxDamage);
+            if (_maxDamage == 0 && initiammaxDamage != 0)
+                _maxDamage = 1;
             if (CurrentHP != MaxHP)
                 CurrentHP = MaxHP;
         }
+    }
+    #endregion
+
+    #region EventHandlers
+    private void GearStatsChanged(object sender, EventArgs e)
+    {
+        if (CurrentHP > MaxHP)
+            CurrentHP = MaxHP;
     }
     #endregion
 }

@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Xml.Serialization;
 
 public class Item
@@ -22,6 +23,12 @@ public class Item
         ID = itemID;
         ItemSO = SkyforgeLoader.LoadItem(itemID).Result;
     }
+    public Item(string itemID, int amount)
+    {
+        ID = itemID;
+        ItemSO = SkyforgeLoader.LoadItem(itemID).Result;
+        Amount = amount;
+    }
     #endregion
 
     #region Methods
@@ -35,6 +42,11 @@ public class Item
         else if (ItemSO is ArmorSO)
         {
             parent.Item = SkyforgeLoader.CurrentProfile.Equipment.Equip(this, Equipment.InventoryType.Armor);
+            return true;
+        }
+        else if (ItemSO is ArtifactSO)
+        {
+            parent.Item = SkyforgeLoader.CurrentProfile.Equipment.Equip(this, Equipment.InventoryType.Artifact);
             return true;
         }
         return false;

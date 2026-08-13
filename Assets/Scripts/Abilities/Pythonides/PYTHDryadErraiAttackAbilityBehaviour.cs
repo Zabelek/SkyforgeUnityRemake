@@ -58,7 +58,8 @@ public class PYTHDryadErraiAttackAbilityBehaviour : AbilityBehaviour
                     continue;
                 if (casuality.bounds.Intersects(collider.bounds) && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
-                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 1, false, false), performer.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 1, false, false),
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     character.TakeDamage(damage);
                     break;
                 }

@@ -56,6 +56,7 @@ public class BerserkerTectonikBlastAbilityBehaviour : AbilityBehaviour
         var potentialCasualities = Physics.OverlapSphere(performer.transform.position, 5);
         var collider = Instantiate(transform.Find("Collider").GetComponent<Collider>(), performer.transform, false);
         int casualityAmount = 0;
+        Damage lastDamage = null;
         if (collider != null)
         {
             foreach (var casuality in potentialCasualities)
@@ -64,9 +65,11 @@ public class BerserkerTectonikBlastAbilityBehaviour : AbilityBehaviour
                     continue;
                 if (casuality.bounds.Intersects(collider.bounds) && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
-                    var damage = CalculateDamage(new Damage(performer, (performer.GetEffectiveDamage()), false, false), performer.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, (performer.GetEffectiveDamage()), false, false),
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     character.TakeDamage(damage);
                     casualityAmount++;
+                    lastDamage = damage;
                 }
             }
         }
@@ -83,6 +86,8 @@ public class BerserkerTectonikBlastAbilityBehaviour : AbilityBehaviour
                 if (i >= 8)
                     break;
             }
+            if(lastDamage != null)
+                performer.AttackPerformedAction(lastDamage);
         }
         Destroy(collider.gameObject);
     }

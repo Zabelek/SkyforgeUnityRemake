@@ -53,9 +53,9 @@ public class PlayerAnimationBehaviour : HeroAnimationBehaviour
         base.Start();
         if (_character is PlayerBehaviour)
             _player = (PlayerBehaviour)_character;
-        _player.OnHurt += Hurt_Performed;
-        _player.OnDeath += Death_Performed;
-        _player.OnResurrect += Resurrect_Performed;
+        _player.OnHurtEvent += Hurt_Performed;
+        _player.OnDeathEvent += Death_Performed;
+        _player.OnResurrectEvent += Resurrect_Performed;
     }
     protected override void FixedUpdate()
     {

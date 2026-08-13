@@ -199,7 +199,8 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
         {
             if(_leap)
             {
-                var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * 3 * rageIncarnateMultiplier), false, false), performer.GetEffectiveCriticalChance());
+                var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * 3 * rageIncarnateMultiplier), false, false),
+                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                 _casuality.TakeDamage(damage);
                 if(rageIncarnateEffect != null)
                 {
@@ -211,30 +212,33 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 var oldDamage = _currentDamages?.FirstOrDefault(dam => dam == _casuality.LastDamage);
                 if (oldDamage != null)
                 {
-                    var newDamageAmount = CalculateDamageForMultishot(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), oldDamage);
+                    var newDamageAmount = CalculateDamageForMultishot(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), 
+                        oldDamage, performer.Stats.GearStats.CriticalDamageBonus);
                     oldDamage.AddMultishot(newDamageAmount);
                     _casuality.TakeDamage(oldDamage);
                 }
                 else
                 {
                     _currentDamages = new();
-                    var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), performer.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), 
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     _casuality.TakeDamage(damage);
                     _currentDamages.Add(damage);
                     if (rageIncarnateEffect != null)
                     {
                         performer.Stats.CurrentMana += 50;
                     }
+                    performer.AttackPerformedAction(damage);
                 }
             }
         }
     }
-    protected Damage CalculateDamageForMultishot(Damage damage, Damage oldDamage)
+    protected Damage CalculateDamageForMultishot(Damage damage, Damage oldDamage, float critMultiplier)
     {
         damage.Amount = (int)(damage.Amount * AbilitySO.DamageMultiplier);
         if (oldDamage.Critical)
         {
-            damage.Amount = damage.Amount * 2;
+            damage.Amount = damage.Amount + (int)(damage.Amount * (1 + critMultiplier));
             damage.Critical = true;
         }
         damage.Amount = (int)(damage.Amount * ExternalDamageMultiplier);

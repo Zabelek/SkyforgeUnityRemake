@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using UnityEngine;
 
 public class UserProfile
 {
+    #region Variables
     public class PerkState
     {
         public string PerkID;
@@ -39,13 +39,20 @@ public class UserProfile
             _inventory = value;
         }
     }
+    #endregion
 
+    #region Constructors
     public UserProfile()
     {
         Difficulty = new();
         AcquiredPerks = new();
         GameplayResources = new();
         Equipment = new();
+        _inventory = new();
     }
-    //These methods will be moved away in the future so that equipping will be done directly through the equipment
+    public void Init()
+    {
+        Inventory.SetResourcesRef(GameplayResources);
+    }
+    #endregion
 }

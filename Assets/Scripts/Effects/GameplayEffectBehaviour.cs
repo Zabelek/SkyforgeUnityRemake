@@ -67,5 +67,21 @@ public class GameplayEffectBehaviour : MonoBehaviour
     {
         return regenMod;
     }
+    public virtual float GetVampirismModifiers(float vampMod)
+    {
+        return vampMod;
+    }
+    public virtual float GetDefenseModifiers(float defMod)
+    {
+        return defMod;
+    }
+    public virtual float GetStabilityModifiers(float stabMod)
+    {
+        return stabMod;
+    }
+    public virtual float GetMaxDamageModifiers(float dmgMod)
+    {
+        return dmgMod;
+    }
     #endregion
 }

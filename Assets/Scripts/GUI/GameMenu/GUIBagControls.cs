@@ -99,26 +99,7 @@ public class GUIBagControls : MonoBehaviour
     {
         _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
         _currentTooltip.SetCanvas(_tooltipCanvas);
-        _currentTooltip.SetTitle(itemSO.Name);
-        _currentTooltip.SetDescription(itemSO.Description);
-        _currentTooltip.SetTitleImage(itemSO.InterfaceSprite);
-        if(itemSO is WeaponSO)
-        {
-            _currentTooltip.AddStatBonus("Damage Bonus: ", ((WeaponSO)itemSO).GetDamage(), false);
-            _currentTooltip.SetDescription(((WeaponSO)itemSO).Type.Name);
-            if (itemSO.Rarity == ItemSO.RarityLevel.Legendary)
-            {
-                _currentTooltip.SetSpecialDescription(itemSO.Description);
-            }
-            else
-            {
-                _currentTooltip.SetDescription(((WeaponSO)itemSO).Type.Name + "\n" + itemSO.Description);
-            }
-        }
-        else if(itemSO is ArmorSO)
-        {
-            _currentTooltip.AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseArmorAmount, true);
-        }
+        _currentTooltip.SetForItem(itemSO);
     }
     private void PositionItemGhost()
     {

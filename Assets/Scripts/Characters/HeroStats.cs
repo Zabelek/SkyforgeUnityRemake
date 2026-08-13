@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class HeroStats : CharacterStats
 {
@@ -21,9 +20,9 @@ public class HeroStats : CharacterStats
     #endregion
 
     #region Methods
-    public override void Reset(CharacterBaseSO baseSO)
+    public override void ResetBase(CharacterBaseSO baseSO)
     {
-        base.Reset(baseSO);
+        base.ResetBase(baseSO);
         if(baseSO is HeroBaseSO)
         {
             var heroBaseSO = baseSO as HeroBaseSO;

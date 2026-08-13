@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,8 @@ public class GUIItemPickView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _nameText;
     [Tooltip("Set this to true if the window needs to be destroyed when the mouse is clicked outside")]
     public bool DestroyedByOutsideClick;
+    [Tooltip("Set this to true if you want the view to be automatically resized depending on storage size")]
+    [SerializeField] private bool _resizedByAmount = true;
     #endregion
 
     #region Mono
@@ -66,17 +69,20 @@ public class GUIItemPickView : MonoBehaviour
         {
             slot.OnPointerUpEvent += SlotPointerUp;
         }
-        if (_slots.Count > 4)
+        if(_resizedByAmount)
         {
-            var rectTransform = GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 270);
+            if (_slots.Count > 4)
+            {
+                var rectTransform = GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 270);
+            }
+            else
+            {
+                var rectTransform = GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 170);
+            }
         }
-        else
-        {
-            var rectTransform = GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 170);
-        }
-        return _slots;
+        return _slots.ToList();
     }
     protected void ClearSlots()
     {

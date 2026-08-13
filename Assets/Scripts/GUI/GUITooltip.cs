@@ -102,14 +102,17 @@ public class GUITooltip : MonoBehaviour
     }
     public void AddStatBonus(string statBonusName, float statBonus, bool isPercent)
     {
-        _statBonusPanel.gameObject.SetActive(true);
-        var newLine = Instantiate(_statLineBase, _statBonusPanel);
-        newLine.gameObject.SetActive(true);
-        newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatName").text = statBonusName;
-        if(isPercent)
-            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = (statBonus * 100).ToString("0.00") + "%";
-        else
-            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = statBonus.ToString();
+        if(statBonus != 0)
+        {
+            _statBonusPanel.gameObject.SetActive(true);
+            var newLine = Instantiate(_statLineBase, _statBonusPanel);
+            newLine.gameObject.SetActive(true);
+            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatName").text = statBonusName;
+            if (isPercent)
+                newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = (statBonus * 100).ToString("0.00") + "%";
+            else
+                newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = statBonus.ToString();
+        }
     }
     public void AddCost(Sprite costIcon, int costAmount)
     {
@@ -143,6 +146,39 @@ public class GUITooltip : MonoBehaviour
         if (defaultPosition.x - size.x < 0)
             leftOffset += size.x;
         _tooltip.anchoredPosition = new Vector2(defaultPosition.x + leftOffset, defaultPosition.y + topOffset);
+    }
+    public void SetForItem(ItemSO itemSO)
+    {
+        SetTitle(itemSO.Name);
+        SetDescription(itemSO.Description);
+        SetTitleImage(itemSO.InterfaceSprite);
+        if (itemSO is WeaponSO)
+        {
+            AddStatBonus("Damage Bonus: ", ((WeaponSO)itemSO).GetDamage(), false);
+            SetDescription(((WeaponSO)itemSO).Type.Name);
+            if (itemSO.Rarity == ItemSO.RarityLevel.Legendary)
+            {
+                SetSpecialDescription(itemSO.Description);
+            }
+            else
+            {
+                SetDescription(((WeaponSO)itemSO).Type.Name + "\n" + itemSO.Description);
+            }
+        }
+        else if (itemSO is ArmorSO)
+        {
+            AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseArmorAmount, true);
+        }
+        else if(itemSO is ArtifactSO)
+        {
+            AddStatBonus("Health Bonus: ", ((ArtifactSO)itemSO).HealthBonus, true);
+            AddStatBonus("Damage Bonus: ", ((ArtifactSO)itemSO).DamageBonus, true);
+            if(itemSO.Rarity == ItemSO.RarityLevel.Legendary)
+            {
+                SetDescription("");
+                SetSpecialDescription(itemSO.Description);
+            }
+        }
     }
     #endregion
 }

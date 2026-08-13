@@ -15,8 +15,8 @@ public class RagnarBehaviour : WeaponBehaviour
         base.Equip(hero, slot, onlyVisual);
         if(!onlyVisual)
         {
-            hero.OnEnemyKill += EnemyKilled;
-            hero.OnResurrect += AddFreshEffect;
+            hero.OnEnemyKillEvent += EnemyKilled;
+            hero.OnResurrectEvent += AddFreshEffect;
             hero.AddEffect(_bloodlustEffectBase);
             _whirlwindAbility = hero.GetHeroClass()?.GetAbilityFromAnyStance("Whirlwind");
             if (_whirlwindAbility != null)
@@ -30,8 +30,8 @@ public class RagnarBehaviour : WeaponBehaviour
         base.Unequip(hero, onlyVisual);
         if (!onlyVisual)
         {
-            hero.OnEnemyKill -= EnemyKilled;
-            hero.OnResurrect -= AddFreshEffect;
+            hero.OnEnemyKillEvent -= EnemyKilled;
+            hero.OnResurrectEvent -= AddFreshEffect;
             hero.RemoveEffect(_bloodlustEffectBase);
             if (_whirlwindAbility != null)
             {

@@ -107,7 +107,8 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
             var oldDamage = _currentDamages.FirstOrDefault(dam => dam == _casuality.LastDamage);
             if (oldDamage != null)
             {
-                var newDamageAmount = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                var newDamageAmount = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), 
+                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                 if (_burningChainApplied)
                     newDamageAmount.Amount = (int)(newDamageAmount.Amount * 2.5f);
                 oldDamage.AddMultishot(newDamageAmount);
@@ -115,11 +116,13 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
             }
             else
             {
-                var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false),
+                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                 if (_burningChainApplied)
                     damage.Amount = (int)(damage.Amount * 2.5f);
                 _casuality.TakeDamage(damage);
                 _currentDamages.Add(damage);
+                performer.AttackPerformedAction(damage);
             }
         }
         else

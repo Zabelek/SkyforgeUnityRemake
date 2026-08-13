@@ -240,7 +240,7 @@ public class HeroClassBehaviour : MonoBehaviour
     {
         if(_hero!= null)
         {
-            _hero.OnDeath -= Hero_OnDeath;
+            _hero.OnDeathEvent -= Hero_OnDeath;
             _hero.OnPerkChange -= Hero_OnPerkChange;
         }
         _hero = player;
@@ -253,7 +253,7 @@ public class HeroClassBehaviour : MonoBehaviour
                     stance.GUIPanel.SetPlayer(((PlayerBehaviour)_hero));
                 }
             }
-            _hero.OnDeath += Hero_OnDeath;
+            _hero.OnDeathEvent += Hero_OnDeath;
             _hero.OnPerkChange += Hero_OnPerkChange;
             Hero_OnPerkChange(this, null);
         }

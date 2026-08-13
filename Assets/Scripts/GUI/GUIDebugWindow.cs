@@ -4,7 +4,7 @@ using UnityEngine;
 public class GUIDebugWindow : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private GUICommonButton _menuButton, _quitButton;
+    [SerializeField] private GUICommonButton _menuButton, _quitButton, _debugStuffButton;
     #endregion
 
     #region Mono
@@ -12,6 +12,7 @@ public class GUIDebugWindow : MonoBehaviour
     {
         _quitButton.OnClick += QuitButton_Clicked;
         _menuButton.OnClick += MenuButton_Clicked;
+        _debugStuffButton.OnClick += DebugStuff_Clicked;
     }
     #endregion
 
@@ -23,6 +24,10 @@ public class GUIDebugWindow : MonoBehaviour
     private void QuitButton_Clicked(object sender, EventArgs e)
     {
         Application.Quit();
+    }
+    private void DebugStuff_Clicked(object sender, EventArgs e)
+    {
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Artifact_SunnyPrism");
     }
     #endregion
 }

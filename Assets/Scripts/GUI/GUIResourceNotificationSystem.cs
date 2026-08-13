@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class GUIResourceNotificationSystem : MonoBehaviour
 {
     #region Variables
-    private static Queue<GameplayResources.ResourceChangeEventArgs> _queuedChanges;
+    private static Queue<EventArgs> _queuedChanges;
     [SerializeField] private GUIResourceChangeWidget _widgetBase;
     [Tooltip("For now ann resource icons have to be referenced here")]
     [SerializeField] private Sprite _iconAelionEidos, _iconCredits;
@@ -22,6 +23,7 @@ public class GUIResourceNotificationSystem : MonoBehaviour
         if(SkyforgeLoader.CurrentProfile!= null)
         {
             SkyforgeLoader.CurrentProfile.GameplayResources.ResourceChangedEvent += ResourcesChanged;
+            SkyforgeLoader.CurrentProfile.Inventory.OnItemChangeEvent += ItemsChanged;
         }
         _queuedChanges = new();
         _spawnedWidgets = new();
@@ -34,14 +36,26 @@ public class GUIResourceNotificationSystem : MonoBehaviour
             _nextWidgetTimer -= Time.deltaTime;
             if(_nextWidgetTimer<=0 && _queuedChanges.Count>0)
             {
-                var newResArgs = _queuedChanges.Dequeue();
+                var newArgs = _queuedChanges.Dequeue();
                 var widget = Instantiate(_widgetBase, this.transform);
-                Sprite sprite = null;
-                if (newResArgs.ResourceType == GameplayResources.ResourceType.AelionEidos)
-                    sprite = _iconAelionEidos;
-                else if (newResArgs.ResourceType == GameplayResources.ResourceType.Credits)
-                    sprite = _iconCredits;
-                widget.SetValues(sprite, newResArgs.Amount);
+                if(newArgs is GameplayResources.ResourceChangeEventArgs)
+                {
+                    var newResArgs = newArgs as GameplayResources.ResourceChangeEventArgs;
+                    Sprite sprite = null;
+                    if (newResArgs.ResourceType == GameplayResources.ResourceType.AelionEidos)
+                        sprite = _iconAelionEidos;
+                    else if (newResArgs.ResourceType == GameplayResources.ResourceType.Credits)
+                        sprite = _iconCredits;
+                    widget.SetValues(sprite, newResArgs.Amount);
+                }
+                else
+                {
+                    var newItemArgs = newArgs as Inventory.OnItemChangeEventArgs;
+                    if(newItemArgs != null)
+                    {
+                        widget.SetValues(newItemArgs.Item.InterfaceSprite, newItemArgs.DifferenceAmount);
+                    }
+                }
                 widget.OnDestroyed += WidgetDestroyed;
                 bool otherWidgetsPresent = false;
                 //If there are displayed widgets already, they will be moved up
@@ -95,6 +109,14 @@ public class GUIResourceNotificationSystem : MonoBehaviour
     {
         //When the player profile is changed, the change itself enters the queue to be displayed on the screen
         if(!_queuedChanges.Contains(e))
+            _queuedChanges.Enqueue(e);
+        if (_nextWidgetTimer == 0)
+            _nextWidgetTimer = 1f;
+    }
+    private void ItemsChanged(object sender, Inventory.OnItemChangeEventArgs e)
+    {
+        //When the player profile is changed, the change itself enters the queue to be displayed on the screen
+        if (!_queuedChanges.Contains(e))
             _queuedChanges.Enqueue(e);
         if (_nextWidgetTimer == 0)
             _nextWidgetTimer = 1f;

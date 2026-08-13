@@ -110,10 +110,12 @@ public class BerserkerFractureAbilityBehaviour : AbilityBehaviour
                     continue;
                 if (casuality.bounds.Intersects(collider.bounds) && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
-                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), 
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     if (performer is PlayerBehaviour && ((PlayerBehaviour)performer).SelectedCharacter == character)
                     {
                         character.TakeDamage(damage);
+                        performer.AttackPerformedAction(damage);
                     }
                     else
                     {

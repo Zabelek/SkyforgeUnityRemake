@@ -1,11 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public class Inventory
 {
     #region Variables
+    public event EventHandler<OnItemChangeEventArgs> OnItemChangeEvent;
+    public class OnItemChangeEventArgs : EventArgs
+    {
+        public ItemSO Item;
+        public int DifferenceAmount;
+        public OnItemChangeEventArgs(ItemSO itemSO, int differenceAmount)
+        {
+            Item = itemSO;
+            DifferenceAmount = differenceAmount;
+        }
+    }
     public string Name { get; set; }
     public List<InventorySlot> Slots { get; set; }
+    private GameplayResources _resources;
     #endregion
 
     #region Constructors
@@ -40,62 +53,87 @@ public class Inventory
     public bool AddItem(string itemID, int amount)
     {
         var item = SkyforgeLoader.LoadItem(itemID).Result;
+        bool result = false;
         if(item != null)
         {
-            if (item.IsStackable)
+            //First chechk if the item is a resource
+            if(itemID == "Base_Resource_AelionEidos" || itemID == "Base_Resource_Credits")
             {
-                var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item?.ID == item.ID);
-                if (slot != null && slot.Item.Amount < 9999)
+                switch(itemID)
                 {
-                    int remainingAmount = amount;
-                    while (remainingAmount > 0 || slot.Item.Amount == 9999)
+                    case "Base_Resource_AelionEidos":
+                        _resources.AddResource(GameplayResources.ResourceType.AelionEidos, amount);
+                        break;
+                    case "Base_Resource_Credits":
+                        _resources.AddResource(GameplayResources.ResourceType.Credits, amount);
+                        break;
+                }
+            }
+            //if not, add it normally
+            else
+            {
+                if (item.IsStackable)
+                {
+                    var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item?.ID == item.ID);
+                    if (slot != null && slot.Item.Amount < 9999)
                     {
-                        slot.Item.Amount++;
-                        remainingAmount--;
+                        int remainingAmount = amount;
+                        while (remainingAmount > 0 || slot.Item.Amount == 9999)
+                        {
+                            slot.Item.Amount++;
+                            remainingAmount--;
+                        }
+                        if (remainingAmount > 0)
+                        {
+                            slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item == null);
+                            if (slot != null)
+                            {
+                                var addedItem = new Item(item.ID, remainingAmount);
+                                slot.Item = addedItem;
+                                result = true;
+                            }
+                        }
+                        else
+                        {
+                            result = true;
+                        }
                     }
-                    if (remainingAmount > 0)
+                    else
                     {
                         slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item == null);
                         if (slot != null)
                         {
-                            slot.Item = new Item() { ItemSO = item, ID = itemID, Amount = remainingAmount };
-                            return true;
+                            var addedItem = new Item(item.ID, amount);
+                            slot.Item = addedItem;
+                            result = true;
                         }
-                        else
-                            return false;
                     }
-                    else return true;
                 }
                 else
                 {
-                    slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item == null);
+                    var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item == null);
                     if (slot != null)
                     {
-                        slot.Item = new Item() { ItemSO = item, ID = itemID, Amount = amount };
-                        return true;
+                        var addedItem = new Item(item.ID, amount);
+                        slot.Item = addedItem;
+                        result = true;
                     }
-                    else
-                        return false;
                 }
-            }
-            else
-            {
-                var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item == null);
-                if (slot != null)
-                {
-                    slot.Item = new Item() { ItemSO = item, ID = itemID, Amount = 1 };
-                    return true;
-                }
-                else
-                    return false;
             }
         }
-        else
-            return false;
+        if(result == true)
+        {
+            OnItemChangeEvent?.Invoke(this, new OnItemChangeEventArgs(item, amount));
+        }
+        return result;
     }
     public bool AddItem(string itemID)
     {
         return AddItem(itemID, 1);
+    }
+    public bool AddItem(Item item)
+    {
+        return AddItem(item.ID, item.Amount);
     }
     public InventorySlot GetQuickAccessItem(Item.QuickAccessSlot slot)
     {
@@ -122,6 +160,10 @@ public class Inventory
         {
             item.QASlotType = slot;
         }
+    }
+    public void SetResourcesRef(GameplayResources resources)
+    {
+        _resources = resources;
     }
     #endregion
 }

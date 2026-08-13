@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -18,6 +20,8 @@ public class Globals : MonoBehaviour
     [Tooltip("Base used by all actors to instantiate healing orbs")]
     public Transform HealingOrbBase;
     [HideInInspector] public bool IsMenuOpen, IsCutscenePlaying;
+    public List<LootBoxBehaviour> RegisteredLootboxes;
+    public LootChestBehaviour CurrentOpenChest;
     #endregion
 
     #region Mono
@@ -26,6 +30,7 @@ public class Globals : MonoBehaviour
         Instance = this;
         IsMenuOpen = false;
         IsCutscenePlaying = false;
+        RegisteredLootboxes = new();
     }
     private void OnDestroy()
     {

@@ -88,6 +88,7 @@ public class GUIProfileCreationView : MonoBehaviour
         ret.Inventory.AddItem("Base_Armor_CursedArmor");
         ret.Inventory.AddItem("Base_Armor_DivinePaladinArmor");
         ret.Equipment.Equip(new Item("Base_Weapon_RustyOldChainsword"), Equipment.InventoryType.Weapon);
+        ret.Init();
         return ret;
     }
     private async Task UpdateHat()

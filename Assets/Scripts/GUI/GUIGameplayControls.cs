@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class GUIGameplayControls : MonoBehaviour
 {
     public const float MAX_INTERACTABLE_RANGE = 3;
+    public const float LOOTBOX_OPEN_DISTANCE = 7;
 
     #region Variables
     [Header("GUI Base References")]
@@ -95,6 +96,8 @@ public class GUIGameplayControls : MonoBehaviour
     [SerializeField] private Transform _interactableWidget;
     [Tooltip("Interactable widget is a small button that appears when E interaction is available")]
     [SerializeField] private TextMeshProUGUI _interactableWidgetText;
+    [SerializeField] private GIUChestLootInterface _chestInterface;
+    private LootChestBehaviour _laastChestCheck;
     private IPlayerInteractable _currentlySelectedInteractable;
     [Header("Menu Black Fade")]
     [Tooltip("Different black fade used for transition to menu")]
@@ -139,6 +142,7 @@ public class GUIGameplayControls : MonoBehaviour
         UpdateDashAndCompanion();
         UpdateOpportunityButtons();
         UpdateVolumeAndDeathScreen();
+        UpdateChestOpen();
         if (_menuOpenDelay > 0)
             _menuOpenDelay -= Time.deltaTime;
     }
@@ -421,8 +425,14 @@ public class GUIGameplayControls : MonoBehaviour
                 _characterTopBar.gameObject.SetActive(false);
                 _bossTopBar.gameObject.SetActive(false);
             }
+            //if there are any lootboxes to open
+            if (Globals.Instance?.RegisteredLootboxes.Any(l => l.IsAlreadyOpen == false && (l.transform.position - _player.transform.position).magnitude < LOOTBOX_OPEN_DISTANCE)==true)
+            {
+                _interactableWidget.gameObject.SetActive(true);
+                _interactableWidgetText.text = "Open";
+            }
             //if any interactoble found, display the widget
-            if (bestInteractable != null)
+            else if (bestInteractable != null)
             {
                 _currentlySelectedInteractable = bestInteractable;
                 _interactableWidget.gameObject.SetActive(true);
@@ -504,6 +514,30 @@ public class GUIGameplayControls : MonoBehaviour
         _player.SelectedCharacter = null;
         _characterTopBar.SetCharacter(null);
         _bossTopBar.SetCharacter(null);
+    }
+    private void UpdateChestOpen()
+    {
+        if (Globals.Instance.CurrentOpenChest != _laastChestCheck)
+        {
+            _laastChestCheck = Globals.Instance.CurrentOpenChest;
+            if (Globals.Instance.CurrentOpenChest != null)
+            {
+                _chestInterface.gameObject.SetActive(true);
+                _chestInterface.SetChest(Globals.Instance.CurrentOpenChest);
+                FreezeCam(true);
+                Globals.Instance.IsMenuOpen = true;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                _chestInterface.gameObject.SetActive(false);
+                FreezeCam(false);
+                Globals.Instance.IsMenuOpen = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
     }
     #endregion
 
@@ -600,10 +634,20 @@ public class GUIGameplayControls : MonoBehaviour
     }
     private void Interaction_Performed(object sender, EventArgs e)
     {
-        if(!_player.IsDead && !Globals.Instance.IsCutscenePlaying && !Globals.Instance.IsMenuOpen && _currentlySelectedInteractable != null)
+        if(!_player.IsDead && !Globals.Instance.IsCutscenePlaying && !Globals.Instance.IsMenuOpen)
         {
-            _currentlySelectedInteractable.Interact(_player);
-            _player.PlayAnimation("Interaction");
+            if(!_player.IsInCombat && Globals.Instance?.RegisteredLootboxes.Any(l => l.IsAlreadyOpen == false && (l.transform.position - _player.transform.position).magnitude < LOOTBOX_OPEN_DISTANCE) == true)
+            {
+                foreach(var lootbox in Globals.Instance.RegisteredLootboxes.Where(l => l.IsAlreadyOpen == false && (l.transform.position - _player.transform.position).magnitude < LOOTBOX_OPEN_DISTANCE))
+                {
+                    lootbox.Loot();
+                }
+            }
+            else if (_currentlySelectedInteractable != null)
+            {
+                _currentlySelectedInteractable.Interact(_player);
+                _player.PlayAnimation("Interaction");
+            }
         }
     }
     #endregion

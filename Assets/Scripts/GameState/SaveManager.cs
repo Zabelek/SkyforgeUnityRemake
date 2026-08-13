@@ -23,6 +23,7 @@ public static class SaveManager
 
                         var profile = (UserProfile)serializer.Deserialize(reader);
                         profile.FileName = Path.GetFileNameWithoutExtension(file);
+                        profile.Init();
                         ret.Add(profile);
                         reader.Close();
                     }

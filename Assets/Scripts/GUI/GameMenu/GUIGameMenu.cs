@@ -111,7 +111,7 @@ public class GUIGameMenu : MonoBehaviour
         {
             _equipmentControls.UpdateValues();
         }
-        _ = _blackFade.StartFadeOut();
+        await _blackFade.StartFadeOut();
     }
     public async Task CloseMenu()
     {

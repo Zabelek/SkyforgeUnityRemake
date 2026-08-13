@@ -64,22 +64,23 @@ public class BerserkerFastAttackAbilityBehaviour : MovingAbilityBehaviour
                     continue;
                 if (casuality.bounds.Intersects(collider.bounds) && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
-                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                    var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), 
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     if (!character.GetActiveEffects().Any(eff => eff.EffectSO.Name == _stunCooldown.EffectSO.Name))
                     {
-                        if (performer is PlayerBehaviour && ((PlayerBehaviour)performer).SelectedCharacter == character)
-                        {
-                            character.AddEffect(_stunCooldown);
-                            character.AddEffect(_stun);
-                        }
-                        else
-                        {
-                            damage.Amount = damage.Amount / 3;
-                        }
+
+                    }
+                    else
+                        damage.Amount = damage.Amount / 2;
+                    if (performer is PlayerBehaviour && ((PlayerBehaviour)performer).SelectedCharacter == character)
+                    {
+                        character.AddEffect(_stunCooldown);
+                        character.AddEffect(_stun);
+                        performer.AttackPerformedAction(damage);
                     }
                     else
                     {
-                        damage.Amount = damage.Amount / 2;
+                        damage.Amount = damage.Amount / 3;
                     }
                     character.TakeDamage(damage);
                     casualityAmount++;

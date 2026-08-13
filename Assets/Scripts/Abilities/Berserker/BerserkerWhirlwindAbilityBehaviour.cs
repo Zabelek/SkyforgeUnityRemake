@@ -182,6 +182,7 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
         var potentialCasualities = Physics.OverlapSphere(performer.transform.position, 10);
         var collider = Instantiate(transform.Find("Collider").GetComponent<Collider>(), performer.transform, false);
         float potentialHealing = 0;
+        Damage lastDamage = null;
         if (collider != null)
         {
             foreach (var casuality in potentialCasualities)
@@ -193,11 +194,13 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
                     Damage newDamage = null;
                     if (_firestorm)
                     {
-                        newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false), performer.GetEffectiveCriticalChance());
+                        newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false), 
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     }
                     else
                     {
-                        newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                        newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false),
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     }
                     var oldDamage = _currentDamages.FirstOrDefault(dam => dam == character.LastDamage);
                     if (oldDamage != null)
@@ -218,6 +221,8 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
                     {
                         potentialHealing++;
                     }
+                    if (newDamage != null)
+                        lastDamage = newDamage;
                 }
             }
         }
@@ -236,6 +241,8 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
             potentialHealing = potentialHealing / 100;
             performer.HealPercent(potentialHealing, true);
         }
+        if (lastDamage != null)
+            performer.AttackPerformedAction(lastDamage);
         Destroy(collider.gameObject);
     }
     public override void UpdateCooldown()

@@ -43,13 +43,14 @@ public class EffectManager
             bool stacks = false;
             foreach (var existingEff in _effects)
             {
-                if (existingEff.GetType() == effect.GetType())
+                if (existingEff.EffectSO.ID == effect.EffectSO.ID)
                 {
                     if (existingEff.EffectSO.IsStackable)
                     {
                         stacks = true;
                     }
                     existingEffect = existingEff;
+                    break;
                 }
             }
             if (existingEffect != null)
@@ -186,6 +187,38 @@ public class EffectManager
         foreach (var effect in _effects)
         {
             regenMod = effect.GetCombatManaRegenModifiers(regenMod);
+        }
+        return regenMod;
+    }
+    public float GetVampirismModifiers(float regenMod)
+    {
+        foreach (var effect in _effects)
+        {
+            regenMod = effect.GetVampirismModifiers(regenMod);
+        }
+        return regenMod;
+    }
+    public float GetStabilityModifiers(float regenMod)
+    {
+        foreach (var effect in _effects)
+        {
+            regenMod = effect.GetStabilityModifiers(regenMod);
+        }
+        return regenMod;
+    }
+    public float GetDefenseModifiers(float regenMod)
+    {
+        foreach (var effect in _effects)
+        {
+            regenMod = effect.GetDefenseModifiers(regenMod);
+        }
+        return regenMod;
+    }
+    public float GetMaxDamageModifiers(float regenMod)
+    {
+        foreach (var effect in _effects)
+        {
+            regenMod = effect.GetMaxDamageModifiers(regenMod);
         }
         return regenMod;
     }

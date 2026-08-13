@@ -178,12 +178,12 @@ public class AbilityBehaviour : MonoBehaviour
     {
         _hitPerformed = true;
     }
-    protected virtual Damage CalculateDamage(Damage damage, float critChance)
+    protected virtual Damage CalculateDamage(Damage damage, float critChance, float critMultiplier)
     {
         damage.Amount = (int)(damage.Amount * AbilitySO.DamageMultiplier);
         if (UnityEngine.Random.Range(0f, 1f) < critChance)
         {
-            damage.Amount = damage.Amount * 2;
+            damage.Amount = damage.Amount + (int)(damage.Amount * (1 + critMultiplier));
             damage.Critical = true;
         }
         damage.Amount = (int)(damage.Amount * ExternalDamageMultiplier);

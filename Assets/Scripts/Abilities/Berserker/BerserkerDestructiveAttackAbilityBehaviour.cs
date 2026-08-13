@@ -2,7 +2,7 @@ using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class BerserkerAbilityBehaviour : MovingAbilityBehaviour
+public class BerserkerDestructiveAttackAbilityBehaviour : MovingAbilityBehaviour
 {
     private const int BURNING_CHAIN_CHANCE_PERCENT = 20;
 
@@ -195,6 +195,7 @@ public class BerserkerAbilityBehaviour : MovingAbilityBehaviour
         }
         int casualityAmount = 0;
         var thrillOfVictoryEffect = performer.GetActiveEffects().FirstOrDefault(e => e.EffectSO.Name == "Thrill of Victory Cast");
+        Damage lastDamage = null;
         if (collider!=null)
         {
             foreach(var casuality in potentialCasualities)
@@ -206,12 +207,15 @@ public class BerserkerAbilityBehaviour : MovingAbilityBehaviour
                     Damage damage;
                     if (_strong)
                     {
-                        damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false), performer.GetEffectiveCriticalChance());
+                        damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false),
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     }
                     else
                     {
-                        damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), performer.GetEffectiveCriticalChance());
+                        damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false),
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
                     }
+                    lastDamage = damage;
                     character.TakeDamage(damage);
                     character.AddEffect(_destAttackEffect);
                     if (thrillOfVictoryEffect != null)
@@ -244,6 +248,8 @@ public class BerserkerAbilityBehaviour : MovingAbilityBehaviour
                     performer.AddEffect(_burningChain);
                 }
             }
+            if (lastDamage != null)
+                performer.AttackPerformedAction(lastDamage);
         }
         Destroy(collider.gameObject);
     }

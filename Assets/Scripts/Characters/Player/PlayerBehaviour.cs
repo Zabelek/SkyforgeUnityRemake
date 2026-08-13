@@ -86,7 +86,7 @@ public class PlayerBehaviour : HeroBehaviour
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        EquippedWeapon.Unequip(this, _isMenuPreview);
+        EquippedWeapon.Unequip(this, IsMenuPreview);
     }
     #endregion
 
@@ -423,7 +423,7 @@ public class PlayerBehaviour : HeroBehaviour
         {
             if (!addOnly)
             {
-                Stats.Reset(CharacterSO);
+                Stats.ResetBase(CharacterSO);
                 _perks.Clear();
                 foreach (var perkState in SkyforgeLoader.CurrentProfile.AcquiredPerks)
                 {
@@ -477,9 +477,9 @@ public class PlayerBehaviour : HeroBehaviour
         if (SkyforgeLoader.CurrentProfile != null)
             SkyforgeLoader.CurrentProfile.CurrentlyPickedClass = nextClass.HeroClassSO.ID;
     }
-    public override void EnemyKilled(CharacterBehaviour enemy)
+    public override void EnemyKilled(EnemyKillEventArgs args)
     {
-        base.EnemyKilled(enemy);
+        base.EnemyKilled(args);
         SkyforgeLoader.CurrentProfile.Prestige += 69;
     }
     public void SyncEquipment()
@@ -516,6 +516,15 @@ public class PlayerBehaviour : HeroBehaviour
                 if (EquippedArmor != null)
                     _ = EquipArmor(null);
                 _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
+            }
+            var artifact = profile.Equipment.GetEquipment(Equipment.InventoryType.Artifact);
+            if (artifact != null && artifact.ItemSO is ArtifactSO && (artifact.ItemSO as ArtifactSO).GetPrefab() is GearPeaceBehaviour)
+            {
+                EquipArtifact((artifact.ItemSO as ArtifactSO).GetPrefab() as GearPeaceBehaviour);
+            }
+            else if (artifact is null)
+            {
+                EquipArtifact(null);
             }
         }
     }

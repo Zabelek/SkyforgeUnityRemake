@@ -188,6 +188,7 @@ public class Equipment
         //for now the rest of fields have to be null to make them locked in GUI
         WeaponSlot = new();
         ArmorSlot = new();
+        ArtifactSlot = new();
     }
     public Item Equip(Item item, Equipment.InventoryType invType)
     {
@@ -204,6 +205,12 @@ public class Equipment
             WeaponSlot.Item = item;
             SkyforgeLoader.EquipmentChanged = true;
         }
+        else if (invType == Equipment.InventoryType.Artifact)
+        {
+            ret = ArtifactSlot.Item;
+            ArtifactSlot.Item = item;
+            SkyforgeLoader.EquipmentChanged = true;
+        }
         return ret;
     }
     public Item GetEquipment(Equipment.InventoryType invType)
@@ -215,6 +222,10 @@ public class Equipment
         else if (invType == Equipment.InventoryType.Weapon)
         {
             return WeaponSlot.Item;
+        }
+        else if (invType == Equipment.InventoryType.Artifact)
+        {
+            return ArtifactSlot.Item;
         }
         else return null;
     }

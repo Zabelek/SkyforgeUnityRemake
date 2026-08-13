@@ -12,17 +12,26 @@ public class CharacterBehaviour : MonoBehaviour
     public const float INSTANT_DEATH_HEIGHT = -150;
 
     #region MainVariables
-    public event EventHandler OnHurt;
-    public event EventHandler OnDeath;
-    public event EventHandler OnResurrect;
-    public event EventHandler OnCutscene;
-    public event EventHandler<EnemyKillEventArgs> OnEnemyKill;
+    public event EventHandler OnHurtEvent;
+    public event EventHandler OnDeathEvent;
+    public event EventHandler OnResurrectEvent;
+    public event EventHandler OnCutsceneEvent;
+    public event EventHandler<EnemyKillEventArgs> OnEnemyKillEvent;
+    public event EventHandler OnAttackPerformedEvent;
+    public event EventHandler OnCriticalAttackPerformedEvent;
     public class EnemyKillEventArgs : EventArgs
     {
         public CharacterBehaviour KilledCharacter;
+        public bool KilledByFinisher;
         public EnemyKillEventArgs(CharacterBehaviour killedCharacter)
         {
             KilledCharacter = killedCharacter;
+            KilledByFinisher = false;
+        }
+        public EnemyKillEventArgs(CharacterBehaviour killedCharacter, bool killedByFinisher)
+        {
+            KilledCharacter = killedCharacter;
+            KilledByFinisher = killedByFinisher;
         }
     }
     [Header("Character Related Variables")]
@@ -105,7 +114,7 @@ public class CharacterBehaviour : MonoBehaviour
     protected virtual void Awake()
     {
         Stats = new();
-        Stats.Reset(CharacterSO);
+        Stats.ResetBase(CharacterSO);
         _colliders = GetComponentsInChildren<Collider>();
         _effectManager = new EffectManager(this);
         ActiveEnemies = new();
@@ -289,7 +298,7 @@ public class CharacterBehaviour : MonoBehaviour
             EnterCombat(damage.Source, false);
             damage.Source.EnterCombat(this, false);
             Stats.CurrentHP -= damage.Amount;
-            OnHurt?.Invoke(this, EventArgs.Empty);
+            OnHurtEvent?.Invoke(this, EventArgs.Empty);
             if (Stats.CurrentHP <= 0)
             {
                 Kill(damage.Source);
@@ -300,7 +309,7 @@ public class CharacterBehaviour : MonoBehaviour
             }
             if (IsDead)
             {
-                OnDeath?.Invoke(this, EventArgs.Empty);
+                OnDeathEvent?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -318,12 +327,18 @@ public class CharacterBehaviour : MonoBehaviour
             float vampValue = damage.Source.Stats.Vampirism * damage.Amount;
             damage.Source.Heal((int)(vampValue), false);
         }
+        if (Stats.GearStats.Armor >0)
+        {
+            damage.Amount -= (int)(damage.Amount * Stats.GearStats.Armor);
+            if (damage.Amount < 1)
+                damage.Amount = 1;
+        }
     }
     public virtual void TakeEmptyDamage()
     {
 
     }
-    public virtual void Kill(CharacterBehaviour killer)
+    public virtual void Kill(CharacterBehaviour killer, AbilityBehaviour killingAbility)
     {
         IsDead = true;
         _canMove = false;
@@ -350,14 +365,21 @@ public class CharacterBehaviour : MonoBehaviour
         {
             aiHandler.enabled = false;
         }
-        killer.EnemyKilled(this);
+        if(killingAbility != null && killingAbility is FinisherAbility)
+            killer.EnemyKilled(new EnemyKillEventArgs(this, true));
+        else
+            killer.EnemyKilled(new EnemyKillEventArgs(this));
+    }
+    public virtual void Kill(CharacterBehaviour killer)
+    {
+        Kill(killer, null);
     }
     public virtual void KillOffCombat()
     {
         Kill(this);
         _lastOffCombatHealAmount = (int)(Stats.MaxHP * 0.06f);
         _healTimer = 1;
-        OnDeath?.Invoke(this, EventArgs.Empty);
+        OnDeathEvent?.Invoke(this, EventArgs.Empty);
     }
     public virtual void Resurrect()
     {
@@ -378,7 +400,7 @@ public class CharacterBehaviour : MonoBehaviour
         }
         LeaveCombat();
         StartCombatProtectionTimer = 5f;
-        OnResurrect?.Invoke(this, EventArgs.Empty);
+        OnResurrectEvent?.Invoke(this, EventArgs.Empty);
     }
     public virtual void Heal(int healAmount, bool effect)
     {
@@ -502,7 +524,7 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void PlayCutscene(RuntimeAnimatorController cutsceneController)
     {
         _animationBehaviour.SetController(cutsceneController);
-        OnCutscene?.Invoke(this, EventArgs.Empty);
+        OnCutsceneEvent?.Invoke(this, EventArgs.Empty);
     }
     public virtual void EndCutscene()
     {
@@ -553,7 +575,7 @@ public class CharacterBehaviour : MonoBehaviour
     }
     public virtual int GetEffectiveDamage()
     {
-        var randomDamage = UnityEngine.Random.Range(Stats.BaseDamage, Stats.BaseDamage + Stats.MaxDamage);
+        var randomDamage = UnityEngine.Random.Range(Stats.BaseDamage, Stats.BaseDamage + GetEffectiveMaxDamage());
         return (int)(randomDamage * GetDamageModifiers());
     }
     public virtual float GetDamageModifiers()
@@ -590,6 +612,46 @@ public class CharacterBehaviour : MonoBehaviour
     {
         float regenMod = 1;
         regenMod = _effectManager.GetCombatManaRegenModifiers(regenMod);
+        return regenMod;
+    }
+    public virtual int GetEffectiveVampirism()
+    {
+        return (int)(Stats.CombatManaRegen * GetVampirismModifiers());
+    }
+    public virtual float GetVampirismModifiers()
+    {
+        float regenMod = 1;
+        regenMod = _effectManager.GetVampirismModifiers(regenMod);
+        return regenMod;
+    }
+    public virtual int GetEffectiveDefense()
+    {
+        return (int)(Stats.CombatManaRegen * GetDefenseModifiers());
+    }
+    public virtual float GetDefenseModifiers()
+    {
+        float regenMod = 1;
+        regenMod = _effectManager.GetDefenseModifiers(regenMod);
+        return regenMod;
+    }
+    public virtual int GetEffectiveStability()
+    {
+        return (int)(Stats.CombatManaRegen * GetStabilityModifiers());
+    }
+    public virtual float GetStabilityModifiers()
+    {
+        float regenMod = 1;
+        regenMod = _effectManager.GetStabilityModifiers(regenMod);
+        return regenMod;
+    }
+    public virtual int GetEffectiveMaxDamage()
+    {
+        return (int)(Stats.CombatManaRegen * GetMaxDamageModifiers());
+    }
+    public virtual float GetMaxDamageModifiers()
+    {
+        float regenMod = 1;
+        regenMod = _effectManager.GetMaxDamageModifiers(regenMod);
         return regenMod;
     }
     private void CheckDropHealingOrb()
@@ -638,7 +700,6 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual bool CanAct()
     {
         //As for now, effects set canAct every tick, so it's not necessary to scan through them to check if any are stuns. This may change in the fututre
-        return _canAct;
         if (_canAct)
             return _effectManager.CanAct();
         else
@@ -647,15 +708,14 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual bool CanMove()
     {
         //As for now, effects set canMove every tick, so it's not necessary to scan through them to check if any are stuns. This may change in the fututre
-        return _canMove;
         if (_canMove)
             return _effectManager.CanMove();
         else
             return false;
     }
-    public virtual void EnemyKilled(CharacterBehaviour enemy)
+    public virtual void EnemyKilled(EnemyKillEventArgs args)
     {
-        OnEnemyKill?.Invoke(this, new EnemyKillEventArgs(enemy));
+        OnEnemyKillEvent?.Invoke(this, args);
     }
     #endregion
 
@@ -733,6 +793,16 @@ public class CharacterBehaviour : MonoBehaviour
     public void SetDamageGlow(float alpha, bool add)
     {
         _visualHitReceiver.SetDamageGlow(alpha, add);
+    }
+    #endregion
+
+    #region EventHandlers
+
+    public void AttackPerformedAction(Damage damage)
+    {
+        if(damage.Critical)
+            OnCriticalAttackPerformedEvent?.Invoke(this, EventArgs.Empty);
+        OnAttackPerformedEvent?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 
