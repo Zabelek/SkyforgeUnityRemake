@@ -137,7 +137,7 @@ public class DOTScenarioManager : ScenarioManager
         yield return new WaitForSeconds(10);
         if (_boss2.Stats.CurrentHP > (int)(_boss2.Stats.MaxHP / 10))
         {
-            _boss2.TakeDamage(new Damage(_laserGun, (_boss2.Stats.CurrentHP - (int)(_boss2.Stats.MaxHP / 10))), true);
+            _boss2.TakeDamage(new Damage(_laserGun, (_boss2.Stats.CurrentHP - (int)(_boss2.Stats.MaxHP / 10))), true, true);
         }
     }
     private IEnumerator DelayedScene5Actions()

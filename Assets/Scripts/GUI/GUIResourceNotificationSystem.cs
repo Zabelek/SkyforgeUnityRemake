@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class GUIResourceNotificationSystem : MonoBehaviour
 {
     #region Variables
     private static Queue<EventArgs> _queuedChanges;
     [SerializeField] private GUIResourceChangeWidget _widgetBase;
-    [Tooltip("For now ann resource icons have to be referenced here")]
+    [Tooltip("For now all resource icons have to be referenced here")]
     [SerializeField] private Sprite _iconAelionEidos, _iconCredits;
     private List<GUIResourceChangeWidget> _spawnedWidgets;
     private float _nextWidgetTimer;
@@ -38,7 +37,8 @@ public class GUIResourceNotificationSystem : MonoBehaviour
             {
                 var newArgs = _queuedChanges.Dequeue();
                 var widget = Instantiate(_widgetBase, this.transform);
-                if(newArgs is GameplayResources.ResourceChangeEventArgs)
+                //queued args can be one ResourceChangeEventArgs or OnItemChangeEventArgs, depending on its source. 
+                if (newArgs is GameplayResources.ResourceChangeEventArgs)
                 {
                     var newResArgs = newArgs as GameplayResources.ResourceChangeEventArgs;
                     Sprite sprite = null;

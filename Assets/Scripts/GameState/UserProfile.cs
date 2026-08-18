@@ -29,9 +29,10 @@ public class UserProfile
         }
         set
         {
+            //each item has to assign an ItemSO on creation
             foreach (var invSlot in value.Slots)
             {
-                if (invSlot.Item != null)
+                if (invSlot.Item != null && SkyforgeLoader.ItemRegistry != null)
                 {
                     invSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == invSlot.Item.ID);
                 }

@@ -3,7 +3,7 @@ using System;
 public class GearBonus
 {
     #region Variables
-    public event EventHandler OnStatsChangedEvernt;
+    public event EventHandler OnStatsChangedEvent;
     public int HealthBonus;
     public float HealthPercentBonus;
     public int DamageBonus;
@@ -28,7 +28,7 @@ public class GearBonus
         DamagePercentBonus = 0;
         Armor = 0;
         CriticalDamageBonus = 0;
-        OnStatsChangedEvernt?.Invoke(this, EventArgs.Empty);
+        OnStatsChangedEvent?.Invoke(this, EventArgs.Empty);
     }
     public void Add(GearBonus bonus)
     {
@@ -40,7 +40,7 @@ public class GearBonus
             DamagePercentBonus += bonus.DamagePercentBonus;
             Armor += bonus.Armor;
         }
-        OnStatsChangedEvernt?.Invoke(this, EventArgs.Empty);
+        OnStatsChangedEvent?.Invoke(this, EventArgs.Empty);
     }
     public void Remove(GearBonus bonus)
     {
@@ -52,7 +52,7 @@ public class GearBonus
             DamagePercentBonus -= bonus.DamagePercentBonus;
             Armor -= bonus.Armor;
         }
-        OnStatsChangedEvernt?.Invoke(this, EventArgs.Empty);
+        OnStatsChangedEvent?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 }

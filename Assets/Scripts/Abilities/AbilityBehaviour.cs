@@ -1,10 +1,19 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityBehaviour : MonoBehaviour
 {
     #region Variables
+    //events
+    public EventHandler<AbilityStateEventArgs> OnAbilityStart, OnAbilityEnd, OnAbilityHit;
+    public class AbilityStateEventArgs : EventArgs
+    {
+        public CharacterBehaviour Performer;
+        public AbilityStateEventArgs(CharacterBehaviour performer)
+        {
+            Performer = performer;
+        }
+    }
     [Header("General Ability Variables")]
     [Tooltip("Ability Scriptable Object with basic needed values")]
     public AbilitySO AbilitySO;
@@ -24,16 +33,6 @@ public class AbilityBehaviour : MonoBehaviour
     [HideInInspector] public float ExternalDamageMultiplier = 1;
     //Used when UpdateAbility in inheriting abilities needs to know if base.UpdateAbility ended the ability in the current iteration.
     [HideInInspector] public bool Finishing;
-    //events
-    public EventHandler<AbilityStateEventArgs> OnAbilityStart, OnAbilityEnd, OnAbilityHit;
-    public class AbilityStateEventArgs : EventArgs
-    {
-        public CharacterBehaviour Performer;
-        public AbilityStateEventArgs(CharacterBehaviour performer)
-        {
-            Performer = performer;
-        }
-    }
     #endregion
 
     #region Methods
@@ -227,6 +226,11 @@ public class AbilityBehaviour : MonoBehaviour
                 CurrentCooldown = MaxCooldown;
             }
         }
+    }
+    public virtual void ModAbilityDuration(float extraSeconds)
+    {
+        _attackTimerNext += extraSeconds;
+        _attackTimerMax += extraSeconds;
     }
     #endregion
 }

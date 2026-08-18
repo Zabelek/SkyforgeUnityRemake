@@ -204,6 +204,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             valid = true;
             title = "Artifact";
         }
+        //add an empty slot so that the character can take of an equipment peace completely, but some weapon has to be on the slot so that the character can fight with something
         if (title != "Weapon")
         {
             var emptySlot = SkyforgeLoader.CurrentProfile.Inventory.Slots.FirstOrDefault(s => s.Item == null);
@@ -271,6 +272,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
         }
         else if(_tempClickedItemSlot!=null && _tempClickedItemSlot.Item != null)
         {
+            //if the item is null, some of the parameters have to be set here (they are normally set in Item.Activate())
             e.Slot.Item = _tempClickedItemSlot.Item;
             _tempClickedItemSlot.Item = null;
             SkyforgeLoader.EquipmentChanged = true;

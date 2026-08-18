@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 7b6c175abc23e0a4293380cb2174e1f6, type: 2}
   Chance: 0.5
   MinAmount: 1
@@ -61,7 +59,7 @@ GameObject:
   - component: {fileID: 7102281751983501080}
   - component: {fileID: 1220428993643353386}
   m_Layer: 0
-  m_Name: lootRecord3 (1)
+  m_Name: lootRecord7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,8 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 0920d764425bcf94983ac3699ebbb659, type: 2}
   Chance: 1
   MinAmount: 1
@@ -144,8 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 1bf47a3a77640354bbab76e5f90b7f52, type: 2}
   Chance: 0.5
   MinAmount: 1
@@ -194,8 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 0920d764425bcf94983ac3699ebbb659, type: 2}
   Chance: 0.5
   MinAmount: 1
@@ -307,8 +299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: ce99a53f9a9e45947b1868845a0b7301, type: 2}
   Chance: 0.5
   MinAmount: 1
@@ -324,7 +314,7 @@ GameObject:
   - component: {fileID: 3036693491535881266}
   - component: {fileID: 6487992080684427349}
   m_Layer: 0
-  m_Name: lootRecord2 (1)
+  m_Name: lootRecord6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,8 +347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 1bf47a3a77640354bbab76e5f90b7f52, type: 2}
   Chance: 1
   MinAmount: 1
@@ -374,7 +362,7 @@ GameObject:
   - component: {fileID: 5646696080255626641}
   - component: {fileID: 5464563632176827879}
   m_Layer: 0
-  m_Name: lootRecord1 (1)
+  m_Name: lootRecord5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,8 +395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: 7b6c175abc23e0a4293380cb2174e1f6, type: 2}
   Chance: 1
   MinAmount: 1
@@ -424,7 +410,7 @@ GameObject:
   - component: {fileID: 1251097772258596751}
   - component: {fileID: 1662013319479762714}
   m_Layer: 0
-  m_Name: lootRecord4 (1)
+  m_Name: lootRecord8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -457,8 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ef63a3da7c1b24eb8cd818fee3a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootRecord
-  IsResource: 0
-  ResourceType: 0
   Item: {fileID: 11400000, guid: ce99a53f9a9e45947b1868845a0b7301, type: 2}
   Chance: 1
   MinAmount: 1

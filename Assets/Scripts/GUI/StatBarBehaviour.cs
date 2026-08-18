@@ -22,9 +22,24 @@ public class StatBarBehaviour : MonoBehaviour
     private bool _firstTime = true;
     private int _previous = 0;
     private int _previousMax = 0;
+    [Header("Freeze")]
+    [Tooltip("Sprite that will be displayed on the bar when its frozen")]
+    [SerializeField] private Sprite _freezeSprite;
+    [Tooltip("Color of the frozen bar")]
+    [SerializeField] private Color _freezeColor;
+    protected Sprite _initialSprite;
+    protected Color _initialColor;
     #endregion
 
     #region Mono
+    private void Awake()
+    {
+        if (_fillBar != null)
+        {
+            _initialColor = _fillBar.color;
+            _initialSprite = _fillBar.sprite;
+        }
+    }
     private void Update()
     {
         //difference bar animations
@@ -100,6 +115,20 @@ public class StatBarBehaviour : MonoBehaviour
     public void SetColor(Color color)
     {
         _fillBar.color = color;
+        _initialColor = color;
+    }
+    public void SetFreeze(bool freeze)
+    {
+        if(freeze)
+        {
+            _fillBar.sprite = _freezeSprite;
+            _fillBar.color = _freezeColor;
+        }
+        else
+        {
+            _fillBar.sprite = _initialSprite;
+            _fillBar.color = _initialColor;
+        }
     }
     public Color GetColor()
     {

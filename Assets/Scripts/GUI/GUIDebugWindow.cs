@@ -27,7 +27,7 @@ public class GUIDebugWindow : MonoBehaviour
     }
     private void DebugStuff_Clicked(object sender, EventArgs e)
     {
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Artifact_SunnyPrism");
+        
     }
     #endregion
 }

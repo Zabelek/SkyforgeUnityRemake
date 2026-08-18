@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class CharacterStats
 {
@@ -7,7 +6,7 @@ public class CharacterStats
     private int _maxHP;
     public int MaxHP { 
         get => (int)((_maxHP + GearStats.HealthBonus) * (1 + GearStats.HealthPercentBonus));
-        set => _maxHP = value;
+        private set => _maxHP = value;
     }
     private int _currentHP;
     public int CurrentHP { 
@@ -27,13 +26,13 @@ public class CharacterStats
     public int BaseDamage 
     { 
         get => (int)((_baseDamage + GearStats.DamageBonus) * (1 + GearStats.DamagePercentBonus));
-        set => _baseDamage = value; 
+        private set => _baseDamage = value; 
     }
     //max bonus value that the character can inflict. Every hit, the character inflicts a random damage betwen Base damage and Base damage + Max damage;
     public int _maxDamage;
     public int MaxDamage {
         get => (int)(_maxDamage * (1 + GearStats.DamagePercentBonus));
-        set => _maxDamage = value;
+        private set => _maxDamage = value;
     }
     public int CombatManaRegen { get; set; }
     //healing percent of the character each time they deal damage. 1 vampirism means that they will heal by 100% of dealt damage
@@ -49,7 +48,7 @@ public class CharacterStats
     public CharacterStats()
     {
         GearStats = new();
-        GearStats.OnStatsChangedEvernt += GearStatsChanged;
+        GearStats.OnStatsChangedEvent += GearStatsChanged;
     }
     #endregion
 
@@ -70,10 +69,6 @@ public class CharacterStats
         CurrentHP = MaxHP;
         if (CurrentMana > MaxMana)
             CurrentMana = MaxMana;
-    }
-    public virtual void ResetGear()
-    {
-        GearStats.Reset();
     }
     public virtual void ModifyAccordingToPerk(PerkSO perk, int modifier)
     {

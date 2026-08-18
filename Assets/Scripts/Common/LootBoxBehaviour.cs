@@ -7,13 +7,15 @@ public class LootBoxBehaviour : MonoBehaviour
     public const float FADE_OUT_TIME = 1;
 
     #region Variables
-    [SerializeField] private CharacterBehaviour _owner;
+    [Tooltip("To animate opening and idle floating")]
     [SerializeField] private Animator _animator;
     private List<Item> _items;
     private float _fadeOutTimer, _initialLightIntensity;
+    [Tooltip("Main mesh of the lootbox")]
     [SerializeField] private SkinnedMeshRenderer _renderer;
     [SerializeField] private Light _light;
     [SerializeField] private SpriteRenderer _sprite;
+    [Tooltip("Particle System to actyivate on box opening")]
     [SerializeField] private ParticleSystem _particles;
     public bool IsAlreadyOpen;
     #endregion
@@ -30,7 +32,7 @@ public class LootBoxBehaviour : MonoBehaviour
     }
     private void Update()
     {
-        var target = Globals.Instance.ViewportCamera.transform.forward * -1;
+        var target = Vector3.zero;
         if (Globals.Instance?.ViewportCamera != null)
             target = Globals.Instance.ViewportCamera.transform.forward * -1;
         else
@@ -62,10 +64,6 @@ public class LootBoxBehaviour : MonoBehaviour
     #endregion
 
     #region Methods
-    public void SetOwner(CharacterBehaviour owner)
-    {
-        _owner = owner;
-    }
     public void AddItem(Item item)
     {
         _items.Add(item);
@@ -87,9 +85,4 @@ public class LootBoxBehaviour : MonoBehaviour
         _fadeOutTimer = 1;
     }
     #endregion
-
-    #region EventHandlers
-    #endregion
-
-
 }

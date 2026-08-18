@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -268,6 +267,13 @@ public class EffectManager
             return false;
         else
             return true;
+    }
+    public bool IsInvulnerable()
+    {
+        if (_effects.Any(e => e.EffectSO.Types.Any(t => t == EffectSO.EffectType.Invulnerability)))
+            return true;
+        else
+            return false;
     }
     #endregion
 }

@@ -65,8 +65,8 @@ public class GIUChestLootInterface : MonoBehaviour
     {
         if (guiSlot.InventorySlot.Item != null)
         {
-            //add checking how much of the items has been transfered if the storage was filled during treansfer
-            if (SkyforgeLoader.CurrentProfile.Inventory.AddItem(guiSlot.InventorySlot.Item.ID, guiSlot.InventorySlot.Item.Amount)) ;
+            //TO DO: add checking how many items has been transfered if the storage was filled during treansfer
+            if (SkyforgeLoader.CurrentProfile.Inventory.AddItem(guiSlot.InventorySlot.Item.ID, guiSlot.InventorySlot.Item.Amount))
             {
                 guiSlot.InventorySlot.Item = null;
                 guiSlot.UpdateSlot();

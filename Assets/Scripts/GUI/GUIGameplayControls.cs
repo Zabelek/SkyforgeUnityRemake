@@ -97,7 +97,7 @@ public class GUIGameplayControls : MonoBehaviour
     [Tooltip("Interactable widget is a small button that appears when E interaction is available")]
     [SerializeField] private TextMeshProUGUI _interactableWidgetText;
     [SerializeField] private GIUChestLootInterface _chestInterface;
-    private LootChestBehaviour _laastChestCheck;
+    private LootChestBehaviour _lastChestCheck;
     private IPlayerInteractable _currentlySelectedInteractable;
     [Header("Menu Black Fade")]
     [Tooltip("Different black fade used for transition to menu")]
@@ -347,6 +347,7 @@ public class GUIGameplayControls : MonoBehaviour
             if (_manaBar.gameObject.activeSelf == false)
                 _manaBar.gameObject.SetActive(true);
             _hpBar.SetValue(_player.Stats.CurrentHP, _player.Stats.MaxHP);
+            _hpBar.SetFreeze(_player.IsInvulnerable());
             _manaBar.SetValue(_player.Stats.CurrentMana, _player.Stats.MaxMana);
         }
         else
@@ -517,9 +518,10 @@ public class GUIGameplayControls : MonoBehaviour
     }
     private void UpdateChestOpen()
     {
-        if (Globals.Instance.CurrentOpenChest != _laastChestCheck)
+        if (Globals.Instance.CurrentOpenChest != _lastChestCheck)
         {
-            _laastChestCheck = Globals.Instance.CurrentOpenChest;
+            //set so that the game sets the view only on chest change
+            _lastChestCheck = Globals.Instance.CurrentOpenChest;
             if (Globals.Instance.CurrentOpenChest != null)
             {
                 _chestInterface.gameObject.SetActive(true);

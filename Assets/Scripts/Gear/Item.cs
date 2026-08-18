@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Xml.Serialization;
 
 public class Item

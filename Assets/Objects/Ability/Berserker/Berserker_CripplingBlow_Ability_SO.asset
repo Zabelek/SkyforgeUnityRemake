@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c62e7517ac2bf5a41906d4a6e174bacb, type: 3}
   m_Name: Berserker_CripplingBlow_Ability_SO
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
-  AttackTimerNext: 3.1
-  AttackTimerMax: 3.4
+  AttackTimerNext: 3.9
+  AttackTimerMax: 4.3
   IsSkill: 1
   Icon: {fileID: 21300000, guid: a33b2af65227dcb49acd17bf00d0968a, type: 3}
   UpgradedIcon: {fileID: 0}

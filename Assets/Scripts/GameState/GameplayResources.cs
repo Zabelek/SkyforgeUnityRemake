@@ -5,13 +5,13 @@ public class GameplayResources
 {
     #region Variables
     public enum ResourceType { Credits, AelionEidos }
+    [XmlIgnore]
+    public EventHandler<ResourceChangeEventArgs> ResourceChangedEvent;
     public class ResourceChangeEventArgs : EventArgs
     {
         public GameplayResources.ResourceType ResourceType;
         public int Amount;
     }
-    [XmlIgnore]
-    public EventHandler<ResourceChangeEventArgs> ResourceChangedEvent;
     //Each new resoure here has to be constructed exactly the way those belowa are. It has to properly trigger events on change, otherwise the GUI may not work as intended
     private int _credits;
     public int Credits {

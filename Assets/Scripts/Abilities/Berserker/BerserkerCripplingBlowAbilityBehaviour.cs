@@ -20,6 +20,7 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
     [SerializeField] private float _emptyHitTimerBase;
     private float _emptyHitTimer, _emptyHits;
     private bool _burningChainApplied;
+    public int MaxTimesHit { get; set; } = 4;
     #endregion
 
     #region Methods
@@ -33,7 +34,7 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
     public override void UpdateAbility(CharacterBehaviour performer, HeroClassBehaviour heroClass)
     {
         _performingTimer += Time.fixedDeltaTime;
-        if (_performingTimer >= _firstHitTimer + (_eachHitTimer * _timesAlreadyHit) && _timesAlreadyHit < 4)
+        if (_performingTimer >= _firstHitTimer + (_eachHitTimer * _timesAlreadyHit) && _timesAlreadyHit < MaxTimesHit)
         {
             if (_timesAlreadyHit == 0)
             {
@@ -55,15 +56,15 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
         }
         UpdateCustomMove(performer);
         //Here the class needs to update its charge to display in the interface
-        if (_performingTimer < AbilitySO.AttackTimerNext)
+        if (_performingTimer < _attackTimerNext)
         {
             heroClass.AbilityCharge = heroClass.AbilityChargeMax - _performingTimer;
         }
-        if (_performingTimer >= AbilitySO.AttackTimerNext && AbilityCurrentlyLockingControl)
+        if (_performingTimer >= _attackTimerNext && AbilityCurrentlyLockingControl)
         {
             ReleaseControl(performer);
         }
-        if (_performingTimer >= AbilitySO.AttackTimerMax)
+        if (_performingTimer >= _attackTimerMax)
         {
             EndAbility(performer);
         }
@@ -208,6 +209,7 @@ public class BerserkerCripplingBlowAbilityBehaviour : MovingAbilityBehaviour
         _emptyHits = 0;
         _casuality = null;
         _burningChainApplied = false;
+        MaxTimesHit = 4;
     }
     #endregion
 }

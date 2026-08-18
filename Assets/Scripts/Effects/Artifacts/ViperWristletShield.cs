@@ -31,7 +31,7 @@ public class ViperWristletShield : GameplayEffectBehaviour
     }
     public override void OnRemove(CharacterBehaviour character)
     {
-        if(_healsAmount < 6)
+        if(_healsAmount < 6 && !character.IsDead)
             character.HealPercent(0.06f, true);
         base.OnRemove(character);
     }

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,8 +6,10 @@ public class LootChestBehaviour : MonoBehaviour, IPlayerInteractable
 {
     #region Variables
     public List<InventorySlot> Slots;
+    [Tooltip("The amound if inventory slots that the chest will contain")]
     [SerializeField] private int _chestSize = 16;
     [SerializeField] private LootManager _lootManager;
+    [Tooltip("For opening and closing the chest")]
     [SerializeField] private Animator _animator;
     #endregion
 
@@ -18,6 +19,7 @@ public class LootChestBehaviour : MonoBehaviour, IPlayerInteractable
         Slots = new();
         if(SkyforgeLoader.ItemRegistry != null)
         {
+            //Loot manager is used to "drop" its items into the chests inventory
             var items = _lootManager.DropItems();
             foreach (var item in items)
             {
@@ -25,6 +27,7 @@ public class LootChestBehaviour : MonoBehaviour, IPlayerInteractable
                 inventorySlot.Item = item;
                 Slots.Add(inventorySlot);
             }
+            //the remaining empty slots are added to match the set chest size
             while (Slots.Count < _chestSize)
             {
                 Slots.Add(new InventorySlot());

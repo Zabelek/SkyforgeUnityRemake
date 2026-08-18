@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GUIItemPickView : MonoBehaviour
 {
@@ -40,7 +39,7 @@ public class GUIItemPickView : MonoBehaviour
     }
     private void Update()
     {
-        //if the player clicks somewhere outside the window, it sends a signal to be destroyued by the parent, if the variable is set to true
+        //if the player clicks somewhere outside the window, it sends a signal to be destroyed by the parent, if the variable is set to true
         if (DestroyedByOutsideClick && Input.GetMouseButtonDown(0))
         {
             var lastClickPosition = Input.mousePosition;

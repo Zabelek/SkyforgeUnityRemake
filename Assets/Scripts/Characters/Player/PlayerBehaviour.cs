@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class PlayerBehaviour : HeroBehaviour
 {
-    //public const int BASE_DASH_CHARGE_MAX = 25;
-    //public const float BASE_COMPANION_CHARGE_MAX = 17;
-
     #region Variables
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
     [SerializeField] private Camera _camera;
@@ -25,17 +21,12 @@ public class PlayerBehaviour : HeroBehaviour
     //selection related logic
     public CharacterBehaviour SelectedCharacter { get; set; }
     //placeholder for companion. To remove once companion system is introduced
-    //public int companionDamage = 5;
     public event EventHandler OnCompanionAttack;
-    //public float CompanionCharge { get; set; }
-    //public float CompanionChargeMax { get; private set; }
     //dash
     public event EventHandler OnDash;
-    //public float DashCharge { get; set; }
-    //public float DashChargeMax { get; private set; }
+    public event EventHandler OnFinisher;
     public Vector3 LastMovementDirection;
     public float LastMovementDirectionExpire;
-    public event EventHandler OnFinisher;
     #endregion
 
     #region Mono
@@ -490,6 +481,7 @@ public class PlayerBehaviour : HeroBehaviour
     {
         if(profile == null)
         {
+            //if profile is null, wear default weapon and armor
             EquipWeapon(_debugWeaponSlot.GetPrefab());
             if (EquippedArmor != null)
                 _ = EquipArmor(null);
@@ -497,7 +489,7 @@ public class PlayerBehaviour : HeroBehaviour
         }
         else
         {
-            var weapon = profile.Equipment.GetEquipment(Equipment.InventoryType.Weapon);
+            var weapon = profile.Equipment.WeaponSlot.Item;
             if (weapon != null)
             {
                 EquipWeapon((weapon.ItemSO as WeaponSO)?.GetPrefab());
@@ -506,7 +498,7 @@ public class PlayerBehaviour : HeroBehaviour
             {
                 EquipWeapon(_debugWeaponSlot.GetPrefab());
             }
-            var armor = profile.Equipment.GetEquipment(Equipment.InventoryType.Armor);
+            var armor = profile.Equipment.ArmorSlot.Item;
             if (armor != null)
             {
                 _ = EquipArmor((armor.ItemSO as ArmorSO)?.GetPrefab());
@@ -517,7 +509,7 @@ public class PlayerBehaviour : HeroBehaviour
                     _ = EquipArmor(null);
                 _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
             }
-            var artifact = profile.Equipment.GetEquipment(Equipment.InventoryType.Artifact);
+            var artifact = profile.Equipment.ArtifactSlot.Item;
             if (artifact != null && artifact.ItemSO is ArtifactSO && (artifact.ItemSO as ArtifactSO).GetPrefab() is GearPeaceBehaviour)
             {
                 EquipArtifact((artifact.ItemSO as ArtifactSO).GetPrefab() as GearPeaceBehaviour);

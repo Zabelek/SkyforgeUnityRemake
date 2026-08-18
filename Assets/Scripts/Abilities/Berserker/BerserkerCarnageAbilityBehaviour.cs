@@ -82,7 +82,7 @@ public class BerserkerCarnageAbilityBehaviour : FinisherAbility
         base.PerformHit(performer);
         if(performer is PlayerBehaviour)
         {
-            Casuality.Kill(performer);
+            Casuality.Kill(performer, this);
             performer.Stats.CurrentMana += 58;
         }
         if (TryGetComponent<CinemachineImpulseSource>(out CinemachineImpulseSource imp))

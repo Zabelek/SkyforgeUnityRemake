@@ -21,7 +21,7 @@ public class Globals : MonoBehaviour
     public Transform HealingOrbBase;
     [HideInInspector] public bool IsMenuOpen, IsCutscenePlaying;
     public List<LootBoxBehaviour> RegisteredLootboxes;
-    public LootChestBehaviour CurrentOpenChest;
+    public LootChestBehaviour CurrentOpenChest { get; set; }
     #endregion
 
     #region Mono

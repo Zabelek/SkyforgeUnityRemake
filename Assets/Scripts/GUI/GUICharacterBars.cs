@@ -61,7 +61,10 @@ public class GUICharacterBars : MonoBehaviour
             if (IsInRange)
             {
                 if (IsHealthBarVisible)
+                {
                     _hpBar.SetValue(_character.Stats.CurrentHP, _character.Stats.MaxHP);
+                    _hpBar.SetFreeze(_character.IsInvulnerable());
+                }
                 if (!IsManualSelected && !IsAutoSelected)
                 {
                     if (IsHealthBarVisible)

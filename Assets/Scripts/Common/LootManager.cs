@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,9 +9,12 @@ public class LootManager : MonoBehaviour
     public const float DROP_AFTER_DEATH_TIME = 0.5f;
 
     #region Variables
+    [Tooltip("If set to true, from all generated loot, only one will bew chosen to spawn. The amount of chosen item stack can still be greater than 1")]
     public bool DropsOneThing;
     public List<LootRecord> LootRecords { get; set; }
+    [Tooltip("CharacterBehaviour from which the loot will drop on death")]
     [SerializeField] private CharacterBehaviour _character;
+    [Tooltip("Prefab of lootbox to spawn")]
     [SerializeField] private LootBoxBehaviour _lootBoxBase;
     #endregion
 
@@ -34,18 +36,21 @@ public class LootManager : MonoBehaviour
     #region Methods
     private IEnumerator HandleItemDrop()
     {
+        //small delay so that the loot doesn't spawn immediately, as it looks a bit weird
         yield return new WaitForSeconds(DROP_AFTER_DEATH_TIME);
-        List<Item> items = new();
-        Dictionary<GameplayResources.ResourceType, int> resources = new();
-        bool any = false;
-        var droppedItems = DropItems();
-        if(droppedItems.Any())
+        if(_lootBoxBase != null)
         {
-            var lootbox = Instantiate(_lootBoxBase, this.transform.position, this.transform.rotation);
-            lootbox.transform.position += new Vector3(0, 0.7f, 0);
-            foreach(var item in droppedItems)
+            List<Item> items = new();
+            Dictionary<GameplayResources.ResourceType, int> resources = new();
+            var droppedItems = DropItems();
+            if (droppedItems.Any())
             {
-                lootbox.AddItem(item);
+                var lootbox = Instantiate(_lootBoxBase, this.transform.position, this.transform.rotation);
+                lootbox.transform.position += new Vector3(0, 0.7f, 0);
+                foreach (var item in droppedItems)
+                {
+                    lootbox.AddItem(item);
+                }
             }
         }
     }
@@ -54,6 +59,7 @@ public class LootManager : MonoBehaviour
         List<Item> items = new();
         List<Item> ret = new();
         bool any = false;
+        //Here the random drop chance is calculated for each drop record
         foreach (var lootRecord in LootRecords)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
@@ -61,7 +67,7 @@ public class LootManager : MonoBehaviour
             {
                 if (lootRecord.Item?.IsStackable == true)
                 {
-                    int amount = UnityEngine.Random.Range(lootRecord.MinAmount, lootRecord.MaxAmount);
+                    int amount = UnityEngine.Random.Range(lootRecord.MinAmount, lootRecord.MaxAmount+1);
                     items.Add(new Item(lootRecord.Item.ID, amount));
                     any = true;
                 }

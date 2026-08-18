@@ -29,6 +29,9 @@ public class ViperWristletBehaviour : GearPeaceBehaviour
             }
         }
     }
+    #endregion
+
+    #region Methods
     public override void Equip(HeroBehaviour hero, bool onlyVisual)
     {
         base.Equip(hero, onlyVisual);
@@ -37,17 +40,13 @@ public class ViperWristletBehaviour : GearPeaceBehaviour
         _hero.OnCombatStartEvent += CombatStartedAction;
         _hero.OnResurrectEvent += ResurrectedAction;
     }
-
-    private void ResurrectedAction(object sender, EventArgs e)
-    {
-        _hero.AddEffect(_baseEffect);
-    }
-
     public override void Unequip(HeroBehaviour hero, bool onlyVisual)
     {
         _hero.OnCombatStartEvent -= CombatStartedAction;
         _hero.OnResurrectEvent -= ResurrectedAction;
         _hero.RemoveEffect(_baseEffect);
+        _hero.RemoveEffect(_baseEffect);
+        _hero.RemoveEffect(_shieldEffect);
         _hero = null;
         base.Unequip(hero, onlyVisual);
     }
@@ -57,6 +56,10 @@ public class ViperWristletBehaviour : GearPeaceBehaviour
     private void CombatStartedAction(object sender, CharacterBehaviour.StartCombatEventArgs e)
     {
         _hero.AddEffect(_damageEffect);
+    }
+    private void ResurrectedAction(object sender, EventArgs e)
+    {
+        _hero.AddEffect(_baseEffect);
     }
     #endregion
 }

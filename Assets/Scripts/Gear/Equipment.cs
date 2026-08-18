@@ -190,8 +190,12 @@ public class Equipment
         ArmorSlot = new();
         ArtifactSlot = new();
     }
+    #endregion
+
+    #region Methods
     public Item Equip(Item item, Equipment.InventoryType invType)
     {
+        //returns the previous item that was in a destination slot, or null if the item was null
         Item ret = null;
         if (invType == Equipment.InventoryType.Armor)
         {

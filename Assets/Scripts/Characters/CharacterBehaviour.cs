@@ -11,14 +11,12 @@ public class CharacterBehaviour : MonoBehaviour
     public const float WALKING_SPEED_MOD = 0.3f;
     public const float INSTANT_DEATH_HEIGHT = -150;
 
-    #region MainVariables
+    #region Events
     public event EventHandler OnHurtEvent;
     public event EventHandler OnDeathEvent;
     public event EventHandler OnResurrectEvent;
     public event EventHandler OnCutsceneEvent;
     public event EventHandler<EnemyKillEventArgs> OnEnemyKillEvent;
-    public event EventHandler OnAttackPerformedEvent;
-    public event EventHandler OnCriticalAttackPerformedEvent;
     public class EnemyKillEventArgs : EventArgs
     {
         public CharacterBehaviour KilledCharacter;
@@ -34,6 +32,25 @@ public class CharacterBehaviour : MonoBehaviour
             KilledByFinisher = killedByFinisher;
         }
     }
+    public event EventHandler OnAttackPerformedEvent;
+    public event EventHandler OnCriticalAttackPerformedEvent;
+    public event EventHandler<StartCombatEventArgs> OnCombatStartEvent;
+    public class StartCombatEventArgs : EventArgs
+    {
+        public CharacterBehaviour Enemy;
+        public bool FightProvokedByGroup;
+        public StartCombatEventArgs(CharacterBehaviour enemy, bool fightProvokedByGroup)
+        {
+            Enemy = enemy;
+            FightProvokedByGroup = fightProvokedByGroup;
+        }
+    }
+
+    public event EventHandler OnCombatEndEvent;
+    public event EventHandler OnHealingOrbDropEvent;
+    #endregion
+
+    #region MainVariables
     [Header("Character Related Variables")]
     [Tooltip("Character Scriptable Object with all basic information")]
     [SerializeField] public CharacterBaseSO CharacterSO;
@@ -56,6 +73,7 @@ public class CharacterBehaviour : MonoBehaviour
     #region StatVariables
     private bool _canAct;
     private bool _canMove;
+    private bool _invulnerable;
     [Tooltip("This overrides the name set in Character Base Scriptable Object, if not empty")]
     public string Name;
     public CharacterStats Stats { get; protected set; }
@@ -84,21 +102,8 @@ public class CharacterBehaviour : MonoBehaviour
     private float _healTimer;
     public bool CombatStance { get; protected set; }
     public List<CharacterBehaviour> ActiveEnemies { get; set; }
-    public class StartCombatEventArgs : EventArgs
-    {
-        public CharacterBehaviour Enemy;
-        public bool FightProvokedByGroup;
-        public StartCombatEventArgs(CharacterBehaviour enemy, bool fightProvokedByGroup)
-        {
-            Enemy = enemy;
-            FightProvokedByGroup = fightProvokedByGroup;
-        }
-    }
-    public event EventHandler<StartCombatEventArgs> OnCombatStartEvent;
-    public event EventHandler OnCombatEndEvent;
     //healing orbs dropping
     private short _droppedHealingOrbsInTheFight;
-    public event EventHandler OnHealingOrbDrop;
     private float _orbDroppingCollisionRadius;
     [Tooltip("By default, when the character appears in the scene, it fades in for a second. If you want to disable the fading animation, set this to false")]
     public bool FadedIntoScene = true;
@@ -271,18 +276,20 @@ public class CharacterBehaviour : MonoBehaviour
     #region RegularMethods
     public virtual void TakeDamage(Damage damage)
     {
-        TakeDamage(damage, false);
+        TakeDamage(damage, false, false);
     }
-    public virtual void TakeDamage(Damage damage, bool cutsceneOverride)
+    public virtual void TakeDamage(Damage damage, bool cutsceneOverride, bool ignoreEffects)
     {
         //first check is to prevent characters from randomly dying during a cutscene
         if (Globals.Instance.IsCutscenePlaying == false || cutsceneOverride)
         {
             LastDamage = damage;
             //For now, only defense and vampirism calculation
-            HandleDamageEffects(damage);
+            if(!ignoreEffects)
+                HandleDamageEffects(damage);
             _LastDamageExpireTimer = 3f;
-            _effectManager.OnDamageTaken(damage);
+            if (!ignoreEffects)
+                _effectManager.OnDamageTaken(damage);
             if (this is PlayerBehaviour)
             {
                 SpeakingBehaviour.PerformHitSound(true);
@@ -295,8 +302,11 @@ public class CharacterBehaviour : MonoBehaviour
             //Range damage will be displayed in the center of the character anyway
             _visualHitReceiver?.GetHit(damage.Range, (damage.Source.transform.position).normalized * -1f);
             SpeakingBehaviour?.PerformHurtSound(1f);
-            EnterCombat(damage.Source, false);
-            damage.Source.EnterCombat(this, false);
+            if(damage.Source != this)
+            {
+                EnterCombat(damage.Source, false);
+                damage.Source.EnterCombat(this, false);
+            }
             Stats.CurrentHP -= damage.Amount;
             OnHurtEvent?.Invoke(this, EventArgs.Empty);
             if (Stats.CurrentHP <= 0)
@@ -315,23 +325,30 @@ public class CharacterBehaviour : MonoBehaviour
     }
     protected virtual void HandleDamageEffects(Damage damage)
     {
-        if (Stats.Defense > 0)
+        if(IsInvulnerable())
         {
-            float blockedDamage = damage.Amount * Stats.Defense;
-            damage.Amount -= (int)(blockedDamage);
-            if (damage.Amount <= 1)
-                damage.Amount = 1;
+            damage.Amount = 0;
         }
-        if (damage.Source.Stats.Vampirism > 0)
+        else
         {
-            float vampValue = damage.Source.Stats.Vampirism * damage.Amount;
-            damage.Source.Heal((int)(vampValue), false);
-        }
-        if (Stats.GearStats.Armor >0)
-        {
-            damage.Amount -= (int)(damage.Amount * Stats.GearStats.Armor);
-            if (damage.Amount < 1)
-                damage.Amount = 1;
+            if (Stats.Defense > 0)
+            {
+                float blockedDamage = damage.Amount * Stats.Defense;
+                damage.Amount -= (int)(blockedDamage);
+                if (damage.Amount <= 1)
+                    damage.Amount = 1;
+            }
+            if (damage.Source.Stats.Vampirism > 0)
+            {
+                float vampValue = damage.Source.Stats.Vampirism * damage.Amount;
+                damage.Source.Heal((int)(vampValue), false);
+            }
+            if (Stats.GearStats.Armor > 0)
+            {
+                damage.Amount -= (int)(damage.Amount * Stats.GearStats.Armor);
+                if (damage.Amount < 1)
+                    damage.Amount = 1;
+            }
         }
     }
     public virtual void TakeEmptyDamage()
@@ -366,7 +383,11 @@ public class CharacterBehaviour : MonoBehaviour
             aiHandler.enabled = false;
         }
         if(killingAbility != null && killingAbility is FinisherAbility)
+        {
             killer.EnemyKilled(new EnemyKillEventArgs(this, true));
+            //normally, the event triggers in GetDamage, but in this case, there was no damage taken, so it has to trigger here
+            OnDeathEvent?.Invoke(this, EventArgs.Empty);
+        }
         else
             killer.EnemyKilled(new EnemyKillEventArgs(this));
     }
@@ -514,6 +535,10 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void SetCanMove(bool canMove)
     {
         _canMove = canMove;
+    }
+    public virtual void SetInvulnerable(bool invulnerable)
+    {
+        _invulnerable = invulnerable;
     }
     #endregion
 
@@ -695,7 +720,7 @@ public class CharacterBehaviour : MonoBehaviour
         dir = dir.normalized;
         var spawnPoint = this.transform.position + (dropRadius * dir) + new Vector3(0, _orbDroppingCollisionRadius/2+1, 0);
         Instantiate(Globals.Instance.HealingOrbBase, spawnPoint, this.transform.rotation).GetComponent<Rigidbody>().AddForce(dir * 8, ForceMode.Impulse);
-        OnHealingOrbDrop?.Invoke(this, EventArgs.Empty);
+        OnHealingOrbDropEvent?.Invoke(this, EventArgs.Empty);
     }
     public virtual bool CanAct()
     {
@@ -713,9 +738,12 @@ public class CharacterBehaviour : MonoBehaviour
         else
             return false;
     }
-    public virtual void EnemyKilled(EnemyKillEventArgs args)
+    public virtual bool IsInvulnerable()
     {
-        OnEnemyKillEvent?.Invoke(this, args);
+        if (!_invulnerable)
+            return _effectManager.IsInvulnerable();
+        else
+            return false;
     }
     #endregion
 
@@ -797,12 +825,15 @@ public class CharacterBehaviour : MonoBehaviour
     #endregion
 
     #region EventHandlers
-
     public void AttackPerformedAction(Damage damage)
     {
         if(damage.Critical)
             OnCriticalAttackPerformedEvent?.Invoke(this, EventArgs.Empty);
         OnAttackPerformedEvent?.Invoke(this, EventArgs.Empty);
+    }
+    public virtual void EnemyKilled(EnemyKillEventArgs args)
+    {
+        OnEnemyKillEvent?.Invoke(this, args);
     }
     #endregion
 

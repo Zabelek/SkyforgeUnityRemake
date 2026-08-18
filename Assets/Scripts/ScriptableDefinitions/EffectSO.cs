@@ -5,7 +5,7 @@ public class EffectSO : ScriptableObject
 {
     public enum EffectType
     {
-        Stun, Slow, Fear, DamageOverTime, DamageDebuff, ArmorDebuff, MoveAround, Cooldown, MovementStop
+        Stun, Slow, Fear, DamageOverTime, DamageDebuff, ArmorDebuff, MoveAround, Cooldown, MovementStop, Invulnerability
     }
     [Tooltip("Type of the effect can help determine what the effect does. This list can be empty")]
     public string ID;

@@ -19530,7 +19530,7 @@ MonoBehaviour:
   _customMoveTimerStartBase: 0
   _particles: {fileID: 8514146422637189487}
   _stunEffect: {fileID: 9102274183295926179}
-  _eachHitTimerBase: 0.5
+  _eachHitTimerBase: 0.7
   _firstHitTimerBase: 1
   _emptyHitTimerBase: 0.1
 --- !u!1 &8129463894096633472

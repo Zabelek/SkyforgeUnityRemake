@@ -56,6 +56,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Outfits
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9319920f34ace7f4d85d1f47a8ce9be0
+    m_Address: Armor_SpecialOperationsArmor_Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Outfits
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f26460ab7410ac94cb59a9f8151fea6e
     m_Address: Armor_CursedArmor_Prefab
     m_ReadOnly: 0

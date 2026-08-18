@@ -10,6 +10,7 @@ public class HeroBehaviour : CharacterBehaviour
     private const float WEAPON_HIDE_DRAW_DURATION_TRESHOLD = 1.5f;
     public const float DASH_COST = 10;
     public const float COMPANION_ATTACK_COST = 10;
+    public const float OFF_COMBAT_WEAPON_HIDE_DELAY = 1;
 
     public class PerkChangeEventArgs : EventArgs
     {
@@ -33,7 +34,6 @@ public class HeroBehaviour : CharacterBehaviour
     //to prevent spamming draw/hide weapon aminations
     protected float _nextDrawStateChangeTimer;
     public bool IsMenuPreview;
-
     protected HeroStats _heroStats;
     protected HeroBaseSO _heroBaseSO;
     #endregion
@@ -43,7 +43,7 @@ public class HeroBehaviour : CharacterBehaviour
     {
         base.Awake();
         if (CharacterSO is not HeroBaseSO)
-            Debug.LogError("Player needs HeroStatsSO, not regular CharacterStats SO!");
+            Debug.LogError("Hero needs HeroStatsSO, not regular CharacterStats SO!");
         else
         {
             Stats = new HeroStats();
@@ -325,39 +325,69 @@ public class HeroBehaviour : CharacterBehaviour
         if (_heroClass != null)
             _heroClass.CancelAllAbilities();
     }
-    public void DrawWeaponForCutscene(bool animate)
+    public void DrawWeaponForCutscene(bool draw, bool animate)
     {
         if(EquippedWeapon != null)
         {
-            if (animate)
+            if(draw)
             {
-                EquippedWeapon.AnimateWeaponDraw();
+                if (animate)
+                {
+                    EquippedWeapon.AnimateWeaponDraw();
+                }
+                else
+                {
+                    EquippedWeapon.SetWeaponDraw();
+                }
             }
             else
             {
-                EquippedWeapon.SetWeaponDraw();
+                if (animate)
+                {
+                    EquippedWeapon.AnimateWeaponHide();
+                }
+                else
+                {
+                    EquippedWeapon.SetWeaponHide();
+                }
             }
         }
     }
-    public void EndDrawingWeaponForCutscene(bool animate)
+    public void EndDrawingWeaponForCutscene(bool draw, bool animate)
     {
         if (EquippedWeapon != null && CombatStance == false)
         {
-            if (animate)
+            if (draw)
             {
-                EquippedWeapon.AnimateWeaponHide();
+                if (animate)
+                {
+                    EquippedWeapon.AnimateWeaponHide();
+                }
+                else
+                {
+                    EquippedWeapon.SetWeaponHide();
+                }
             }
             else
             {
-                EquippedWeapon.SetWeaponHide();
+                if (animate)
+                {
+                    EquippedWeapon.AnimateWeaponDraw();
+                }
+                else
+                {
+                    EquippedWeapon.SetWeaponDraw();
+                }
             }
         }
     }
     protected IEnumerator DelayedWeaponHide()
     {
-        yield return new WaitForSeconds(1);
-        if(!Globals.Instance.IsCutscenePlaying && !IsInCombat)
+        yield return new WaitForSeconds(OFF_COMBAT_WEAPON_HIDE_DELAY);
+        if(!Globals.Instance.IsCutscenePlaying && !IsInCombat && _heroClass.CurrentlyUpdatedAbilities.Count == 0)
+        {
             ChangeWeaponOutState(false);
+        }
     }
     public override void SetCanAct(bool canAct, bool ownAbilityDriven)
     {
@@ -388,7 +418,7 @@ public class HeroBehaviour : CharacterBehaviour
     }
     public LockablePerk GetPerk(PerkSO perkSO)
     {
-        return _perks.FirstOrDefault(p => p.Perk == perkSO);
+        return _perks.FirstOrDefault(p => p.Perk.ID == perkSO.ID);
     }
     public List<LockablePerk> GetAllPerks()
     {
@@ -404,26 +434,5 @@ public class HeroBehaviour : CharacterBehaviour
         else
             return base.GetMovementSpeedModifiers();
     }
-    /*protected override void HandleDamageEffects(Damage damage)
-    {
-        base.HandleDamageEffects(damage);
-        if(EquippedArmor!=null)
-        {
-            damage.Amount -= (int)(damage.Amount * EquippedArmor.ArmorSO.BaseArmorAmount);
-            if (damage.Amount < 1)
-                damage.Amount = 1;
-        }
-    }*/
-    /*public override int GetEffectiveDamage()
-    {
-        int ret = 0;
-        if (EquippedWeapon != null)
-            ret = (int)(((Stats.BaseDamage + EquippedWeapon.WeaponSO.GetDamage()) * GetDamageModifiers()));
-        else
-            ret = (int)(Stats.BaseDamage * GetDamageModifiers());
-        if (EquippedArtifact != null)
-            ret = (int)(ret * (1 + EquippedArtifact.DamageBonus));
-        return ret;
-    }*/
     #endregion
 }
