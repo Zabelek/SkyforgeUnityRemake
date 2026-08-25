@@ -54,7 +54,7 @@ public class AIHandlerBehaviour : MonoBehaviour
     #endregion
 
     #region Mono
-    protected void Start()
+    protected virtual void Start()
     {
         //in case setting character in the editor was ommited
         if (_character == null)

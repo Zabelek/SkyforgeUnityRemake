@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
@@ -7,6 +8,7 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
     #region Variables
     [Header("Monster Related Variables")]
     [SerializeField] AIHandlerBehaviour _aiHandler;
+    public int AvailableAttackVariants = 1;
     #endregion
 
     #region Mono
@@ -17,6 +19,7 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
         {
             ((MonsterBehaviour)_character).OnHurtAction += Character_OnHurtAction;
             ((MonsterBehaviour)_character).OnEmoteAction += Character_OnEmoteAction;
+            ((MonsterBehaviour)_character).OnDeathEvent += Character_OnDeathAction;
         }
         else
         {
@@ -70,6 +73,13 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
         _animator.SetFloat("Hurt_Variance", (Random.Range(0, 2)));
         _animator.SetTrigger("Hurt");
     }
+    private void Character_OnDeathAction(object sender, System.EventArgs e)
+    {
+        if(_animator.parameters.Any(p => p.name == "Death" && p.type == AnimatorControllerParameterType.Trigger))
+        {
+            _animator.SetTrigger("Death");
+        }
+    }
     public virtual bool TryGetMovingSpeedFromAiHandler(out float speed)
     {
         if (_aiHandler != null)
@@ -85,6 +95,10 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
     }
     public virtual void TriggerAttackAnimation()
     {
+        if (AvailableAttackVariants > 1)
+        {
+            _animator.SetFloat("Attack_Variance", (float)(Random.Range(0, AvailableAttackVariants)-1));
+        }
         _animator.SetTrigger("Attack");
     }
     #endregion

@@ -35,6 +35,7 @@ public class CharacterBehaviour : MonoBehaviour
     public event EventHandler OnAttackPerformedEvent;
     public event EventHandler OnCriticalAttackPerformedEvent;
     public event EventHandler<StartCombatEventArgs> OnCombatStartEvent;
+
     public class StartCombatEventArgs : EventArgs
     {
         public CharacterBehaviour Enemy;
@@ -300,7 +301,10 @@ public class CharacterBehaviour : MonoBehaviour
             }
             //This vector math is to display the hit effect slightly towards the one that dealt damage, if it's melee damage.
             //Range damage will be displayed in the center of the character anyway
-            _visualHitReceiver?.GetHit(damage.Range, (damage.Source.transform.position).normalized * -1f);
+            if(damage.Source != null)
+                _visualHitReceiver?.GetHit(damage.Range, (damage.Source.transform.position).normalized * -1f);
+            else
+                _visualHitReceiver?.GetHit(damage.Range, transform.position);
             SpeakingBehaviour?.PerformHurtSound(1f);
             if(damage.Source != this)
             {
@@ -432,7 +436,7 @@ public class CharacterBehaviour : MonoBehaviour
             if (effect)
             {
                 _visualHitReceiver.GetHeal();
-                SpeakingBehaviour.PerformHealSound();
+                SpeakingBehaviour?.PerformHealSound();
             }
         }       
     }
@@ -576,6 +580,11 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void SetAnimationState(string animationName, bool value)
     {
         _animationBehaviour?.SetAnimationBool(animationName, value);
+    }
+
+    public void SetAnimationState(string animationName, float value)
+    {
+        _animationBehaviour?.SetAnimationFloat(animationName, value);
     }
     public virtual void ResetAnimation()
     {
@@ -743,7 +752,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (!_invulnerable)
             return _effectManager.IsInvulnerable();
         else
-            return false;
+            return _invulnerable;
     }
     #endregion
 
@@ -852,6 +861,20 @@ public class CharacterBehaviour : MonoBehaviour
         character = null;
         return false;
     }
+    public static bool FindAllyCharacterInCollider(Collider collider, CharacterBehaviour exclCharacter, out CharacterBehaviour character)
+    {
+        if (collider.tag == "Hit_Collider")
+        {
+            character = collider.GetComponent<CharacterBehaviour>();
+            if (character == null)
+                character = collider.GetComponentInParent<CharacterBehaviour>();
+            if (character != null && character != exclCharacter && character.CanBeDamaged && (character.Faction.FactionType == exclCharacter.Faction.FactionType ||
+                exclCharacter.Faction.Allies.Contains(character.Faction.FactionType)))
+                return true;
+        }
+        character = null;
+        return false;
+    }
     public static bool FindCharacterInCollider(Collider collider, CharacterBehaviour exclCharacter, out CharacterBehaviour character)
     {
         if (collider.tag == "Hit_Collider")
@@ -877,6 +900,11 @@ public class CharacterBehaviour : MonoBehaviour
         }
         character = null;
         return false;
+    }
+    public static void EnterCombat(CharacterBehaviour character1, CharacterBehaviour character2)
+    {
+        character1.EnterCombat(character2, false);
+        character2.EnterCombat(character1, false);
     }
     #endregion
 }

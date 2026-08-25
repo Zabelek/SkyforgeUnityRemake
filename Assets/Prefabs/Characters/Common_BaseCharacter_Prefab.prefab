@@ -929,6 +929,8 @@ MonoBehaviour:
   _amountText: {fileID: 0}
   _percentText: {fileID: 0}
   _fadeoutTimerMax: 0.6
+  _freezeSprite: {fileID: 0}
+  _freezeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6314936289501039245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,6 +1607,7 @@ MonoBehaviour:
   _renderers: []
   FadedIntoScene: 1
   KillBelowScene: 1
+  StartCombatProtectionTimer: 0
 --- !u!114 &4667532580671100868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,8 +1638,8 @@ Rigidbody:
   m_GameObject: {fileID: 9217023375570061297}
   serializedVersion: 5
   m_Mass: 80
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 1
+  m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

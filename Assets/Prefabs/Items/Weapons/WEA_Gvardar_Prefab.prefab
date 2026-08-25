@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5476103838704645897}
   - component: {fileID: 37697464426099634}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShieldLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7033527948882935111}
   - component: {fileID: 4343929034570272397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WEA_Gvardar_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 987082298560783557}
   - component: {fileID: 1506282324748059166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShieldShort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5060,7 +5060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366942860729151809}
   - component: {fileID: 3176360298370588048}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HealBoost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5196,6 +5196,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4bba4c6e842ae7141a02f500937c86ea, type: 3}
       propertyPath: m_Name
       value: WEA_Gvardar_Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4bba4c6e842ae7141a02f500937c86ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

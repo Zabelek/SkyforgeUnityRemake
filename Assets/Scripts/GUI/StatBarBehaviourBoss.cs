@@ -63,10 +63,10 @@ public class GuiBossTopBarBehaviour : GUICharacterTopBar
                 if (current==0 && _character.Stats.CurrentHP>0)
                 {
                     _hpBar.SetValue(_singleBarHpAmount, _singleBarHpAmount);
-                    _hpBar.SetFreeze(_character.IsInvulnerable());
                     _hpBar.ResetDiffAlpha();
                 }
-                _hpBar.SetValueDisplayOnly(_character.Stats.CurrentHP, _character.Stats.MaxHP);                 
+                _hpBar.SetValueDisplayOnly(_character.Stats.CurrentHP, _character.Stats.MaxHP);
+                _hpBar.SetFreeze(_character.IsInvulnerable());
             }
         }
         else

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PYTTHEntidFirstAbilityBehaviour : AbilityBehaviour
@@ -57,6 +58,7 @@ public class PYTTHEntidFirstAbilityBehaviour : AbilityBehaviour
             var triffid = Instantiate(_triffidBase, spawnPoint);
             triffid.GetComponent<DOTHealingTriffidAIHandler>().FollowTarget = performer;
             _summonedTriffids.Add(triffid);
+            triffid.AddComponent<KillAfterBattleBehaviour>();
         }
     }
     public override void Reset()

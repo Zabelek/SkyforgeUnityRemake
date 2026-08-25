@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class GUIGameMenuEquipmentControls : MonoBehaviour
+public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
 {
     #region Variables
     [SerializeField] private PlayerBehaviour _playerVisual;
@@ -14,14 +14,6 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     [SerializeField] private GUIInventorySlot _armorSlot, _artifactSlot, _ringSlot, _amuletSlot, _broochSlot, _braceletSlot,
         _sapphireSlot, _rubySlot, _emeraldSlot, _topazSlot, _qa1, _qa2, _qa3, _qa4, _qa5, _qa6;
     private List<GUIInventorySlot> _slots;
-    [Header("Tooltips")]
-    [Tooltip("Prefab used to spawn tooltips")]
-    [SerializeField] private GUITooltip _tooltipBase;
-    private GUITooltip _currentTooltip;
-    [Tooltip("Canvas reference to handle tooltip positioning")]
-    [SerializeField] private Canvas _tooltipCanvas;
-    [Tooltip("Where tooltips will be spawned")]
-    [SerializeField] private Transform _tooltipsParent;
     [Header("Stats")]
     [SerializeField] private TextMeshProUGUI _damageDisplay;
     [SerializeField] private TextMeshProUGUI _healthDisplay, _attackSpeedDisplay, _criticalChanceDisplay, _criticalDamageBonusDisplay, _companionDamageDisplay, 
@@ -31,6 +23,8 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     [SerializeField] private GUIItemPickView _itemPickWindowBase;
     private GUIItemPickView _currentPickWindow;
     private InventorySlot _tempClickedItemSlot;
+    [Header("Sound")]
+    [SerializeField] protected SoundEffectSO _itemEquipSound;
     #endregion
 
     #region Mono
@@ -76,11 +70,6 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             slotWidget.OnPointerUpEvent += SlotPointerUpAction;
             slotWidget.OnPointerDownEvent += SlotPointerDownAction;
         }
-    }
-    public void OnDisable()
-    {
-        _currentTooltip?.gameObject.SetActive(false);
-
     }
     #endregion
 
@@ -156,12 +145,6 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             _playerVisual.ChangeWeaponOutState(true);
         }
     }
-    private void SetUpNewTooltip(ItemSO itemSO)
-    {
-        _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
-        _currentTooltip.SetCanvas(_tooltipCanvas);
-        _currentTooltip.SetForItem(itemSO);
-    }
     #endregion
 
     #region EventHandlers
@@ -174,11 +157,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     }
     private void SlotPointerDownAction(object sender, EventArgs e)
     {
-        if (_currentTooltip != null)
-        {
-            Destroy(_currentTooltip.gameObject);
-            _currentTooltip = null;
-        }
+        DestroyCurrentTooltip();
     }
     private void SlotPointerUpAction(object sender, EventArgs e)
     {
@@ -238,11 +217,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
     }
     private void SlotPointerExitAction(object sender, EventArgs e)
     {
-        if (_currentTooltip != null)
-        {
-            Destroy(_currentTooltip.gameObject);
-            _currentTooltip = null;
-        }
+        DestroyCurrentTooltip();
     }
     private void DestroyPickWindow(object sender, EventArgs e)
     {
@@ -281,6 +256,7 @@ public class GUIGameMenuEquipmentControls : MonoBehaviour
             UpdateValues();
             _tempClickedItemSlot = null;
         }
+        SoundManager.UIInstance.PlayGlobalSFX(_itemEquipSound);
     }
     #endregion
 }

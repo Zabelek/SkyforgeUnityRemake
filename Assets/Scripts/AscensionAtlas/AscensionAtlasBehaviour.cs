@@ -4,9 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AscensionAtlasBehaviour : MonoBehaviour
+public class AscensionAtlasBehaviour : TooltipDisplayerBehaviour
 {
     #region Variables
+    [Header("Class")]
     public HeroClassSO HeroClassSO;
     [Header("Sprites")]
     [SerializeField] private Sprite _aelionEidosSprite;
@@ -18,18 +19,14 @@ public class AscensionAtlasBehaviour : MonoBehaviour
     [Header("Scene")]
     [SerializeField] private Camera _atlasCamera;
     [SerializeField] private Transform _tooltipLayer, _connectionsLayer;
-    [SerializeField] private Canvas _tooltipCanvas;
     private float _untilTooltipDisplaytimer;
     [Tooltip("The atlas camera can move only inside this collider. Make sure the collider is not on the Default layer, as it may block mouse collision with nodes")]
     public Collider AtlasBounds;
     [Tooltip("The point at which the canvas camera will reset. Best is to put it near the start noe of the atlas")]
     public Transform OriginPoint;
     [Header("Base Prefabs")]
-    [Tooltip("Prefab used to spawn GUI tooltips on node hover")]
-    [SerializeField] private GUITooltip _tooltipBase;
     [Tooltip("Prefab used to spawn new node connections")]
     [SerializeField] private AtlasNodeConnectionBehaviour _connectionBase;
-    private GUITooltip _currentTooltip;
     private List<AtlasNodeConnectionBehaviour> _currentlyDisplayedConnections;
     #endregion
 
@@ -63,8 +60,9 @@ public class AscensionAtlasBehaviour : MonoBehaviour
             }
         }
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         ClearActiveConnections();
     }
     private void OnEnable()
@@ -74,6 +72,17 @@ public class AscensionAtlasBehaviour : MonoBehaviour
     #endregion
 
     #region Methods
+    protected override void SetUpNewTooltip()
+    {
+        base.SetUpNewTooltip();
+        _currentTooltip.SetTitle(_previouslyHoveredNode.PerkSO.Name);
+        _currentTooltip.SetDescription(FormatPerkDesription(_previouslyHoveredNode.PerkSO));
+        _currentTooltip.SetTitleImage(IconBallSprite);
+        if (!_previouslyHoveredNode.IsActive)
+        {
+            _currentTooltip.AddCost(_aelionEidosSprite, _previouslyHoveredNode.PerkSO.EidosCost);
+        }
+    }
     public string FormatPerkDesription(PerkSO perk)
     {
         string ret = "";
@@ -160,11 +169,7 @@ public class AscensionAtlasBehaviour : MonoBehaviour
         if(_previouslyHoveredNode!= null)
             _previouslyHoveredNode.OnPointerExit();
         _previouslyHoveredNode = null;
-        if(_currentTooltip != null)
-        {
-            Destroy(_currentTooltip.gameObject);
-            _currentTooltip = null;
-        }
+        DestroyCurrentTooltip();
         if (replacementNode != null)
         {
             replacementNode.OnPointerEnter();

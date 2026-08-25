@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62e7517ac2bf5a41906d4a6e174bacb, type: 3}
+  m_Name: PYTH_TriffidBossAreaAttack_Ability_SO
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
+  AttackTimerNext: 5
+  AttackTimerMax: 5.1
+  IsSkill: 1
+  Icon: {fileID: 0}
+  UpgradedIcon: {fileID: 0}
+  EscapeIcon: {fileID: 0}
+  StateType: 0
+  Name: Area Attack
+  Description: Shoots at every direction. The closer the target is to the character,
+    the more damage it takes
+  HeroClass: {fileID: 0}
+  DamageMultiplier: 3
+  ManaCost: 0
+  AbilityWeight: 0
+  Cooldown: 25
+  UpgradedCooldown: 0
+  EscapeCooldown: 0

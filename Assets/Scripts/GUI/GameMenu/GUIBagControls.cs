@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUIBagControls : MonoBehaviour
+public class GUIBagControls : TooltipDisplayerBehaviour
 {
     private const float DOUBLE_CLICK_TRESHOLD = 0.2f;
 
@@ -18,21 +18,16 @@ public class GUIBagControls : MonoBehaviour
     private GUIInventorySlot _currentlyDraggedSlot, _currentDragTargetSlot;
     [Tooltip("icon displayed when the item is dragged")]
     [SerializeField] private Image _visualItemGhost;
-    [Header("Tooltips")]
-    [Tooltip("Prefab used to spawn tooltips")]
-    [SerializeField] private GUITooltip _tooltipBase;
-    [Tooltip("Canvas reference needed for tooltips to be correctly positioned")]
-    [SerializeField] private Canvas _tooltipCanvas;
-    [Tooltip("Where tooltips will be spawned")]
-    [SerializeField] private Transform _tooltipsParent;
-    private GUITooltip _currentTooltip;
     //mouse related variables
     private Vector3 _mouseOffsetFromFirstClick;
     private float _doubleClickTimer;
+    [Header("Sound")]
+    [SerializeField] protected SoundEffectSO _itemMoveSound;
+    [SerializeField] protected SoundEffectSO _itemEquipSound;
     #endregion
 
     #region Mono
-    public void Awake()
+    private void Awake()
     {
         _currentSlots = new();
         if (SkyforgeLoader.CurrentProfile != null)
@@ -70,7 +65,7 @@ public class GUIBagControls : MonoBehaviour
                 _doubleClickTimer = 0;
         }
     }
-    public void OnDestroy()
+    private void OnDestroy()
     {
         foreach(var slot in _currentSlots)
         {
@@ -79,10 +74,6 @@ public class GUIBagControls : MonoBehaviour
             slot.OnPointerUpEvent -= SlotPointerUpAction;
             slot.OnPointerDownEvent -= SlotPointerDownAction;
         }
-    }
-    public void OnDisable()
-    {
-        _currentTooltip?.gameObject.SetActive(false);
     }
     #endregion
 
@@ -93,13 +84,6 @@ public class GUIBagControls : MonoBehaviour
         {
             slot.UpdateSlot();
         }
-    }
-    //To be moved into Tooltip class
-    private void SetUpNewTooltip(ItemSO itemSO)
-    {
-        _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
-        _currentTooltip.SetCanvas(_tooltipCanvas);
-        _currentTooltip.SetForItem(itemSO);
     }
     private void PositionItemGhost()
     {
@@ -136,11 +120,7 @@ public class GUIBagControls : MonoBehaviour
     }
     private void SlotPointerDownAction(object sender, EventArgs e)
     {
-        if (_currentTooltip != null)
-        {
-            Destroy(_currentTooltip.gameObject);
-            _currentTooltip = null;
-        }
+        DestroyCurrentTooltip();
         if (sender is GUIInventorySlot && (sender as GUIInventorySlot).InventorySlot.Item != null)
         {
             _currentlyDraggedSlot = sender as GUIInventorySlot;
@@ -157,6 +137,7 @@ public class GUIBagControls : MonoBehaviour
             {
                 ActivateItem((sender as GUIInventorySlot).InventorySlot);
                 (sender as GUIInventorySlot).UpdateSlot();
+                SoundManager.UIInstance.PlayGlobalSFX(_itemEquipSound);
             }
         }
     }
@@ -172,6 +153,7 @@ public class GUIBagControls : MonoBehaviour
                 _currentDragTargetSlot.UpdateSlot();
                 _currentlyDraggedSlot.UpdateSlot();
                 _currentDragTargetSlot = null;
+                SoundManager.UIInstance.PlayGlobalSFX(_itemMoveSound);
             }
         }
         _currentlyDraggedSlot = null;
@@ -179,12 +161,8 @@ public class GUIBagControls : MonoBehaviour
     }
     private void SlotPointerExitAction(object sender, EventArgs e)
     {
-        if(_currentTooltip != null)
-        {
-            Destroy(_currentTooltip.gameObject);
-            _currentTooltip = null;
-            _currentDragTargetSlot = null;
-        }
+        DestroyCurrentTooltip();
+        _currentDragTargetSlot = null;
     }
     #endregion
 }

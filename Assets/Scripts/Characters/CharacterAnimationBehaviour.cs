@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -42,6 +43,13 @@ public class CharacterAnimationBehaviour : MonoBehaviour
         if (_character != null && _animator != null)
         {
             _animator.SetBool(boolName, value);
+        }
+    }
+    public void SetAnimationFloat(string floatName, float value)
+    {
+        if (_character != null && _animator != null)
+        {
+            _animator.SetFloat(floatName, value);
         }
     }
     public void StopMovementAnimation()

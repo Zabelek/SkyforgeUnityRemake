@@ -38828,7 +38828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5801870109911135212, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
       propertyPath: m_Mass
-      value: 250
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5801870109911135212, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
       propertyPath: m_LinearDamping
@@ -38983,6 +38983,7 @@ MonoBehaviour:
   _animator: {fileID: 4978220784542894774}
   _character: {fileID: 1484691438138398820}
   _aiHandler: {fileID: 8447219249179625779}
+  AvailableAttackVariants: 1
 --- !u!114 &8447219249179625779
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,9 +17,20 @@ public class DOTScenarioManager : ScenarioManager
     [SerializeField] private ParticleSystem _particlesLaserExp;
     [SerializeField] private Transform _laserDirGuide;
     [SerializeField] private WeaponBehaviour _lastSceneErrai;
+    [Header("Chest")]
+    [SerializeField] private CapsuleCollider _chestBossArea;
+    [SerializeField] private LootChestBehaviour _lootChest;
+    [SerializeField] protected VoicelineSO[] _chestVoicelines;
+    private bool _chestOpened = false, _bossEngaged = false;
     #endregion
 
     #region Mono
+    protected override void Awake()
+    {
+        base.Awake();
+        _lootChest.OnChestOpenEvent += ChestOpenedAction;
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -120,6 +131,15 @@ public class DOTScenarioManager : ScenarioManager
             StartCoroutine(DelayedScene5Actions());
             StartCoroutine(DelayedBackToMenu());
         }
+        //chest logic
+        if(!_chestOpened)
+        {
+            if (!_bossEngaged && (_chestBossArea.transform.position - _player.transform.position).magnitude < _chestBossArea.radius)
+            {
+                _bossEngaged = true;            
+                _interface.ShowCharacterMessage(_chestVoicelines[0]);
+            }
+        }
     }
     private IEnumerator DelayedBackToMenu()
     {
@@ -144,6 +164,12 @@ public class DOTScenarioManager : ScenarioManager
     {
         yield return new WaitForSeconds(1);
         _player.EquipWeapon(_lastSceneErrai);
+    }
+    private void ChestOpenedAction(object sender, EventArgs e)
+    {
+        _chestOpened = true;
+        _interface.ShowCharacterMessage(_chestVoicelines[1]);
+        _lootChest.OnChestOpenEvent -= ChestOpenedAction;
     }
     #endregion
 }

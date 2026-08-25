@@ -2,20 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GIUChestLootInterface : MonoBehaviour
+public class GIUChestLootInterface : TooltipDisplayerBehaviour
 {
     #region Variables
+    [Header("Chest")]
     [SerializeField] private GUIItemPickView _itemsView;
     private LootChestBehaviour _currentChest;
     [SerializeField] private GUICommonButton _takeAllButton, _closeButton;
     private List<GUIInventorySlot> _currentSlots;
-    [Tooltip("Prefab used to spawn tooltips")]
-    [SerializeField] private GUITooltip _tooltipBase;
-    private GUITooltip _currentTooltip;
-    [Tooltip("Canvas reference to handle tooltip positioning")]
-    [SerializeField] private Canvas _tooltipCanvas;
-    [Tooltip("Where tooltips will be spawned")]
-    [SerializeField] private Transform _tooltipsParent;
+    [SerializeField] protected SoundEffectSO _itemMoveSound;
     #endregion
 
     #region Mono
@@ -27,12 +22,6 @@ public class GIUChestLootInterface : MonoBehaviour
     #endregion
 
     #region Methods
-    private void SetUpNewTooltip(ItemSO itemSO)
-    {
-        _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
-        _currentTooltip.SetCanvas(_tooltipCanvas);
-        _currentTooltip.SetForItem(itemSO);
-    }
     public void SetChest(LootChestBehaviour chest)
     {
         _currentChest = chest;
@@ -113,6 +102,7 @@ public class GIUChestLootInterface : MonoBehaviour
         if (sender is GUIInventorySlot)
         {
             TakeItem(sender as GUIInventorySlot);
+            SoundManager.UIInstance.PlayGlobalSFX(_itemMoveSound);
         }
     }
     #endregion

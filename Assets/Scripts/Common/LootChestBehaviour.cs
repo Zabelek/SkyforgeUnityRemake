@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class LootChestBehaviour : MonoBehaviour, IPlayerInteractable
 {
     #region Variables
+    public event EventHandler OnChestOpenEvent;
     public List<InventorySlot> Slots;
     [Tooltip("The amound if inventory slots that the chest will contain")]
     [SerializeField] private int _chestSize = 16;
@@ -51,6 +53,7 @@ public class LootChestBehaviour : MonoBehaviour, IPlayerInteractable
         {
             Globals.Instance.CurrentOpenChest = this;
             _animator.SetBool("IsOpen", true);
+            OnChestOpenEvent?.Invoke(this, EventArgs.Empty);
         }
     }
     public void AddItem(Item item)

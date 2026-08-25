@@ -3653,13 +3653,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127b01156ff8b374097d669faf921103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
+  _tooltipCanvas: {fileID: 492164580}
+  _tooltipsParent: {fileID: 1966134214}
   _equipmentControls: {fileID: 171048065}
   _slotPattern: {fileID: 3333656613944701942, guid: 55788946fe600a14b9ae0b15ad5e6830, type: 3}
   _slotsParent: {fileID: 2063456446}
   _visualItemGhost: {fileID: 2074559432}
-  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
-  _tooltipCanvas: {fileID: 492164580}
-  _tooltipsParent: {fileID: 1966134214}
+  _itemMoveSound: {fileID: 11400000, guid: ea991e2e1a477ae44b701226ad4f49dd, type: 2}
+  _itemEquipSound: {fileID: 11400000, guid: 1bb82a56157a9544b902bca65469027b, type: 2}
 --- !u!4 &80884702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7255173279634499216, guid: 951c1639e938a9047b9d1e238a865d25, type: 3}
@@ -7989,6 +7991,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787dd95fe118d6e46b55ea51cdc619ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
+  _tooltipCanvas: {fileID: 492164580}
+  _tooltipsParent: {fileID: 1966134214}
   _playerVisual: {fileID: 1783806844}
   _weaponSlot: {fileID: 752444676}
   _armorSlot: {fileID: 1647183524}
@@ -8007,9 +8012,6 @@ MonoBehaviour:
   _qa4: {fileID: 2034475729}
   _qa5: {fileID: 266430175}
   _qa6: {fileID: 294653531}
-  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
-  _tooltipCanvas: {fileID: 492164580}
-  _tooltipsParent: {fileID: 1966134214}
   _damageDisplay: {fileID: 4411164119039352422}
   _healthDisplay: {fileID: 1329848443}
   _attackSpeedDisplay: {fileID: 829552870}
@@ -8024,6 +8026,7 @@ MonoBehaviour:
   _maxDashChargesDisplay: {fileID: 1843770546}
   _maxCompanionChargesDisplay: {fileID: 1519098293}
   _itemPickWindowBase: {fileID: 1645711966}
+  _itemEquipSound: {fileID: 11400000, guid: 1bb82a56157a9544b902bca65469027b, type: 2}
 --- !u!224 &171048066
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15060,58 +15063,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 951c1639e938a9047b9d1e238a865d25, type: 3}
---- !u!21 &333313557
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/DefaultCompositionGraph 2
-  m_Shader: {fileID: -6465566751694194690, guid: c397a0bfe9f41eb49a086595979492e4, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _3DViewLayer:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BackgroundLayer:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _InterfaceLayer:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1001 &333775007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37744,7 +37695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.Compositor.CompositionManager
   m_Enable: 1
-  m_Material: {fileID: 333313557}
+  m_Material: {fileID: 1399136110}
   m_OutputDisplay: 0
   m_InputLayers:
   - m_LayerName: _BackgroundLayer
@@ -57144,6 +57095,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba22083963c5b1446b26d49a3e3548c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
+  _tooltipCanvas: {fileID: 492164580}
+  _tooltipsParent: {fileID: 1966134214}
   HeroClassSO: {fileID: 11400000, guid: 0cfdc7a2e0d2b0b4cbb4ce0d3824cbcf, type: 2}
   _aelionEidosSprite: {fileID: 21300000, guid: 4b8ebb827025fee479342558785a7276, type: 3}
   IconBoxSprite: {fileID: 21300000, guid: f09163ca1d904964ca9fd26bc1aa5f15, type: 3}
@@ -57156,10 +57110,8 @@ MonoBehaviour:
   _atlasCamera: {fileID: 1823688466}
   _tooltipLayer: {fileID: 1966134214}
   _connectionsLayer: {fileID: 734364197}
-  _tooltipCanvas: {fileID: 492164580}
   AtlasBounds: {fileID: 1518604466}
   OriginPoint: {fileID: 413124581}
-  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
   _connectionBase: {fileID: 4144048487355444967, guid: 670a9421ed86e1c44b8453243dc7c768, type: 3}
 --- !u!1001 &1260642005
 PrefabInstance:
@@ -61328,6 +61280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba22083963c5b1446b26d49a3e3548c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
+  _tooltipCanvas: {fileID: 492164580}
+  _tooltipsParent: {fileID: 1966134214}
   HeroClassSO: {fileID: 0}
   _aelionEidosSprite: {fileID: 21300000, guid: 4b8ebb827025fee479342558785a7276, type: 3}
   IconBoxSprite: {fileID: 21300000, guid: f09163ca1d904964ca9fd26bc1aa5f15, type: 3}
@@ -61340,10 +61295,8 @@ MonoBehaviour:
   _atlasCamera: {fileID: 1823688466}
   _tooltipLayer: {fileID: 1966134214}
   _connectionsLayer: {fileID: 734364197}
-  _tooltipCanvas: {fileID: 492164580}
   AtlasBounds: {fileID: 1701832436}
   OriginPoint: {fileID: 1458367551}
-  _tooltipBase: {fileID: 6657815207834322343, guid: fa67ee4c43c6d6945b64fd30e7a52c6a, type: 3}
   _connectionBase: {fileID: 4144048487355444967, guid: 670a9421ed86e1c44b8453243dc7c768, type: 3}
 --- !u!1001 &1339699416
 PrefabInstance:
@@ -63750,6 +63703,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7255173279634499216, guid: 951c1639e938a9047b9d1e238a865d25, type: 3}
   m_PrefabInstance: {fileID: 1048674255}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1399136110
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/DefaultCompositionGraph 2
+  m_Shader: {fileID: -6465566751694194690, guid: c397a0bfe9f41eb49a086595979492e4, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _3DViewLayer:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BackgroundLayer:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _InterfaceLayer:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!4 &1399216988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7255173279634499216, guid: 951c1639e938a9047b9d1e238a865d25, type: 3}
@@ -84942,7 +84947,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 20
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -84968,8 +84973,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.051725257, y: 0.06252629, z: 0.0008954641, w: 0.9967017}
-  m_LocalPosition: {x: 745, y: -1647, z: 1478}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -1627.61, y: -8.758, z: 1.702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

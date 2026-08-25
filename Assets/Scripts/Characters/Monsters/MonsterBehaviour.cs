@@ -29,7 +29,7 @@ public class MonsterBehaviour : CharacterBehaviour
         }
         if (SpecialAttack != null)
         {
-            SpecialAttack = Instantiate(BaseAttack, this.transform);
+            SpecialAttack = Instantiate(SpecialAttack, this.transform);
             SpecialAttack.Init();
             SpecialAttack.gameObject.SetActive(false);
         }
@@ -85,6 +85,15 @@ public class MonsterBehaviour : CharacterBehaviour
     {
         BaseAttack?.UpdateCooldown();
         SpecialAttack?.UpdateCooldown();
+    }
+    public override void EnterCombat(CharacterBehaviour character, bool fightProvokedByGroup)
+    {
+        //reseting abilities cooldowns on combat enter, so if player died and returns to try again, the monster won't immediately use its special attack
+        if (!IsInCombat && SpecialAttack != null)
+        {
+            SpecialAttack.CurrentCooldown = 0;
+        }
+        base.EnterCombat(character, fightProvokedByGroup);
     }
     public override void SetCanAct(bool canAct, bool ownAbilityDriven)
     {

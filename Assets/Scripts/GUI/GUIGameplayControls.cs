@@ -649,6 +649,15 @@ public class GUIGameplayControls : MonoBehaviour
             {
                 _currentlySelectedInteractable.Interact(_player);
                 _player.PlayAnimation("Interaction");
+                switch(_currentlySelectedInteractable.GetInteractionType())
+                {
+                    case IPlayerInteractable.InteractionType.DigitalInterface:
+                        _player.SetAnimationState("Interaction_Variance", 0f);
+                        break;
+                    case IPlayerInteractable.InteractionType.OpenClose:
+                        _player.SetAnimationState("Interaction_Variance", 1f);
+                        break;
+                }
             }
         }
     }
