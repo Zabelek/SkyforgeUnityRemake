@@ -19,7 +19,7 @@ MonoBehaviour:
   MaxMana: 0
   MovementSpeed: 4
   AttackSpeed: 1
-  BaseDamage: 20
+  BaseDamage: 15
   CriticalChance: 0
   CombatManaRegen: 0
   Defense: 0

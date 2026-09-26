@@ -3,6 +3,7 @@ using UnityEngine;
 public class PYTHHealingDryadAIHandlerBehaviour : AIHandlerBehaviour
 {
     #region Variables
+    //to prevent exceptions in case not all types are as required (casts in the code)
     private bool _isCorrect;
     private MonsterBehaviour _dryad;
     #endregion

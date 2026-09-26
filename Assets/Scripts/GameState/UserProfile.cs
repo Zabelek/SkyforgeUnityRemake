@@ -40,6 +40,7 @@ public class UserProfile
             _inventory = value;
         }
     }
+    public StoryVariables StoryVariables { get; set; }
     #endregion
 
     #region Constructors
@@ -50,6 +51,7 @@ public class UserProfile
         GameplayResources = new();
         Equipment = new();
         _inventory = new();
+        StoryVariables = new();
     }
     public void Init()
     {

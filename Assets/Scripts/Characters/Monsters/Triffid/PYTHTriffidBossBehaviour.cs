@@ -94,7 +94,4 @@ public class PYTHTriffidBossBehaviour : PYTHTriffidBehaviour
         _area.SetActive(false);
     }
     #endregion
-
-    #region EventHandlers
-    #endregion
 }

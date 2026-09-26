@@ -1,5 +1,3 @@
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PYTHTriffidBossPillarBehaviour : DestroyableObjectBehaviour
@@ -31,7 +29,7 @@ public class PYTHTriffidBossPillarBehaviour : DestroyableObjectBehaviour
             if(!_hideAnimationStarted)
             {
                 _hideAnimationStarted = true;
-                _spawnAnimationTimer = 2;
+                _spawnAnimationTimer = ANIMATION_TIMER;
                 _currentParticles = Instantiate(_particlesBase, this.transform);
                 _currentParticles.gameObject.SetActive(true);
             }
@@ -64,11 +62,5 @@ public class PYTHTriffidBossPillarBehaviour : DestroyableObjectBehaviour
             }
         }
     }
-    #endregion
-
-    #region Methods
-    #endregion
-
-    #region EventHandlers
     #endregion
 }

@@ -16,13 +16,6 @@ public class AIHandlerBehaviour : MonoBehaviour
     private float _unstuckTimer, _repathTimer;
     private bool _agentActive;
 
-    //FOR OLD MOVEMENT METHODS:
-    //used in the agent to rigidbody vector method
-    //protected const float SEPARATION_STRENGTH = 6;
-    //protected const float GOAL_STRENGTH = 1.5f;
-    //even if the two characters get too close (not intersecting with each other) they will try to find another path
-    //protected const float PROXIMITY_ADD_VALUE = 0.6f;
-
     #region Variables
     [Header("AI Related Variables")]
     [SerializeField] protected MonsterBehaviour _character;
@@ -161,34 +154,6 @@ public class AIHandlerBehaviour : MonoBehaviour
                 _rigidbody.linearVelocity = _agent.velocity;
             transform.forward = Vector3.Lerp(transform.forward, _agent.velocity, Time.fixedDeltaTime * _agent.angularSpeed * Time.fixedDeltaTime);
         }
-        //old movement method, overcomplicated and more buggy
-        /*_agent.nextPosition = _rigidbody.position;
-        if(!_rigidbody.isKinematic)
-        {
-            Vector3 goalDir = (_agent.steeringTarget - transform.position).normalized;
-            Vector3 separationDir = Vector3.zero;
-            foreach (var other in RegisteredAgents)
-            {
-                if (other != _agent)
-                {
-                    Vector3 diff = transform.position - other.transform.position;
-                    float dist = diff.magnitude;
-                    var realDist = dist - _agent.radius - other.radius;
-                    if (realDist < PROXIMITY_ADD_VALUE && dist > 0)
-                    {
-                        //once the "too close" treshold is reached, the character will try to smoothly walk around the other one.
-                        //The closer they get, the stronger is the force to avoid jumping from 0 to 1 each frame, to avoid shaking
-                        separationDir += diff.normalized * (1 - (realDist / PROXIMITY_ADD_VALUE));
-                    }
-                }
-            }
-            Vector3 combinedDir = (goalDir * GOAL_STRENGTH + separationDir * SEPARATION_STRENGTH).normalized;
-            Vector3 current = _rigidbody.linearVelocity;
-            Vector3 target = combinedDir * _agent.speed;
-            Vector3 appliedVector = Vector3.Lerp(current, target, Time.fixedDeltaTime * 10);
-            _rigidbody.linearVelocity = new Vector3(appliedVector.x, _rigidbody.linearVelocity.y, appliedVector.z);
-            transform.forward = Vector3.Lerp(transform.forward, appliedVector, Time.fixedDeltaTime * _agent.angularSpeed / 70);
-        }*/
     }
     public virtual void CheckForNewEnemy()
     {
@@ -379,7 +344,7 @@ public class AIHandlerBehaviour : MonoBehaviour
     {
         if(_character.CanAct())
         {
-            //it can't be return _character.TryPerformAbility(_character.SpecialAttack), because it won't check for niemal attack and just return false!
+            //it can't be return _character.TryPerformAbility(_character.SpecialAttack), because it won't check for base attack and just return false!
             if (_character.SpecialAttack != null && _character.TryPerformAbility(_character.SpecialAttack))
                 return true;
             else if (_character.BaseAttack != null && _character.TryPerformAbility(_character.BaseAttack))

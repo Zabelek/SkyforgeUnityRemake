@@ -8,6 +8,8 @@ public class PYTHDryadHealAbilityBehaviour : AbilityBehaviour
     private ParticleSystem _currentParticles;
     [SerializeField] private float _healingInterval;
     private float _healingTimesAlreadyDone;
+    [Tooltip("When the healed ally gets to ofar from the user, the healing is interrupted")]
+    public float MaxHealingDistance = 15f;
     #endregion
 
     #region Methods
@@ -19,11 +21,12 @@ public class PYTHDryadHealAbilityBehaviour : AbilityBehaviour
             _healingTimesAlreadyDone++;
             HealingTarget.Heal((int)(performer.GetEffectiveDamage() * AbilitySO.DamageMultiplier), true);
         }
+        //rotates the dryad towards the healed ally
         if(HealingTarget!=null)
             performer.transform.forward = HealingTarget.transform.position - performer.transform.position;
         else
             Interrupt(performer);
-        if ((HealingTarget.transform.position - performer.transform.position).magnitude > 15f || HealingTarget.IsDead)
+        if ((HealingTarget.transform.position - performer.transform.position).magnitude > MaxHealingDistance || HealingTarget.IsDead)
         {
             Interrupt(performer);
         }

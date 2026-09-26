@@ -6,14 +6,19 @@ public class ProjectileBehaviour : MonoBehaviour
     #region Variables
     public CharacterBehaviour Caster;
     public CharacterBehaviour Target;
+    [Tooltip("If this projectile follows the target, ort is it just following stright line")]
     public bool IsAutoRedirecting;
+    [Tooltip("After this time, the projectile will despawn")]
     public float MaxLifetime;
     private float _currentLifetime = 0;
     public Damage Damage;
     public float Speed;
+    [Tooltip("it can detonate on other enemies that are not its target")]
     public bool CanBeStopped;
     private Collider _collider;
+    [Tooltip("how high above the ground the projectile is spawned")]
     public float HeightOffset;
+    private bool _enemyAlreadyKilled = false;
     #endregion
 
     #region Mono
@@ -29,7 +34,8 @@ public class ProjectileBehaviour : MonoBehaviour
     }
     protected virtual void FixedUpdate()
     {
-        if(!IsAutoRedirecting)
+        _currentLifetime += Time.fixedDeltaTime;
+        if (!IsAutoRedirecting)
         {
             this.transform.position += this.transform.forward * Speed * Time.fixedDeltaTime;
         }
@@ -38,9 +44,10 @@ public class ProjectileBehaviour : MonoBehaviour
             this.transform.forward = new Vector3(Target.transform.position.x, Target.transform.position.y + HeightOffset, Target.transform.position.z) - this.transform.position;
             this.transform.position += this.transform.forward * Speed * Time.fixedDeltaTime;
         }
-        ChechDetonation();
-        _currentLifetime += Time.fixedDeltaTime;
-        if(_currentLifetime > MaxLifetime)
+        CheckDetonation();
+        if (Target != null && Target.IsDead)
+            _enemyAlreadyKilled = true;
+        if (_currentLifetime > MaxLifetime)
         {
             Destroy(this.gameObject);
         }
@@ -48,7 +55,7 @@ public class ProjectileBehaviour : MonoBehaviour
     #endregion
 
     #region Methods
-    protected virtual void ChechDetonation()
+    protected virtual void CheckDetonation()
     {
         Collider[] potentialColliders = Physics.OverlapSphere(this.transform.position, 1f);
         if (potentialColliders.Count() > 0)
@@ -85,7 +92,7 @@ public class ProjectileBehaviour : MonoBehaviour
     #region EventHandlers
     protected virtual void Detonite(CharacterBehaviour character)
     {
-        if(character!= null)
+        if(character!= null && !_enemyAlreadyKilled)
         {
             character.TakeDamage(Damage);
         }

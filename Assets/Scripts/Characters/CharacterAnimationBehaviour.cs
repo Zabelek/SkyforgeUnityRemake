@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -67,7 +66,6 @@ public class CharacterAnimationBehaviour : MonoBehaviour
             _animator.SetTrigger("Init");
         //Recheck needs to be performed in case new animator controller is different than previous one in terms of walking support
         _hasWalkRunAnimations = _animator.parameters.Any(p => p.name == "Speed_Indicator");
-
     }
     public virtual void PerformEmote(EmoteSO emote)
     {

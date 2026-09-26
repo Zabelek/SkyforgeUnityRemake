@@ -27,6 +27,9 @@ public static class SkyforgeLoader
     //variables used only for the main menu to see of the player just finished the game, so that the Argus end lines can play
     public static bool HardestDiffBeaten = false;
     public static bool GameBeaten = false;
+    //Other scene state variables
+    public static bool SceneTransferMidScenario = false;
+    public static string CurrentGameplayScene;
     #endregion
 
     #region Methods
@@ -51,6 +54,7 @@ public static class SkyforgeLoader
         GUILoadingScreen.MapThumbnail = map.Thumbnail;
         await LoadScene(currentScene, map.SceneName);
         await SceneManager.LoadSceneAsync("GameMenuScene", LoadSceneMode.Additive);
+        CurrentGameplayScene = map.SceneName;
     }
     public static async Task LoadScene()
     {

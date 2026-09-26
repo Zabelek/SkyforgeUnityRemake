@@ -108,7 +108,7 @@ public class CharacterBehaviour : MonoBehaviour
     private float _orbDroppingCollisionRadius;
     [Tooltip("By default, when the character appears in the scene, it fades in for a second. If you want to disable the fading animation, set this to false")]
     public bool FadedIntoScene = true;
-    [Tooltip("If this variable is set to true, the character will be killed f they fall too low.")]
+    [Tooltip("If this variable is set to true, the character will be killed if they fall too low.")]
     public bool KillBelowScene = true;
     private Rigidbody _rigidbody;
     public float StartCombatProtectionTimer;

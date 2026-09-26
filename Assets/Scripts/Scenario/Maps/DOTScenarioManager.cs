@@ -171,5 +171,10 @@ public class DOTScenarioManager : ScenarioManager
         _interface.ShowCharacterMessage(_chestVoicelines[1]);
         _lootChest.OnChestOpenEvent -= ChestOpenedAction;
     }
+    protected override void LoadMidScenario()
+    {
+        base.LoadMidScenario();
+        Stage = 3;
+    }
     #endregion
 }

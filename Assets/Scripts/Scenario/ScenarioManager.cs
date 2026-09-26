@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Video;
@@ -22,7 +23,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] protected VoicelineSO[] _deadJokes;
     [Tooltip("Player reference")]
     [SerializeField] protected PlayerBehaviour _player;
-    protected Vector3 _spawnPoint;
+    [SerializeField] protected Transform _defaultSpawnPoint, _spawnPointMidScenario;
     //cameras
     [Tooltip("Normal gameplay camera to switch after the cutscene is over")]
     [SerializeField] protected CinemachineCamera _followCamera;
@@ -53,9 +54,16 @@ public class ScenarioManager : MonoBehaviour
             _cutscenes.Add(child);
             child.SetManager(this);
         }
-        StartCoroutine(DelayedInitSequence(SceneStartDelay));
         _player.OnPlayerRessurected += Resurrect_Performed;
-        _spawnPoint = _player.transform.position;
+        if(SkyforgeLoader.SceneTransferMidScenario)
+        {
+            LoadMidScenario();
+            _player.transform.position = _spawnPointMidScenario.transform.position;
+        }
+        else
+        {
+            StartCoroutine(DelayedInitSequence(SceneStartDelay));
+        }
     }
     protected virtual void Update()
     {
@@ -88,7 +96,7 @@ public class ScenarioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _player.Resurrect();
-        _player.transform.position = _spawnPoint;
+        _player.transform.position = _defaultSpawnPoint.transform.position;
         if (_deadJokes != null && _deadJokes.Length > 0)
         {
             _interface.ShowCharacterMessage(_deadJokes[UnityEngine.Random.Range(0, _deadJokes.Count() - 1)]);
@@ -165,6 +173,21 @@ public class ScenarioManager : MonoBehaviour
     public void StopVideo()
     {
         _videoPlayer.Pause();
+    }
+    protected virtual void LoadMidScenario()
+    {
+        //used when the scene init is performed during another scenario running. Usually it skips the first cutscene, optionally may be loading map state
+        SkyforgeLoader.SceneTransferMidScenario = false;
+        _ = ScheduleFadeOutOnLoad();
+    }
+    private async Task ScheduleFadeOutOnLoad()
+    {
+        //Since the scene showing is delayed by around 1 second after actual loading, the face in has to triger only when the loading scene is dissolved.
+        while (SkyforgeLoader.LoadingScreenReady==false)
+        {
+            await Task.Delay(1);
+        }
+        await _blackFade.StartFadeOut();
     }
     #endregion
 }

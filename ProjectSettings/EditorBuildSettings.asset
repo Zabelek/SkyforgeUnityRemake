@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DivineObservatoryScene.unity
     guid: b2376f8b063b4cf4993d48caffb6a3a4
+  - enabled: 1
+    path: Assets/Scenes/SkyForgeScene.unity
+    guid: 6340b40d6622dac488a1f1ac9a7c0353
   m_configObjects:
     com.unity.adaptivePerformance.basic.provider_settings: {fileID: 11400000, guid: f4c515dd456534543b67bfc0342fe197, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 5157b7eb51c823a4eb7b00fe0b99f8c7, type: 2}

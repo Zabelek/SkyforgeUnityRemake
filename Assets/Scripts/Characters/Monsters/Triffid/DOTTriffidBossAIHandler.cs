@@ -44,7 +44,4 @@ public class DOTTriffidBossAIHandler : AIHandlerBehaviour
         return base.TryPerformAttack();
     }
     #endregion
-
-    #region EventHandlers
-    #endregion
 }

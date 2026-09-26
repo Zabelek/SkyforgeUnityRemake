@@ -20,6 +20,8 @@ public class GUIGameplayControls : MonoBehaviour
     [SerializeField] private PlayerBehaviour _player;
     [Tooltip("Player Input Behaviour should be a child of System object on the scene")]
     [SerializeField] private PlayerInputBehaviour _inputBehaviour;
+    [Tooltip("All gameplay controls in case hiding/showing them all at one is needed")]
+    [SerializeField] private Transform _gameplayControls;
     [Header("Effects and Stat Bars")]
     [Tooltip("The whole HP bar (parent of the other components)")]
     [SerializeField] private StatBarBehaviour _hpBar;
@@ -100,11 +102,16 @@ public class GUIGameplayControls : MonoBehaviour
     private LootChestBehaviour _lastChestCheck;
     private IPlayerInteractable _currentlySelectedInteractable;
     [Header("Menu Black Fade")]
-    [Tooltip("Different black fade used for transition to menu")]
+    [Tooltip("Different black fade than the usual one in the scene. It's dedicated for transition to menu")]
     [SerializeField] private GUISceneBlackFade _menuBlackFade;
     //so that the player can't open/close menu too fast
     private float _menuOpenDelay = 0.5f;
+    //so that the player stats object doesn't have to be casted every frame
     private HeroStats _playerStats;
+    //Special In-World Interface
+    [HideInInspector] public bool IsPlayerInSpecialWorldInterface;
+    [HideInInspector] public RectTransform CurrentSpecialWorldInterface, TempInterfaceParent;
+    [HideInInspector] public CinemachineCamera CurrentWorldInterfaceCinemachineCamera;
     #endregion
 
     #region Mono
@@ -541,6 +548,54 @@ public class GUIGameplayControls : MonoBehaviour
             }
         }
     }
+    public void SetSpecialWorldInterface(RectTransform interfaceControls, RectTransform interfaceParent, CinemachineCamera camera)
+    {
+        if (!IsPlayerInSpecialWorldInterface)
+        {
+            CurrentSpecialWorldInterface = interfaceControls;
+            TempInterfaceParent = interfaceParent;
+            if (camera != null)
+            {
+                CurrentWorldInterfaceCinemachineCamera = camera;
+                CurrentWorldInterfaceCinemachineCamera.Priority = 10;
+            }
+            CurrentSpecialWorldInterface.transform.SetParent(this.transform);
+            CurrentSpecialWorldInterface.transform.localPosition = Vector3.zero;
+            CurrentSpecialWorldInterface.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            CurrentSpecialWorldInterface.transform.localScale = new Vector3(1, 1, 1);
+            CurrentSpecialWorldInterface.gameObject.SetActive(true);
+            IsPlayerInSpecialWorldInterface = true;
+            Globals.Instance.IsMenuOpen = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            _gameplayControls.gameObject.SetActive(false);
+        }
+    }
+    public void ClearSpecialWorldInterface()
+    {
+        if(IsPlayerInSpecialWorldInterface && CurrentSpecialWorldInterface != null)
+        { 
+            if(TempInterfaceParent != null)
+            {
+                CurrentSpecialWorldInterface.transform.SetParent(TempInterfaceParent);
+                CurrentSpecialWorldInterface.transform.localPosition = Vector3.zero;
+                CurrentSpecialWorldInterface.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                CurrentSpecialWorldInterface.transform.localScale = new Vector3(1, 1, 1);
+            }
+            if(CurrentWorldInterfaceCinemachineCamera != null)
+            {
+                CurrentWorldInterfaceCinemachineCamera.Priority = 1;
+                CurrentWorldInterfaceCinemachineCamera = null;
+            }
+            CurrentSpecialWorldInterface.gameObject.SetActive(false);
+            CurrentSpecialWorldInterface = null;
+            IsPlayerInSpecialWorldInterface = false;
+            Globals.Instance.IsMenuOpen = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            _gameplayControls.gameObject.SetActive(true);
+        }
+    }
     #endregion
 
     #region EventHandlers
@@ -548,7 +603,11 @@ public class GUIGameplayControls : MonoBehaviour
     {
         if (gameObject.activeSelf && !Globals.Instance.IsCutscenePlaying && _menuOpenDelay<=0)
         {
-            if (Globals.Instance.IsMenuOpen == false)
+            if(IsPlayerInSpecialWorldInterface)
+            {
+                ClearSpecialWorldInterface();
+            }
+            else if (Globals.Instance.IsMenuOpen == false)
             {
                 _ = OpenMenuAndShowSystemView();
             }
@@ -623,7 +682,7 @@ public class GUIGameplayControls : MonoBehaviour
             Destroy(_abilitiesPanel.gameObject);
         if(panel != null)
         {
-            _abilitiesPanel = Instantiate(panel, this.transform);
+            _abilitiesPanel = Instantiate(panel, _gameplayControls.transform);
             _abilitiesPanel.gameObject.SetActive(true);
             _abilitiesPanel.SetPlayer(_player);
         }

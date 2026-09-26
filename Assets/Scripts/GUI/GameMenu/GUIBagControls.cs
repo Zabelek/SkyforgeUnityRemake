@@ -22,7 +22,9 @@ public class GUIBagControls : TooltipDisplayerBehaviour
     private Vector3 _mouseOffsetFromFirstClick;
     private float _doubleClickTimer;
     [Header("Sound")]
+    [Tooltip("Sound played when the item changes slot")]
     [SerializeField] protected SoundEffectSO _itemMoveSound;
+    [Tooltip("Sound played when the item is equipped")]
     [SerializeField] protected SoundEffectSO _itemEquipSound;
     #endregion
 

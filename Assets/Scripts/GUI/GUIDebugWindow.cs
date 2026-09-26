@@ -19,7 +19,7 @@ public class GUIDebugWindow : MonoBehaviour
     #region EventHandlers
     private void MenuButton_Clicked(object sender, EventArgs e)
     {
-        _ = SkyforgeLoader.LoadScene("DivineObservatoryScene", "MainMenuScene");
+        _ = SkyforgeLoader.LoadScene(SkyforgeLoader.CurrentGameplayScene, "MainMenuScene");
     }
     private void QuitButton_Clicked(object sender, EventArgs e)
     {

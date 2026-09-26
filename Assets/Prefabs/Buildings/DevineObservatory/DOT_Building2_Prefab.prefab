@@ -3163,10 +3163,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6a66d5f8a9e2e6b48b37c8fb0aa656b2, type: 2}
+    - target: {fileID: -731927464984675483, guid: 749d815179e1e1140ab0df6b3731fd52, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8925926767166342596, guid: c3f8f657ed680d044b352a0e7985cd33, type: 3}
     - target: {fileID: 919132149155446097, guid: 749d815179e1e1140ab0df6b3731fd52, type: 3}
       propertyPath: m_Name
       value: Window_Barrier
       objectReference: {fileID: 0}
+    - target: {fileID: 6738012246132827336, guid: 749d815179e1e1140ab0df6b3731fd52, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1042801323994665371, guid: c3f8f657ed680d044b352a0e7985cd33, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

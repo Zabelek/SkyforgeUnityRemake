@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +8,8 @@ public class RestrictedAreaBehaviour : MonoBehaviour
     private CapsuleCollider _collider;
     private List<Collider> _charactersInside;
     public bool IsActive { get; private set; }
+    [Tooltip("margin used so that the teleport radius isn't too close to the check margin, as it may cause bugs")]
+    [SerializeField] private float _safetyMargin;
     #endregion
 
     #region Mono
@@ -32,7 +33,7 @@ public class RestrictedAreaBehaviour : MonoBehaviour
                 else
                 {
                     var distance = (this.transform.position - collider.transform.position).magnitude;
-                    if (distance > _collider.radius)
+                    if (distance > _collider.radius + _safetyMargin)
                     {
                         if (CharacterBehaviour.FindCharacterInCollider(collider, out var character) == true)
                         {
@@ -41,6 +42,7 @@ public class RestrictedAreaBehaviour : MonoBehaviour
                     }
                 }
             }
+            //the mechanic works only on characters that enter the area while its active
             foreach (var potentialChar in Physics.OverlapSphere(this.transform.position, _collider.radius))
             {
                 if ((this.transform.position - potentialChar.transform.position).magnitude < _collider.radius && !_charactersInside.Contains(potentialChar))
@@ -70,8 +72,5 @@ public class RestrictedAreaBehaviour : MonoBehaviour
         if (active == false)
             Reset();
     }
-    #endregion
-
-    #region EventHandlers
     #endregion
 }
