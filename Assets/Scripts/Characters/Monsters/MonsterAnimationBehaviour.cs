@@ -7,15 +7,18 @@ public class MonsterAnimationBehaviour : CharacterAnimationBehaviour
 
     #region Variables
     [Header("Monster Related Variables")]
-    [SerializeField] AIHandlerBehaviour _aiHandler;
     public int AvailableAttackVariants = 1;
+    protected AIHandlerBehaviour _aiHandler;
     #endregion
 
     #region Mono
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
-        if(_character is MonsterBehaviour)
+        base.Awake();
+        _aiHandler = GetComponent<AIHandlerBehaviour>();
+        if(_aiHandler == null)
+            _aiHandler = GetComponentInParent<AIHandlerBehaviour>();
+        if (_character is MonsterBehaviour)
         {
             ((MonsterBehaviour)_character).OnHurtAction += Character_OnHurtAction;
             ((MonsterBehaviour)_character).OnEmoteAction += Character_OnEmoteAction;

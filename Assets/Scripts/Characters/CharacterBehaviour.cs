@@ -35,7 +35,6 @@ public class CharacterBehaviour : MonoBehaviour
     public event EventHandler OnAttackPerformedEvent;
     public event EventHandler OnCriticalAttackPerformedEvent;
     public event EventHandler<StartCombatEventArgs> OnCombatStartEvent;
-
     public class StartCombatEventArgs : EventArgs
     {
         public CharacterBehaviour Enemy;
@@ -46,7 +45,6 @@ public class CharacterBehaviour : MonoBehaviour
             FightProvokedByGroup = fightProvokedByGroup;
         }
     }
-
     public event EventHandler OnCombatEndEvent;
     public event EventHandler OnHealingOrbDropEvent;
     #endregion
@@ -55,14 +53,12 @@ public class CharacterBehaviour : MonoBehaviour
     [Header("Character Related Variables")]
     [Tooltip("Character Scriptable Object with all basic information")]
     [SerializeField] public CharacterBaseSO CharacterSO;
-    [Tooltip("Script responsible for updating visual effects of receiving damage/healing")]
-    [SerializeField] private VisualHitReceiver _visualHitReceiver;
-    [Tooltip("Script responsible for changing meshes depending on equipped outfit")]
-    [SerializeField] protected OutfitManager _outfitManager;
+    private VisualHitReceiver _visualHitReceiver;
+    protected OutfitManager _outfitManager;
     [Tooltip("When you need a reference to any specific bone from the character's skeleton, you can use this array so that external scripts can access them")]
     public Transform[] RegisteredBones;
     [Tooltip("Characters play sounds via this component")]
-    public SpeakingBehaviour SpeakingBehaviour;
+    [HideInInspector] public SpeakingBehaviour SpeakingBehaviour;
     //handles effects applied to the character
     private EffectManager _effectManager;
     //animation controllers
@@ -124,31 +120,11 @@ public class CharacterBehaviour : MonoBehaviour
         _colliders = GetComponentsInChildren<Collider>();
         _effectManager = new EffectManager(this);
         ActiveEnemies = new();
-        if(this is not PlayerBehaviour)
+        if (this is not PlayerBehaviour)
         {
             Stats.ModifyAccordingToDifficultyLevel();
         }
-        _rigidbody = GetComponent<Rigidbody>();
-        if(TryGetComponent<NavMeshAgent>(out var agent))
-        {
-            DefaultRadius = agent.radius;
-        }
-        else if(GetComponentInChildren<Collider>() != null)
-        {
-            if(GetComponentInChildren<Collider>() is CapsuleCollider)
-            {
-                DefaultRadius = (GetComponentInChildren<Collider>() as CapsuleCollider).radius;
-            }
-            else
-            {
-                DefaultRadius = GetComponentInChildren<Collider>().transform.localScale.x;
-            }
-        }
-        else
-        {
-            DefaultRadius = 1;
-        }
-        _orbDroppingCollisionRadius = DefaultRadius;
+        SetUpInternalReferences();
     }
     protected virtual void Start()
     {
@@ -275,6 +251,45 @@ public class CharacterBehaviour : MonoBehaviour
     #endregion
 
     #region RegularMethods
+    protected virtual void SetUpInternalReferences()
+    {
+        _visualHitReceiver = GetComponent<VisualHitReceiver>();
+        if (_visualHitReceiver == null)
+        {
+            _visualHitReceiver = GetComponentInChildren<VisualHitReceiver>();
+        }
+        _rigidbody = GetComponent<Rigidbody>();
+        if (TryGetComponent<NavMeshAgent>(out var agent))
+        {
+            DefaultRadius = agent.radius;
+        }
+        else if (GetComponentInChildren<Collider>() != null)
+        {
+            if (GetComponentInChildren<Collider>() is CapsuleCollider)
+            {
+                DefaultRadius = (GetComponentInChildren<Collider>() as CapsuleCollider).radius;
+            }
+            else
+            {
+                DefaultRadius = GetComponentInChildren<Collider>().transform.localScale.x;
+            }
+        }
+        else
+        {
+            DefaultRadius = 1;
+        }
+        _orbDroppingCollisionRadius = DefaultRadius;
+        _outfitManager = GetComponent<OutfitManager>();
+        if(_outfitManager== null)
+        {
+            _outfitManager = GetComponentInChildren<OutfitManager>();
+        }
+        SpeakingBehaviour = GetComponent<SpeakingBehaviour>();
+        if (SpeakingBehaviour == null)
+        {
+            SpeakingBehaviour = GetComponentInChildren<SpeakingBehaviour>();
+        }
+    }
     public virtual void TakeDamage(Damage damage)
     {
         TakeDamage(damage, false, false);

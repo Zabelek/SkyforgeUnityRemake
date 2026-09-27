@@ -5,12 +5,12 @@ public class CharacterAnimationBehaviour : MonoBehaviour
 {
     #region Variables
     [SerializeField] protected Animator _animator;
-    [SerializeField] protected CharacterBehaviour _character;
+    protected CharacterBehaviour _character;
     protected bool _hasWalkRunAnimations;
     #endregion
 
     #region Mono
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         //In case the animator wasn't set in editor, but is present
         if(_animator == null)
@@ -21,6 +21,9 @@ public class CharacterAnimationBehaviour : MonoBehaviour
             _hasWalkRunAnimations = _animator.parameters.Any(p => p.name == "Speed_Indicator");
         }
         //makes sure that character and animator see each other
+        _character = GetComponent<CharacterBehaviour>();
+        if(_character == null)
+            _character = GetComponentInParent<CharacterBehaviour>();
         if (_character != null)
         {
             _character.SetAnimationBehaviour(this);

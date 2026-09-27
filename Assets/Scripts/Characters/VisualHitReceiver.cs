@@ -10,8 +10,7 @@ public class VisualHitReceiver : MonoBehaviour
     [SerializeField] private GameObject _hitEffectMeelee;
     [Tooltip("Effect that would spawn when the character gets ranged hit")]
     [SerializeField] private GameObject _hitEffectRanged;
-    [Tooltip("Current character reference")]
-    [SerializeField] private CharacterBehaviour _character;
+    private CharacterBehaviour _character;
     private float _lightenTimer = 0;
     private float _darkenTimer = 0;
     private float _heallLightenTimer = 0;
@@ -19,6 +18,15 @@ public class VisualHitReceiver : MonoBehaviour
     #endregion
 
     #region Mono
+    private void Awake()
+    {
+        CharacterBehaviour character = GetComponent<CharacterBehaviour>();
+        if(character == null)
+        {
+            character = GetComponentInParent<CharacterBehaviour>();
+        }
+        _character = character;
+    }
     private void Start()
     {
         _character = GetComponent<CharacterBehaviour>();

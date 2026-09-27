@@ -160,7 +160,7 @@ public class GUIGameMenu : MonoBehaviour
         _abilitiesControlGroup.gameObject.SetActive(true);
         await _abilitiesControlGroup.UpdateView(true);
         _abilitiesTopButton.SetToggled(true);
-        MenuButton_DeselectRest(_settingsTopButton, EventArgs.Empty);
+        MenuButton_DeselectRest(_abilitiesTopButton, EventArgs.Empty);
         _playerScene.transform.SetParent(_playerAbilitiesPosition);
         _playerScene.localPosition = Vector3.zero;
         _playerScene.localRotation = Quaternion.Euler(Vector3.zero);

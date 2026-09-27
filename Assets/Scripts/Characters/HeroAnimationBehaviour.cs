@@ -4,9 +4,9 @@ public class HeroAnimationBehaviour : CharacterAnimationBehaviour
     #endregion
 
     #region Mono
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
     }
     protected override void FixedUpdate()
     {

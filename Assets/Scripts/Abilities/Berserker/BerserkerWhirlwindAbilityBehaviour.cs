@@ -189,7 +189,10 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
             {
                 if (casuality == collider || casuality == performer.GetComponent<Collider>())
                     continue;
-                if (casuality.bounds.Intersects(collider.bounds) && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
+                if (casuality.bounds.Intersects(collider.bounds) &&
+                        Physics.ComputePenetration(casuality, casuality.transform.position, casuality.transform.rotation,
+                        collider, collider.transform.position, collider.transform.rotation, out _, out _)
+                        && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
                     Damage newDamage = null;
                     if (_firestorm)

@@ -48,9 +48,9 @@ public class PlayerAnimationBehaviour : HeroAnimationBehaviour
     #endregion
 
     #region Mono
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         if (_character is PlayerBehaviour)
             _player = (PlayerBehaviour)_character;
         _player.OnHurtEvent += Hurt_Performed;

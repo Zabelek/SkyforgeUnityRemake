@@ -10,8 +10,7 @@ public class GUICharacterBars : MonoBehaviour
     [Header("Character Bar Related Variables")]
     [Tooltip("Reference to the HP bar above thwe character's mesh")]
     [SerializeField] private StatBarBehaviour _hpBar;
-    [Tooltip("Refernece to this specific bar's character")]
-    [SerializeField] private CharacterBehaviour _character;
+    private CharacterBehaviour _character;
     [Tooltip("Reference to the canvas that contains all the bars")]
     [SerializeField] private Canvas _canvas;
     [Tooltip("Image to display when the character is selected automatically by the player")]
@@ -36,7 +35,10 @@ public class GUICharacterBars : MonoBehaviour
     #region Mono
     private void Awake()
     {
-        if(_character.CharacterSO.Category.ShowBackgroundAboveModel)
+        _character = GetComponent<CharacterBehaviour>();
+        if(_character == null)
+            _character = GetComponentInParent<CharacterBehaviour>();
+        if (_character.CharacterSO.Category.ShowBackgroundAboveModel)
         {
             _canvas.transform.Find("Icons").Find("Icon_Strength")
                 .GetComponent<Image>().sprite = _character.CharacterSO.Category.IconBackground;

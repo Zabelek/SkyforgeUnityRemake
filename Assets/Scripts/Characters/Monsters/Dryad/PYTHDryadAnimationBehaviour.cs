@@ -1,9 +1,9 @@
 public class PYTHDryadAnimationBehaviour : MonsterAnimationBehaviour
 {
     #region Mono
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         if(_character is PYTHDryadBehaviour)
         {
             ((PYTHDryadBehaviour)_character).OnWeakenAction += Dryad_OnWeakenAction;

@@ -18,7 +18,7 @@ public class AIHandlerBehaviour : MonoBehaviour
 
     #region Variables
     [Header("AI Related Variables")]
-    [SerializeField] protected MonsterBehaviour _character;
+    protected MonsterBehaviour _character;
     [Tooltip("When the character in combat stays further to the player than this value, they will try to walk closer.")]
     [SerializeField] protected float _followCloseUpDistanceLimit;
     [Tooltip("Normally, the character would attack only when they're closer to the Player than Close Up Distance Limit. This value allows them to attach a bit further. WARNING: Make sure the hit box of character's attack is greater in size than the potential distance between the Character and Player!")]
@@ -47,6 +47,12 @@ public class AIHandlerBehaviour : MonoBehaviour
     #endregion
 
     #region Mono
+    protected virtual void Awake()
+    {
+        _character = GetComponent<MonsterBehaviour>();
+        if(_character == null)
+            _character = GetComponentInParent<MonsterBehaviour>();
+    }
     protected virtual void Start()
     {
         //in case setting character in the editor was ommited

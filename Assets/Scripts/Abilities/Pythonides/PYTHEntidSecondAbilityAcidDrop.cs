@@ -52,7 +52,10 @@ public class PYTHEntidSecondAbilityAcidDrop : MonoBehaviour
             {
                 if (casuality == _collider)
                     continue;
-                if (casuality.bounds.Intersects(_collider.bounds) && CharacterBehaviour.FindCharacterInCollider(casuality, Caster, out CharacterBehaviour character))
+                if (casuality.bounds.Intersects(_collider.bounds) &&
+                        Physics.ComputePenetration(casuality, casuality.transform.position, casuality.transform.rotation,
+                        _collider, _collider.transform.position, _collider.transform.rotation, out _, out _)
+                        && CharacterBehaviour.FindCharacterInCollider(casuality, Caster, out CharacterBehaviour character))
                 {
                     var damage = new Damage(Caster, (int)(Caster.GetEffectiveDamage() / 2), false, true);
                     character.TakeDamage(damage);
