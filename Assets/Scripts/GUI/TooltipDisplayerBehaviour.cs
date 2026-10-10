@@ -26,10 +26,10 @@ public class TooltipDisplayerBehaviour : MonoBehaviour
         _currentTooltip = Instantiate(_tooltipBase, _tooltipsParent);
         _currentTooltip.SetCanvas(_tooltipCanvas);
     }
-    protected virtual void SetUpNewTooltip(ItemSO itemSO)
+    protected virtual void SetUpNewTooltip(Item item)
     {
         SetUpNewTooltip();
-        _currentTooltip.SetForItem(itemSO);
+        _currentTooltip.SetForItem(item);
     }
     protected void DestroyCurrentTooltip()
     {

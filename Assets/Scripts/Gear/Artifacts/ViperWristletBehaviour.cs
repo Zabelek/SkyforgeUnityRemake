@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class ViperWristletBehaviour : GearPeaceBehaviour
+public class ViperWristletBehaviour : ArtifactBehaviour
 {
     #region Variables
     public ArtifactSO ArtifactSO;
@@ -11,12 +11,6 @@ public class ViperWristletBehaviour : GearPeaceBehaviour
     #endregion
 
     #region Mono
-    protected override void Awake()
-    {
-        base.Awake();
-        GearBonus.HealthPercentBonus += ArtifactSO.HealthBonus;
-        GearBonus.DamagePercentBonus += ArtifactSO.DamageBonus;
-    }
     private void Update()
     {
         if(_hero?.Stats.CurrentHP < (int)(_hero?.Stats.MaxHP * 0.15f) && _hero.IsMenuPreview == false)

@@ -19,6 +19,7 @@ MonoBehaviour:
   IsStackable: 0
   Rarity: 2
   CanBeQuickAccessed: 0
+  IsUpgradable: 1
   OutfitSO: {fileID: 11400000, guid: c097114fd17db72409ca104b06901b71, type: 2}
-  BaseArmorAmount: 0.2
+  BaseArmorAmount: 1
   _prefab: {fileID: 8862405662896891928, guid: f188d4efcb92b60469ccce94e3bfa7c0, type: 3}

@@ -86,7 +86,7 @@ public class BerserkerMightyStrikeAbilityBehaviour : MovingAbilityBehaviour
                         && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
                     var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), 
-                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     if (performer is PlayerBehaviour && ((PlayerBehaviour)performer).SelectedCharacter == character)
                     {
                         character.TakeDamage(damage);

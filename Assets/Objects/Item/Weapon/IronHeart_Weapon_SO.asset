@@ -20,6 +20,8 @@ MonoBehaviour:
   InterfaceSprite: {fileID: 21300000, guid: 858e6c911c9b96b4b9018e238ae0d1d0, type: 3}
   IsStackable: 0
   Rarity: 4
+  CanBeQuickAccessed: 0
+  IsUpgradable: 1
   Type: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}
   _weaponPrefab: {fileID: 7098471429605740878, guid: 70f30c9c70f3faf42ac2e97dff032b7f, type: 3}
-  _baseDamage: 5
+  _baseDamage: 1

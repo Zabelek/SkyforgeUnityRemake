@@ -211,12 +211,12 @@ public class BerserkerDestructiveAttackAbilityBehaviour : MovingAbilityBehaviour
                     if (_strong)
                     {
                         damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false),
-                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     }
                     else
                     {
                         damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false),
-                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     }
                     lastDamage = damage;
                     character.TakeDamage(damage);

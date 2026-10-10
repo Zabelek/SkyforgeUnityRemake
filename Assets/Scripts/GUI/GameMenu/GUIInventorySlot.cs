@@ -11,7 +11,7 @@ public class GUIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public InventorySlot InventorySlot { get; set; }
     [SerializeField] private Image _itemImage, _rarityBar, _lockIcon;
     [SerializeField] private CanvasGroup _backgroundGroup;
-    [SerializeField] private TextMeshProUGUI _amountTextBox;
+    [SerializeField] private TextMeshProUGUI _amountTextBox, _generationTextBox;
     #endregion
 
     #region Methods
@@ -23,6 +23,7 @@ public class GUIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
             _lockIcon.gameObject.SetActive(true);
             _rarityBar.gameObject.SetActive(false);
             _amountTextBox.text = "";
+            _generationTextBox.gameObject.SetActive(false);
         }
         else if(InventorySlot.Item != null)
         {
@@ -56,6 +57,13 @@ public class GUIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 _amountTextBox.text = InventorySlot.Item.Amount.ToString();
             else
                 _amountTextBox.text = "";
+            if(InventorySlot.Item.ItemUpgradeState != null)
+            {
+                _generationTextBox.gameObject.SetActive(true);
+                _generationTextBox.text = InventorySlot.Item.ItemUpgradeState.Generation.ToString();
+            }
+            else
+                _generationTextBox.gameObject.SetActive(false);
         }
         else
         {
@@ -65,6 +73,7 @@ public class GUIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
            _backgroundGroup.alpha = 0.35f;
             _amountTextBox.text = "";
             _rarityBar.gameObject.SetActive(false);
+            _generationTextBox.gameObject.SetActive(false);
         }
     }
     #endregion

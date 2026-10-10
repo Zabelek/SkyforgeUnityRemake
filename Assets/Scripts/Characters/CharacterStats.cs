@@ -19,9 +19,24 @@ public class CharacterStats
         get => _currentMana;
         set => _currentMana = Math.Clamp(value, 0, MaxMana);
     }
-    public float MovementSpeed { get; set; }
-    public float AttackSpeed { get; set; }
-    public float CriticalChance { get; set; }
+    private float _movementSpeed;
+    public float MovementSpeed
+    {
+        get => _movementSpeed * (1+GearStats.MovementSpeedPercentBonus);
+        private set => _movementSpeed = value;
+    }
+    private float _attackSpeed;
+    public float AttackSpeed
+    {
+        get => _attackSpeed * (1+GearStats.AttackSpeedBonus);
+        private set => _attackSpeed = value;
+    }
+    private float _criticalChance;
+    public float CriticalChance
+    {
+        get => _criticalChance + GearStats.CriticalChanceBonus;
+        private set => _criticalChance = value;
+    }
     private int _baseDamage;
     public int BaseDamage 
     { 
@@ -31,16 +46,25 @@ public class CharacterStats
     //max bonus value that the character can inflict. Every hit, the character inflicts a random damage betwen Base damage and Base damage + Max damage;
     public int _maxDamage;
     public int MaxDamage {
-        get => (int)(_maxDamage * (1 + GearStats.DamagePercentBonus));
+        get => (int)(_maxDamage * (1 + GearStats.DamagePercentBonus + GearStats.MaxDamagePercentBonus));
         private set => _maxDamage = value;
     }
     public int CombatManaRegen { get; set; }
     //healing percent of the character each time they deal damage. 1 vampirism means that they will heal by 100% of dealt damage
-    public float Vampirism { get; set; }
+    private float _vampirism;
+    public float Vampirism {
+        get => (_vampirism + GearStats.VampirismBonus);
+        private set => _vampirism = value;
+    }
     //Percent damage reduction of the character
     public float Defense { get; set; }
     //percent negative effect duration reduction of the character
-    public float Stability { get; set; }
+    private float _stability;
+    public float Stability
+    {
+        get => _stability + GearStats.StabilityBonus;
+        private set => _stability = value;
+    }
     public GearBonus GearStats { get; private set; }
     #endregion
 

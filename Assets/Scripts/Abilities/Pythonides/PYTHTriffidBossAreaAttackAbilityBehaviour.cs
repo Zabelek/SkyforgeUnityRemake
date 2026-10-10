@@ -41,7 +41,7 @@ public class PYTHTriffidBossAreaAttackAbilityBehaviour : AbilityBehaviour
                 //the closer the target is, the more damage it takes
                 var damageMultiplier = 1 - ((casuality.transform.position - performer.transform.position).magnitude / _hitAreaRadious);
                 var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, true),
-                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                 damage.Amount = (int)(damage.Amount * damageMultiplier);
                 casuality.TakeDamage(damage);
             }

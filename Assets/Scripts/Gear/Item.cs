@@ -10,6 +10,7 @@ public class Item
     public ItemSO ItemSO;
     public int Amount { get; set; } = 1;
     public QuickAccessSlot QASlotType = QuickAccessSlot.None;
+    public ItemUpgradeState ItemUpgradeState;
     #endregion
 
     #region Constructors
@@ -21,11 +22,13 @@ public class Item
     {
         ID = itemID;
         ItemSO = SkyforgeLoader.LoadItem(itemID).Result;
+        if(ItemSO?.IsUpgradable == true)
+        {
+            ItemUpgradeState = new();
+        }
     }
-    public Item(string itemID, int amount)
+    public Item(string itemID, int amount) : this(itemID)
     {
-        ID = itemID;
-        ItemSO = SkyforgeLoader.LoadItem(itemID).Result;
         Amount = amount;
     }
     #endregion

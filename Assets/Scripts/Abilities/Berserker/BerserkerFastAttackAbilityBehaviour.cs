@@ -68,7 +68,7 @@ public class BerserkerFastAttackAbilityBehaviour : MovingAbilityBehaviour
                         && CharacterBehaviour.FindEnemyCharacterInCollider(casuality, performer, out var character))
                 {
                     var damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false), 
-                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     if (!character.GetActiveEffects().Any(eff => eff.EffectSO.Name == _stunCooldown.EffectSO.Name))
                     {
 

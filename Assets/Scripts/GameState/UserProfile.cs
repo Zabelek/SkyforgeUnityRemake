@@ -35,6 +35,8 @@ public class UserProfile
                 if (invSlot.Item != null && SkyforgeLoader.ItemRegistry != null)
                 {
                     invSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == invSlot.Item.ID);
+                    if (invSlot.Item.ItemSO.IsUpgradable && invSlot.Item.ItemUpgradeState == null)
+                        invSlot.Item.ItemUpgradeState = new();
                 }
             }
             _inventory = value;

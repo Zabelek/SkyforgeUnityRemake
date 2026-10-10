@@ -23,6 +23,7 @@ MonoBehaviour:
   IsStackable: 0
   Rarity: 4
   CanBeQuickAccessed: 0
+  IsUpgradable: 1
   Type: {fileID: 11400000, guid: 6dbac4bb7e0206249a4017820372b67b, type: 2}
   _weaponPrefab: {fileID: 4343929034570272397, guid: 541c9310ad8f7c843a9d102bf01dc5e5, type: 3}
-  _baseDamage: 5
+  _baseDamage: 1

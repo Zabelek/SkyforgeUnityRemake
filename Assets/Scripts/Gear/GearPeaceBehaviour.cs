@@ -34,5 +34,19 @@ public class GearPeaceBehaviour : MonoBehaviour
         gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
+    public virtual void SynchronizeGearBonus(Item item)
+    {
+        GearBonus = new();
+        GearBonus.Add(GetBaseStats(item));
+        GearBonus.Add(GetMarkedStats(item));
+    }
+    public virtual GearBonus GetBaseStats(Item item)
+    {
+        return new GearBonus();
+    }
+    public virtual GearBonus GetMarkedStats(Item item)
+    {
+        return new GearBonus();
+    }
     #endregion
 }

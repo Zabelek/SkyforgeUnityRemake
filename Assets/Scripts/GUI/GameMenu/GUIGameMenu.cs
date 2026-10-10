@@ -83,6 +83,9 @@ public class GUIGameMenu : MonoBehaviour
         _controlGroups.Add(_abilitiesControlGroup.GetComponent<CanvasGroup>());
         _controlGroups.Add(_bagControlGroup.GetComponent<CanvasGroup>());
         _controlGroups.Add(_equipmentControls.GetComponent<CanvasGroup>());
+        _atlasCinemachineBrain.Priority = 1;
+        _emptyCinemachineBrain.Priority = 5;
+        _characterCinemachineBrain.Priority = 1;
     }
     private void OnDestroy()
     {
@@ -180,12 +183,14 @@ public class GUIGameMenu : MonoBehaviour
     private async Task ShowEquipmentView()
     {
         await _blackFade.StartFadeIn();
+
         _atlasCinemachineBrain.Priority = 1;
         _emptyCinemachineBrain.Priority = 1;
         _characterCinemachineBrain.Priority = 5;
         CloseAllControlGroups();
         _equipmentControls.gameObject.SetActive(true);
         _equipmentControls.UpdateValues();
+        _equipmentControls.ResetMode();
         _equipmentTopButton.SetToggled(true);
         MenuButton_DeselectRest(_equipmentTopButton, EventArgs.Empty);
         _playerScene.transform.SetParent(_playerEquipmentPosition);

@@ -25,6 +25,9 @@ public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
     private InventorySlot _tempClickedItemSlot;
     [Header("Sound")]
     [SerializeField] protected SoundEffectSO _itemEquipSound;
+
+    [Header("Other Interface References")]
+    [SerializeField] private GUIMenuRebirthMode _rebirthPanel;
     #endregion
 
     #region Mono
@@ -103,7 +106,7 @@ public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
         _companionDamageDisplay.text = heroStats.CompanionDamage.ToString();
         _vampirismDisplay.text = (_playerVisual.Stats.Vampirism * 100) + "%";
         _defenseDisplay.text = (_playerVisual.Stats.Defense * 100) + "%";
-        _armorDisplay.text = (_playerVisual.Stats.GearStats.Armor * 100) + "%";
+        _armorDisplay.text = (_playerVisual.Stats.GearStats.Armor).ToString();
         _stabilityDisplay.text = (_playerVisual.Stats.Stability * 100) + "%";
         _movementSpeedDisplay.text = (_playerVisual.Stats.MovementSpeed * 20) + "%";
         _maxDashChargesDisplay.text = heroStats.DashChargeMax.ToString();
@@ -145,6 +148,10 @@ public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
             _playerVisual.ChangeWeaponOutState(true);
         }
     }
+    public void ResetMode()
+    {
+        _rebirthPanel.CloseRebirthView(true, false);
+    }
     #endregion
 
     #region EventHandlers
@@ -152,7 +159,7 @@ public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
     {
         if (_currentTooltip == null && sender is GUIInventorySlot && (sender as GUIInventorySlot).InventorySlot?.Item != null)
         {
-            SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item.ItemSO);
+            SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item);
         }
     }
     private void SlotPointerDownAction(object sender, EventArgs e)

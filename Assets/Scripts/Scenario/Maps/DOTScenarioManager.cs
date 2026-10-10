@@ -163,7 +163,7 @@ public class DOTScenarioManager : ScenarioManager
     private IEnumerator DelayedScene5Actions()
     {
         yield return new WaitForSeconds(1);
-        _player.EquipWeapon(_lastSceneErrai);
+        _player.EquipWeapon(_lastSceneErrai, null);
     }
     private void ChestOpenedAction(object sender, EventArgs e)
     {

@@ -200,7 +200,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
             if(_leap)
             {
                 var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * 3 * rageIncarnateMultiplier), false, false),
-                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                    performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                 _casuality.TakeDamage(damage);
                 if(rageIncarnateEffect != null)
                 {
@@ -213,7 +213,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 if (oldDamage != null)
                 {
                     var newDamageAmount = CalculateDamageForMultishot(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), 
-                        oldDamage, performer.Stats.GearStats.CriticalDamageBonus);
+                        oldDamage, performer.Stats.GearStats.CriticalDamagePercentBonus);
                     oldDamage.AddMultishot(newDamageAmount);
                     _casuality.TakeDamage(oldDamage);
                 }
@@ -221,7 +221,7 @@ public class BerserkerGladiatorStrikeAbilityBehaviour : AbilityBehaviour
                 {
                     _currentDamages = new();
                     var damage = CalculateDamage(new Damage(performer, (int)(performer.GetEffectiveDamage() * rageIncarnateMultiplier), false, false), 
-                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                        performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     _casuality.TakeDamage(damage);
                     _currentDamages.Add(damage);
                     if (rageIncarnateEffect != null)

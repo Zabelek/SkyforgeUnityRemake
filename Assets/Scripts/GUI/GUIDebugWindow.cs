@@ -27,7 +27,18 @@ public class GUIDebugWindow : MonoBehaviour
     }
     private void DebugStuff_Clicked(object sender, EventArgs e)
     {
-        
+        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.Generation = 3;
+        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.PickedEtherDirection = ItemUpgradeState.EtherDirection.SageHalf;
+        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[0] = 1;
+        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[1] = 1;
+        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[2] = 1;
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_TearOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_FlameOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_BreezeOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_BudOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_StarOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_SealOfRebirth");
+        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_SparkleOfRebirth");
     }
     #endregion
 }

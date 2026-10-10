@@ -204,7 +204,7 @@ public class HeroBehaviour : CharacterBehaviour
         }
         OnPerkChange?.Invoke(this, new PerkChangeEventArgs { PerkSO = perk.Perk, Enabled = false });
     }
-    public virtual void EquipWeapon(WeaponBehaviour weapon)
+    public virtual void EquipWeapon(WeaponBehaviour weapon, Item weaponItem)
     {
         if(weapon != null)
         {
@@ -213,10 +213,11 @@ public class HeroBehaviour : CharacterBehaviour
                 EquippedWeapon.Unequip(this, IsMenuPreview);
             }
             EquippedWeapon = Instantiate(weapon, _weaponTransformSlot);
+            EquippedWeapon.SynchronizeGearBonus(weaponItem);
             EquippedWeapon.Equip(this, _weaponTransformSlot, IsMenuPreview);
         }
     }
-    public virtual async Task EquipArmor(ArmorBehaviour armor)
+    public virtual async Task EquipArmor(ArmorBehaviour armor, Item armorItem)
     {
         if (EquippedArmor != null)
         {
@@ -225,11 +226,12 @@ public class HeroBehaviour : CharacterBehaviour
         if (armor != null)
         {
             EquippedArmor = Instantiate(armor, this.transform);
+            EquippedArmor.SynchronizeGearBonus(armorItem);
             EquippedArmor.Equip(this, IsMenuPreview);
             EquippedArmor.AssignWornOutfit(await _outfitManager.EquipOutfit(armor.OutfitSO.ObjectID, armor.OutfitSO.Slot));
         }
     }
-    public virtual void EquipArtifact(GearPeaceBehaviour artifact)
+    public virtual void EquipArtifact(GearPeaceBehaviour artifact, Item artifactItem)
     {
         if (EquippedArtifact != null)
         {
@@ -238,6 +240,7 @@ public class HeroBehaviour : CharacterBehaviour
         if(artifact!=null)
         {
             EquippedArtifact = Instantiate(artifact, this.transform);
+            EquippedArtifact.SynchronizeGearBonus(artifactItem);
             EquippedArtifact.Equip(this, IsMenuPreview);
         }
     }

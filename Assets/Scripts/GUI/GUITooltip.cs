@@ -10,9 +10,9 @@ public class GUITooltip : MonoBehaviour
     public const float APPEAR_DELAY = 0.1f;
 
     #region Variables
-    [SerializeField] protected Image _titleImage;
-    [SerializeField] protected TextMeshProUGUI _titleText, _descriptionText, _specialDescriptionText;
-    [SerializeField] Transform _costPanel, _costLayout, _costOpsitionTemplate, _statBonusPanel, _specialDescriptionPanel, _statLineBase;
+    [SerializeField] protected Image _titleImage, _progressBarFill, _Upgradebackground;
+    [SerializeField] protected TextMeshProUGUI _titleText, _descriptionText, _specialDescriptionText, _addInfoTopText;
+    [SerializeField] Transform _costPanel, _costLayout, _costOpsitionTemplate, _statBonusPanel, _specialDescriptionPanel, _statLineBase, _markedStatBonusPanel, _progressBarTransform;
     private float _fadeInTimer, _waitUntilAppearTimer;
     private CanvasGroup _group;
     [SerializeField] private RectTransform _tooltip;
@@ -23,26 +23,26 @@ public class GUITooltip : MonoBehaviour
     private void Awake()
     {
         if(_costPanel!= null)
-        {
             _costPanel.gameObject.SetActive(false);
-        }
         if (_specialDescriptionPanel != null)
-        {
             _specialDescriptionPanel.gameObject.SetActive(false);
-        }
         if (_statLineBase != null)
-        {
             _statLineBase.gameObject.SetActive(false);
-        }
         if (_statBonusPanel != null)
-        {
             _statBonusPanel.gameObject.SetActive(false);
-        }
+        if (_markedStatBonusPanel != null)
+            _markedStatBonusPanel.gameObject.SetActive(false);
+        if (_progressBarTransform != null)
+            _progressBarTransform.gameObject.SetActive(false);        
+        if (_Upgradebackground != null)
+            _Upgradebackground.gameObject.SetActive(false);
         _fadeInTimer = 0;
         _waitUntilAppearTimer = APPEAR_DELAY;
         _group = GetComponent<CanvasGroup>();
         if (_group != null)
             _group.alpha = 0;
+        _addInfoTopText.gameObject.SetActive(false);
+
     }
     private void Update()
     {
@@ -114,6 +114,20 @@ public class GUITooltip : MonoBehaviour
                 newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = statBonus.ToString();
         }
     }
+    public void AddMarkedStatBonus(string statBonusName, float statBonus, bool isPercent)
+    {
+        if (statBonus != 0)
+        {
+            _markedStatBonusPanel.gameObject.SetActive(true);
+            var newLine = Instantiate(_statLineBase, _markedStatBonusPanel);
+            newLine.gameObject.SetActive(true);
+            newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatName").text = statBonusName;
+            if (isPercent)
+                newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = (statBonus * 100).ToString("0.00") + "%";
+            else
+                newLine.GetComponentsInChildren<TextMeshProUGUI>().First(c => c.name == "StatValue").text = statBonus.ToString();
+        }
+    }
     public void AddCost(Sprite costIcon, int costAmount)
     {
         _costPanel.gameObject.SetActive(true);
@@ -147,38 +161,84 @@ public class GUITooltip : MonoBehaviour
             leftOffset += size.x;
         _tooltip.anchoredPosition = new Vector2(defaultPosition.x + leftOffset, defaultPosition.y + topOffset);
     }
-    public void SetForItem(ItemSO itemSO)
+    public void SetForItem(Item item)
     {
-        SetTitle(itemSO.Name);
-        SetDescription(itemSO.Description);
-        SetTitleImage(itemSO.InterfaceSprite);
-        if (itemSO is WeaponSO)
+        SetTitle(item.ItemSO.Name);
+        SetDescription(item.ItemSO.Description);
+        SetTitleImage(item.ItemSO.InterfaceSprite);
+        GearBonus markedBonus = null;
+        if (item.ItemSO is WeaponSO)
         {
-            AddStatBonus("Damage Bonus: ", ((WeaponSO)itemSO).GetDamage(), false);
-            SetDescription(((WeaponSO)itemSO).Type.Name);
-            if (itemSO.Rarity == ItemSO.RarityLevel.Legendary)
+            var baseStats = WeaponBehaviour.GetGeneralBaseStats(item);
+            markedBonus = WeaponBehaviour.GetGeneralMarkedStats(item);
+            AddStatBonus("Damage Bonus: ", baseStats.DamageBonus, false);
+            SetDescription(((WeaponSO)item.ItemSO).Type.Name);
+            if (item.ItemSO.Rarity == ItemSO.RarityLevel.Legendary)
             {
-                SetSpecialDescription(itemSO.Description);
+                SetSpecialDescription(item.ItemSO.Description);
             }
             else
             {
-                SetDescription(((WeaponSO)itemSO).Type.Name + "\n" + itemSO.Description);
+                SetDescription(((WeaponSO)item.ItemSO).Type.Name + "\n" + item.ItemSO.Description);
             }
         }
-        else if (itemSO is ArmorSO)
+        else if (item.ItemSO is ArmorSO)
         {
-            AddStatBonus("Defense Bonus: ", ((ArmorSO)itemSO).BaseArmorAmount, true);
+            var baseStats = ArmorBehaviour.GetGeneralBaseStats(item);
+            markedBonus = ArmorBehaviour.GetGeneralMarkedStats(item);
+            AddStatBonus("Armor Bonus: ", baseStats.Armor, false);
         }
-        else if(itemSO is ArtifactSO)
+        else if(item.ItemSO is ArtifactSO)
         {
-            AddStatBonus("Health Bonus: ", ((ArtifactSO)itemSO).HealthBonus, true);
-            AddStatBonus("Damage Bonus: ", ((ArtifactSO)itemSO).DamageBonus, true);
-            if(itemSO.Rarity == ItemSO.RarityLevel.Legendary)
+            var baseStats = ArtifactBehaviour.GetGeneralBaseStats(item);
+            markedBonus = ArtifactBehaviour.GetGeneralMarkedStats(item);
+            AddStatBonus("Health Bonus: ", baseStats.HealthPercentBonus, true);
+            AddStatBonus("Damage Bonus: ", baseStats.DamagePercentBonus, true);
+            if(item.ItemSO.Rarity == ItemSO.RarityLevel.Legendary)
             {
                 SetDescription("");
-                SetSpecialDescription(itemSO.Description);
+                SetSpecialDescription(item.ItemSO.Description);
             }
         }
+        if (item.ItemSO.IsUpgradable)
+        {
+            _addInfoTopText.gameObject.SetActive(true);
+            _addInfoTopText.text = "Generation " + item.ItemUpgradeState.Generation;
+            if(markedBonus != null)
+            {
+                if (markedBonus.HealthPercentBonus > 0)
+                    AddMarkedStatBonus("Health Bonus: ", markedBonus.HealthPercentBonus, true);
+                if (markedBonus.ArmorPercentBonus > 0)
+                    AddMarkedStatBonus("Armor Bonus: ", markedBonus.ArmorPercentBonus, true);
+                if (markedBonus.DamagePercentBonus > 0)
+                    AddMarkedStatBonus("Damage Bonus: ", markedBonus.DamagePercentBonus, true);
+                if (markedBonus.CriticalDamagePercentBonus > 0)
+                    AddMarkedStatBonus("Critical Damage Bonus: ", markedBonus.CriticalDamagePercentBonus, true);
+                if (markedBonus.CompanionDamagePercentBonus > 0)
+                    AddMarkedStatBonus("Companion Damage Bonus: ", markedBonus.CompanionDamagePercentBonus, true);
+                if (markedBonus.VampirismBonus > 0)
+                    AddMarkedStatBonus("Vampirism Bonus: ", markedBonus.VampirismBonus, true);
+                if (markedBonus.MaxDamagePercentBonus > 0)
+                    AddMarkedStatBonus("Max Damage Bonus: ", markedBonus.MaxDamagePercentBonus, true);
+                if (markedBonus.AttackSpeedBonus > 0)
+                    AddMarkedStatBonus("Attack Speed Bonus: ", markedBonus.AttackSpeedBonus, true);
+                if (markedBonus.StabilityBonus > 0)
+                    AddMarkedStatBonus("Stability Bonus: ", markedBonus.StabilityBonus, true);
+                if (markedBonus.DashChargesBonusPercent > 0)
+                    AddMarkedStatBonus("Dash Charges Bonus: ", markedBonus.DashChargesBonusPercent, true);
+                if (markedBonus.CompanionChargesBonusPercent > 0)
+                    AddMarkedStatBonus("Companion Charges Bonus: ", markedBonus.CompanionChargesBonusPercent, true);
+                if (markedBonus.MovementSpeedPercentBonus > 0)
+                    AddMarkedStatBonus("Movement Speed Bonus: ", markedBonus.MovementSpeedPercentBonus, true);
+                if (markedBonus.MoneyReceivedBonus > 0)
+                    AddMarkedStatBonus("Credits Received Bonus: ", markedBonus.MoneyReceivedBonus, true);
+            }
+            _Upgradebackground.gameObject.SetActive(item.ItemUpgradeState.CanGenUp());
+            _progressBarTransform.gameObject.SetActive(true);
+            _progressBarFill.fillAmount = (float)((decimal)item.ItemUpgradeState.CurrentExp / (decimal)item.ItemUpgradeState.GetMaxExp());
+        }
+        else
+            _addInfoTopText.gameObject.SetActive(false);
     }
     #endregion
 }

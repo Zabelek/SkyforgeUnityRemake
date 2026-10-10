@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SunnyPrismBehaviour : GearPeaceBehaviour
+public class SunnyPrismBehaviour : ArtifactBehaviour
 {
     #region Variables
     public ArtifactSO ArtifactSO;
@@ -9,12 +9,6 @@ public class SunnyPrismBehaviour : GearPeaceBehaviour
     #endregion
 
     #region Mono
-    protected override void Awake()
-    {
-        base.Awake();
-        GearBonus.HealthPercentBonus += ArtifactSO.HealthBonus;
-        GearBonus.DamagePercentBonus += ArtifactSO.DamageBonus;
-    }
     private void FixedUpdate()
     {
     }

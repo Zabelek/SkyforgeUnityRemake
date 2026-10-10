@@ -112,7 +112,7 @@ public class GUIBagControls : TooltipDisplayerBehaviour
         {
             if (_currentTooltip == null && sender is GUIInventorySlot && (sender as GUIInventorySlot).InventorySlot.Item != null)
             {
-                SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item.ItemSO);
+                SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item);
             }
         }
         else if ((sender as GUIInventorySlot).InventorySlot.IsLocked == false)

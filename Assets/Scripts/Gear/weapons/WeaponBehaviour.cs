@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponBehaviour : GearPeaceBehaviour
@@ -33,10 +34,6 @@ public class WeaponBehaviour : GearPeaceBehaviour
             SetWeaponHide();
         else
             SetWeaponDraw();
-        if(WeaponSO != null)
-        {
-            GearBonus.DamageBonus += WeaponSO.GetDamage();
-        }
     }
     private void Update()
     {
@@ -134,6 +131,109 @@ public class WeaponBehaviour : GearPeaceBehaviour
     public void SetTrail(bool on)
     {
         _trailEffect.gameObject.SetActive(on);
+    }
+    public override GearBonus GetBaseStats(Item item)
+    {
+        return GetGeneralBaseStats(item);
+    }
+    public override GearBonus GetMarkedStats(Item item)
+    {
+        return GetGeneralMarkedStats(item);
+    }
+    public static GearBonus GetGeneralMarkedStats(Item item)
+    {
+        var ret = new GearBonus();
+        if (item?.ItemUpgradeState != null && item.ItemUpgradeState.EtherFibers[0]!=0)
+        {
+            if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.KingHalf)
+            {
+                ret.DamagePercentBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.DamagePercentBonus += 0.005f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.King)
+            {
+                ret.CompanionDamagePercentBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.CompanionDamagePercentBonus += 0.005f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.AssassinHalf)
+            {
+                ret.CriticalChanceBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.CriticalChanceBonus += 0.0035f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.Assassin)
+            {
+                ret.CriticalDamagePercentBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.CriticalDamagePercentBonus += 0.005f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.SageHalf)
+            {
+                ret.AttackSpeedBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.AttackSpeedBonus += 0.002f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.Sage)
+            {
+                ret.MaxDamagePercentBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.MaxDamagePercentBonus += 0.0075f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.JudgeHalf)
+            {
+                ret.VampirismBonus += 0.005f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.VampirismBonus += 0.001f * fiber;
+                }
+            }
+            else if (item.ItemUpgradeState.PickedEtherDirection == ItemUpgradeState.EtherDirection.Judge)
+            {
+                ret.StabilityBonus += 0.01f;
+                foreach (float fiber in item.ItemUpgradeState.EtherFibers)
+                {
+                    ret.StabilityBonus += 0.005f * fiber;
+                }
+            }
+        }
+        return ret;
+    }
+    public static GearBonus GetGeneralBaseStats(Item item)
+    {
+        var ret = new GearBonus();
+        if (item?.ItemSO is WeaponSO)
+        {
+            var damage = 1;
+            if (item.ItemUpgradeState != null)
+            {
+                for (int i = 0; i < item.ItemUpgradeState.Generation; i++)
+                {
+                    damage += i;
+                }
+            }
+            if (item.ItemSO.Rarity == ItemSO.RarityLevel.Uncommon)
+                damage *= 2;
+            else if (item.ItemSO.Rarity == ItemSO.RarityLevel.Rare)
+                damage *= 3;
+            else if (item.ItemSO.Rarity == ItemSO.RarityLevel.Epic || item.ItemSO.Rarity == ItemSO.RarityLevel.Legendary)
+                damage *= 4;
+            ret.DamageBonus += (int)(damage * (item.ItemSO as WeaponSO).GetDamage());
+        }
+        return ret;
     }
     #endregion
 }

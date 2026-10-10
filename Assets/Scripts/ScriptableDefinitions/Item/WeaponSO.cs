@@ -9,7 +9,7 @@ public class WeaponSO : ItemSO
     [Tooltip("That might sound controversial, but it's a prefab of the weapon")]
     [SerializeField] private WeaponBehaviour _weaponPrefab;
     [Tooltip("damage modifier of the weapon. It'll be added to hero's damage when calculating output damage for each skill")]
-    [SerializeField] private int _baseDamage;
+    [SerializeField] private float _baseDamage;
     [Tooltip("Name your weapon whatever you want, just don't name it Doris. Doris is not a good name for a weapon.")]
     #endregion
 
@@ -18,7 +18,7 @@ public class WeaponSO : ItemSO
     {
         return _weaponPrefab;
     }
-    public int GetDamage()
+    public float GetDamage()
     {
         return _baseDamage;
     }

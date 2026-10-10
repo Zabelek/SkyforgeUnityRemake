@@ -472,6 +472,14 @@ public class PlayerBehaviour : HeroBehaviour
     {
         base.EnemyKilled(args);
         SkyforgeLoader.CurrentProfile.Prestige += 69;
+        if(args.KilledCharacter != null)
+        {
+            SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.AddExp(args.KilledCharacter.CharacterSO.MaxHealth);
+            if (SkyforgeLoader.CurrentProfile.Equipment.ArmorSlot.Item != null)
+                SkyforgeLoader.CurrentProfile.Equipment.ArmorSlot.Item.ItemUpgradeState.AddExp(args.KilledCharacter.CharacterSO.MaxHealth);
+            if (SkyforgeLoader.CurrentProfile.Equipment.ArtifactSlot.Item != null)
+                SkyforgeLoader.CurrentProfile.Equipment.ArtifactSlot.Item.ItemUpgradeState.AddExp(args.KilledCharacter.CharacterSO.MaxHealth);
+        }
     }
     public void SyncEquipment()
     {
@@ -482,9 +490,9 @@ public class PlayerBehaviour : HeroBehaviour
         if(profile == null)
         {
             //if profile is null, wear default weapon and armor
-            EquipWeapon(_debugWeaponSlot.GetPrefab());
+            EquipWeapon(_debugWeaponSlot.GetPrefab(), null);
             if (EquippedArmor != null)
-                _ = EquipArmor(null);
+                _ = EquipArmor(null, null);
             _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
         }
         else
@@ -492,31 +500,31 @@ public class PlayerBehaviour : HeroBehaviour
             var weapon = profile.Equipment.WeaponSlot.Item;
             if (weapon != null)
             {
-                EquipWeapon((weapon.ItemSO as WeaponSO)?.GetPrefab());
+                EquipWeapon((weapon.ItemSO as WeaponSO)?.GetPrefab(), weapon);
             }
             else
             {
-                EquipWeapon(_debugWeaponSlot.GetPrefab());
+                EquipWeapon(_debugWeaponSlot.GetPrefab(), null);
             }
             var armor = profile.Equipment.ArmorSlot.Item;
             if (armor != null)
             {
-                _ = EquipArmor((armor.ItemSO as ArmorSO)?.GetPrefab());
+                _ = EquipArmor((armor.ItemSO as ArmorSO)?.GetPrefab(), armor);
             }
             else
             {
                 if (EquippedArmor != null)
-                    _ = EquipArmor(null);
+                    _ = EquipArmor(null, null);
                 _ = _outfitManager.EquipOutfit(_debugOutfitSlot.ObjectID, OutfitSO.OutfitSlot.Body);
             }
             var artifact = profile.Equipment.ArtifactSlot.Item;
             if (artifact != null && artifact.ItemSO is ArtifactSO && (artifact.ItemSO as ArtifactSO).GetPrefab() is GearPeaceBehaviour)
             {
-                EquipArtifact((artifact.ItemSO as ArtifactSO).GetPrefab() as GearPeaceBehaviour);
+                EquipArtifact((artifact.ItemSO as ArtifactSO).GetPrefab() as GearPeaceBehaviour, artifact);
             }
             else if (artifact is null)
             {
-                EquipArtifact(null);
+                EquipArtifact(null, null);
             }
         }
     }

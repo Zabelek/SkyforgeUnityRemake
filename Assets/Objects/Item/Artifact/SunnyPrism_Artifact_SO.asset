@@ -20,6 +20,7 @@ MonoBehaviour:
   IsStackable: 0
   Rarity: 4
   CanBeQuickAccessed: 0
-  HealthBonus: 0.5
-  DamageBonus: 0.06
+  IsUpgradable: 1
+  HealthBonus: 1
+  DamageBonus: 0.7
   _prefab: {fileID: 1461951996843942779, guid: 3cc2e436fd61e854493e5d536a3f2a3e, type: 3}

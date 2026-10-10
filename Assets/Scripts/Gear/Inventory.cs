@@ -135,6 +135,34 @@ public class Inventory
     {
         return AddItem(item.ID, item.Amount);
     }
+    public bool RemoveItem(string itemID)
+    {
+        var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item?.ID == itemID);
+        if (slot != null && slot.Item.Amount >= 1)
+        {
+            slot.Item.Amount -= 1;
+            if (slot.Item.Amount <= 0)
+            {
+                slot.Item = null;
+            }
+            return true;
+        }
+        else return false;
+    }
+    public bool RemoveItem(string itemID, int amount)
+    {
+        var slot = Slots.FirstOrDefault(s => s.IsLocked == false && s.Item?.ID == itemID);
+        if (slot != null && slot.Item.Amount >= amount)
+        {
+            slot.Item.Amount -= amount;
+            if (slot.Item.Amount <= 0)
+            {
+                slot.Item = null;
+            }
+            return true;
+        }
+        else return false;
+    }
     public InventorySlot GetQuickAccessItem(Item.QuickAccessSlot slot)
     {
         foreach (var invSlot in Slots)

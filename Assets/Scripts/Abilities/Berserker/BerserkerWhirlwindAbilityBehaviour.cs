@@ -198,12 +198,12 @@ public class BerserkerWhirlwindAbilityBehaviour : AbilityBehaviour
                     if (_firestorm)
                     {
                         newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage() * 2, false, false), 
-                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     }
                     else
                     {
                         newDamage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage(), false, false),
-                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                            performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
                     }
                     var oldDamage = _currentDamages.FirstOrDefault(dam => dam == character.LastDamage);
                     if (oldDamage != null)

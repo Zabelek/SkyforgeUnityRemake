@@ -364,7 +364,8 @@ public class CharacterBehaviour : MonoBehaviour
             }
             if (Stats.GearStats.Armor > 0)
             {
-                damage.Amount -= (int)(damage.Amount * Stats.GearStats.Armor);
+                var armor = Stats.GearStats.Armor * (1+Stats.GearStats.ArmorPercentBonus);
+                damage.Amount = (int)((damage.Amount * damage.Amount) / (damage.Amount + armor));
                 if (damage.Amount < 1)
                     damage.Amount = 1;
             }

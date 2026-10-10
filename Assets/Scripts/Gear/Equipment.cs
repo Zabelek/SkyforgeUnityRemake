@@ -14,10 +14,7 @@ public class Equipment
         set
         {
             _weaponSlot = value;
-            if (_weaponSlot.Item != null)
-            {
-                _weaponSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _weaponSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_weaponSlot);
         }
     }
     private InventorySlot _armorSlot;
@@ -30,10 +27,7 @@ public class Equipment
         set
         {
             _armorSlot = value;
-            if (_armorSlot.Item != null)
-            {
-                _armorSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _armorSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_armorSlot);
         }
     }
     private InventorySlot _artifactSlot;
@@ -46,10 +40,7 @@ public class Equipment
         set
         {
             _artifactSlot = value;
-            if (_artifactSlot.Item != null)
-            {
-                _artifactSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _artifactSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_artifactSlot);
         }
     }
     private InventorySlot _ringSlot;
@@ -62,10 +53,7 @@ public class Equipment
         set
         {
             _ringSlot = value;
-            if (_ringSlot.Item != null)
-            {
-                _ringSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _ringSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_ringSlot);
         }
     }
     private InventorySlot _amuletSlot;
@@ -78,10 +66,7 @@ public class Equipment
         set
         {
             _amuletSlot = value;
-            if (_amuletSlot.Item != null)
-            {
-                _amuletSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _amuletSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_amuletSlot);
         }
     }
     private InventorySlot _broochSlot;
@@ -94,10 +79,7 @@ public class Equipment
         set
         {
             _broochSlot = value;
-            if (_broochSlot.Item != null)
-            {
-                _broochSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _broochSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_broochSlot);
         }
     }
     private InventorySlot _braceletSlot;
@@ -110,10 +92,7 @@ public class Equipment
         set
         {
             _braceletSlot = value;
-            if (_braceletSlot.Item != null)
-            {
-                _braceletSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _braceletSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_braceletSlot);
         }
     }
     private InventorySlot _sapphiteSlot;
@@ -126,10 +105,7 @@ public class Equipment
         set
         {
             _sapphiteSlot = value;
-            if (_sapphiteSlot.Item != null)
-            {
-                _sapphiteSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _sapphiteSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_sapphiteSlot);
         }
     }
     private InventorySlot _rubySlot;
@@ -142,10 +118,7 @@ public class Equipment
         set
         {
             _rubySlot = value;
-            if (_rubySlot.Item != null)
-            {
-                _rubySlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _rubySlot.Item.ID);
-            }
+            SetUpSlotOnInit(_rubySlot);
         }
     }
     private InventorySlot _emeraldSlot;
@@ -158,10 +131,7 @@ public class Equipment
         set
         {
             _emeraldSlot = value;
-            if (_emeraldSlot.Item != null)
-            {
-                _emeraldSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _emeraldSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_emeraldSlot);
         }
     }
     private InventorySlot _topazSlot;
@@ -174,10 +144,7 @@ public class Equipment
         set
         {
             _topazSlot = value;
-            if (_topazSlot.Item != null)
-            {
-                _topazSlot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == _topazSlot.Item.ID);
-            }
+            SetUpSlotOnInit(_topazSlot);
         }
     }
     #endregion
@@ -232,6 +199,19 @@ public class Equipment
             return ArtifactSlot.Item;
         }
         else return null;
+    }
+    private void SetUpSlotOnInit(InventorySlot slot)
+    {
+        if (slot.Item != null)
+        {
+            slot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == slot.Item.ID);
+            if (slot.Item != null && SkyforgeLoader.ItemRegistry != null)
+            {
+                slot.Item.ItemSO = SkyforgeLoader.ItemRegistry.RegisteredItems.FirstOrDefault(i => i.ID == slot.Item.ID);
+                if (slot.Item.ItemSO.IsUpgradable && slot.Item.ItemUpgradeState == null)
+                    slot.Item.ItemUpgradeState = new();
+            }
+        }
     }
     #endregion
 }

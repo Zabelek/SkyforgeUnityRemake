@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CutthrostsRingBehaviour : GearPeaceBehaviour
+public class CutthrostsRingBehaviour : ArtifactBehaviour
 {
     #region Variables
     public ArtifactSO ArtifactSO;
@@ -12,12 +12,6 @@ public class CutthrostsRingBehaviour : GearPeaceBehaviour
     #endregion
 
     #region Mono
-    protected override void Awake()
-    {
-        base.Awake();
-        GearBonus.HealthPercentBonus += ArtifactSO.HealthBonus;
-        GearBonus.DamagePercentBonus += ArtifactSO.DamageBonus;
-    }
     private void FixedUpdate()
     {
         if(_nextStackTimer>0)

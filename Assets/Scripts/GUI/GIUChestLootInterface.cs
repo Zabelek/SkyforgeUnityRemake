@@ -81,7 +81,7 @@ public class GIUChestLootInterface : TooltipDisplayerBehaviour
     {
         if (_currentTooltip == null && sender is GUIInventorySlot && (sender as GUIInventorySlot).InventorySlot?.Item != null)
         {
-            SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item.ItemSO);
+            SetUpNewTooltip((sender as GUIInventorySlot).InventorySlot.Item);
         }
     }
     private void SlotPointerExitAction(object sender, EventArgs e)

@@ -25,7 +25,7 @@ public class PYTHTriffidShot : AbilityBehaviour
             newProjectile.Caster = performer;
             newProjectile.Target = performer.ActiveEnemies[Random.Range(0, performer.ActiveEnemies.Count()-1)];
             newProjectile.Damage = CalculateDamage(new Damage(performer, performer.GetEffectiveDamage()),
-                performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamageBonus);
+                performer.GetEffectiveCriticalChance(), performer.Stats.GearStats.CriticalDamagePercentBonus);
             newProjectile.Damage.Range = true;
         }
     }

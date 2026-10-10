@@ -3,20 +3,41 @@ using System;
 public class HeroStats : CharacterStats
 {
     #region Variables
-    public float DashChargeMax { get; set; }
+    private float _dashChargeMax;
+    public float DashChargeMax
+    {
+        get => _dashChargeMax * (1 + GearStats.DashChargesBonusPercent);
+        private set => _dashChargeMax = value;
+    }
     private float _currentDashCharge;
     public float CurrentDashCharge {
         get => _currentDashCharge;
         set => _currentDashCharge = Math.Clamp(value, 0, DashChargeMax);
     }
-    public float CompanionChargeMax { get; set; }
+    private float _companionChargeMax;
+    public float CompanionChargeMax
+    {
+        get => _companionChargeMax * (1 + GearStats.CompanionChargesBonusPercent);
+        private set => _companionChargeMax = value;
+    }
     private float _currentCompanionCharge;
     public float CurrentCompanionCharge
     {
         get => _currentCompanionCharge;
         set => _currentCompanionCharge = Math.Clamp(value, 0, CompanionChargeMax);
     }
-    public int CompanionDamage { get; set; }
+    private int _companionDamage;
+    public int CompanionDamage
+    {
+        get => (int)(_companionDamage * (1 + GearStats.CompanionDamagePercentBonus));
+        private set => _companionDamage = value;
+    }
+    private float _moneyReceivedBonus;
+    public float MoneyReceivedBonus
+    {
+        get => _moneyReceivedBonus + GearStats.MoneyReceivedBonus;
+        private set => _moneyReceivedBonus = value;
+    }
     #endregion
 
     #region Methods

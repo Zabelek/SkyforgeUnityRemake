@@ -11,4 +11,5 @@ public class ItemSO : ScriptableObject
     public bool IsStackable = false;
     public RarityLevel Rarity;
     public bool CanBeQuickAccessed = false;
+    public bool IsUpgradable = false;
 }
