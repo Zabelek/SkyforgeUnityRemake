@@ -1,10 +1,11 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class GUIDebugWindow : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private GUICommonButton _menuButton, _quitButton, _debugStuffButton;
+    [SerializeField] private GUICommonButton _menuButton, _quitButton, _debugStuffButton, _debugStuff2Button;
     #endregion
 
     #region Mono
@@ -13,6 +14,7 @@ public class GUIDebugWindow : MonoBehaviour
         _quitButton.OnClick += QuitButton_Clicked;
         _menuButton.OnClick += MenuButton_Clicked;
         _debugStuffButton.OnClick += DebugStuff_Clicked;
+        _debugStuff2Button.OnClick += DebugStuff2_Clicked;
     }
     #endregion
 
@@ -27,18 +29,32 @@ public class GUIDebugWindow : MonoBehaviour
     }
     private void DebugStuff_Clicked(object sender, EventArgs e)
     {
-        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.Generation = 3;
-        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.PickedEtherDirection = ItemUpgradeState.EtherDirection.SageHalf;
-        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[0] = 1;
-        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[1] = 1;
-        //SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[2] = 1;
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_TearOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_FlameOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_BreezeOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_BudOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_StarOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_SealOfRebirth");
-        SkyforgeLoader.CurrentProfile.Inventory.AddItem("Base_Resource_SparkleOfRebirth");
+        for (int i = 0; i < 20; i++)
+        {
+            SkyforgeLoader.CurrentProfile.Equipment.WeaponSlot.Item.ItemUpgradeState.EtherFibers[i] = 0;
+        }
+        if (SkyforgeLoader.CurrentProfile.Equipment.ArmorSlot.Item != null)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                SkyforgeLoader.CurrentProfile.Equipment.ArmorSlot.Item.ItemUpgradeState.EtherFibers[i] = 0;
+            }
+        }
+        if (SkyforgeLoader.CurrentProfile.Equipment.ArtifactSlot.Item != null)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                SkyforgeLoader.CurrentProfile.Equipment.ArtifactSlot.Item.ItemUpgradeState.EtherFibers[i] = 0;
+            }
+        }
+    }
+    private void DebugStuff2_Clicked(object sender, EventArgs e)
+    {
+        var slot = SkyforgeLoader.CurrentProfile.Inventory.Slots.FirstOrDefault(s => s.IsLocked == true);
+        if(slot != null)
+        {
+            slot.IsLocked = false;
+        }
     }
     #endregion
 }

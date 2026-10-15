@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponBehaviour : GearPeaceBehaviour
@@ -140,6 +139,9 @@ public class WeaponBehaviour : GearPeaceBehaviour
     {
         return GetGeneralMarkedStats(item);
     }
+    #endregion
+
+    #region StaticMethods
     public static GearBonus GetGeneralMarkedStats(Item item)
     {
         var ret = new GearBonus();

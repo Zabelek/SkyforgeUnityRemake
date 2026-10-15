@@ -100,17 +100,17 @@ public class GUIGameMenuEquipmentControls : TooltipDisplayerBehaviour
         if (_playerVisual.EquippedWeapon != null)
         _damageDisplay.text = (_playerVisual.Stats.BaseDamage).ToString() + " - " + ((_playerVisual.Stats.BaseDamage) + _playerVisual.Stats.MaxDamage).ToString();
         _healthDisplay.text = _playerVisual.Stats.MaxHP.ToString();
-        _attackSpeedDisplay.text = (_playerVisual.Stats.AttackSpeed * 100) + "%";
-        _criticalChanceDisplay.text = (_playerVisual.Stats.CriticalChance * 100) + "%";
-        _criticalDamageBonusDisplay.text = "100%";
+        _attackSpeedDisplay.text = (_playerVisual.Stats.AttackSpeed).ToString("0.00%");
+        _criticalChanceDisplay.text = (_playerVisual.Stats.CriticalChance).ToString("0.00%");
+        _criticalDamageBonusDisplay.text = _playerVisual.Stats.GearStats.CriticalDamagePercentBonus.ToString("0.00%");
         _companionDamageDisplay.text = heroStats.CompanionDamage.ToString();
-        _vampirismDisplay.text = (_playerVisual.Stats.Vampirism * 100) + "%";
-        _defenseDisplay.text = (_playerVisual.Stats.Defense * 100) + "%";
+        _vampirismDisplay.text = _playerVisual.Stats.Vampirism.ToString("0.00%");
+        _defenseDisplay.text = _playerVisual.Stats.Defense.ToString("0.00%"); ;
         _armorDisplay.text = (_playerVisual.Stats.GearStats.Armor).ToString();
-        _stabilityDisplay.text = (_playerVisual.Stats.Stability * 100) + "%";
-        _movementSpeedDisplay.text = (_playerVisual.Stats.MovementSpeed * 20) + "%";
-        _maxDashChargesDisplay.text = heroStats.DashChargeMax.ToString();
-        _maxCompanionChargesDisplay.text = heroStats.CompanionChargeMax.ToString();
+        _stabilityDisplay.text = _playerVisual.Stats.Stability.ToString("0.00%");
+        _movementSpeedDisplay.text = (_playerVisual.Stats.MovementSpeed/5).ToString("0.00%");
+        _maxDashChargesDisplay.text = heroStats.DashChargeMax.ToString("0.00");
+        _maxCompanionChargesDisplay.text = heroStats.CompanionChargeMax.ToString("0.00");
     }
     private void AssignQASlots()
     {

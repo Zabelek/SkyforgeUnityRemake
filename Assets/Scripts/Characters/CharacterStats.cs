@@ -28,7 +28,7 @@ public class CharacterStats
     private float _attackSpeed;
     public float AttackSpeed
     {
-        get => _attackSpeed * (1+GearStats.AttackSpeedBonus);
+        get => _attackSpeed + GearStats.AttackSpeedBonus;
         private set => _attackSpeed = value;
     }
     private float _criticalChance;
@@ -98,7 +98,7 @@ public class CharacterStats
     {
         if (perk.Stat == PerkSO.StatType.AttackSpeed)
         {
-            AttackSpeed += perk.Value * modifier;
+            _attackSpeed += perk.Value * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.BaseDamage)
         {
@@ -110,7 +110,7 @@ public class CharacterStats
         }
         else if (perk.Stat == PerkSO.StatType.CriticalChance)
         {
-            CriticalChance += perk.Value * modifier;
+            _criticalChance += perk.Value * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.MaxHP)
         {
@@ -124,7 +124,7 @@ public class CharacterStats
         }
         else if (perk.Stat == PerkSO.StatType.Vampirism)
         {
-            Vampirism += perk.Value * modifier;
+            _vampirism += perk.Value * modifier;
         }
         else if (perk.Stat == PerkSO.StatType.Defense)
         {
@@ -132,7 +132,7 @@ public class CharacterStats
         }
         else if (perk.Stat == PerkSO.StatType.Stability)
         {
-            Stability += perk.Value * modifier;
+            _stability += perk.Value * modifier;
         }
     }
     public virtual void ModifyAccordingToDifficultyLevel()

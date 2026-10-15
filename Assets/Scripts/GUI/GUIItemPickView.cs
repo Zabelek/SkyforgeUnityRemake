@@ -35,7 +35,8 @@ public class GUIItemPickView : MonoBehaviour
     #region Mono
     public void Awake()
     {
-        _slots = new();
+        if(_slots == null)
+            _slots = new();
     }
     private void Update()
     {
@@ -55,6 +56,8 @@ public class GUIItemPickView : MonoBehaviour
     #region Methods
     public List<GUIInventorySlot> AssignSlots(List<InventorySlot> slots)
     {
+        if (_slots == null)
+            _slots = new();
         ClearSlots();
         foreach(var slot in slots)
         {
@@ -85,7 +88,7 @@ public class GUIItemPickView : MonoBehaviour
     }
     protected void ClearSlots()
     {
-        foreach(var slot in _slots)
+        foreach (var slot in _slots)
         {
             slot.OnPointerUpEvent -= SlotPointerUp;
             Destroy(slot.gameObject);

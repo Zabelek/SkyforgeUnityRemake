@@ -262,6 +262,42 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""2742c5b0-a7c2-4593-a5a8-d02472bb6f8b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""25afee7e-6c1f-476f-bcfb-4b43e74dc81d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""535328c7-d678-4971-b07b-9e390238c504"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""447164f5-2ed9-4cf0-b99d-d5ab94007dde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -517,6 +553,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""OpenSettings"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5985a36-0345-4cb8-a8c1-c2b6efcd6288"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b1b84e1-2d98-4fe4-a220-8ba7bb00fbe8"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""074fbe46-e457-400d-b425-2f1beffd9f08"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83b7083b-ae1f-4a40-abdb-06f66b15ca7c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -544,6 +624,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         m_Default_Interaction = m_Default.FindAction("Interaction", throwIfNotFound: true);
         m_Default_ExitGame = m_Default.FindAction("ExitGame", throwIfNotFound: true);
+        m_Default_Up = m_Default.FindAction("Up", throwIfNotFound: true);
+        m_Default_Down = m_Default.FindAction("Down", throwIfNotFound: true);
+        m_Default_Right = m_Default.FindAction("Right", throwIfNotFound: true);
+        m_Default_Left = m_Default.FindAction("Left", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -643,6 +727,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Dash;
     private readonly InputAction m_Default_Interaction;
     private readonly InputAction m_Default_ExitGame;
+    private readonly InputAction m_Default_Up;
+    private readonly InputAction m_Default_Down;
+    private readonly InputAction m_Default_Right;
+    private readonly InputAction m_Default_Left;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default".
     /// </summary>
@@ -731,6 +819,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @ExitGame => m_Wrapper.m_Default_ExitGame;
         /// <summary>
+        /// Provides access to the underlying input action "Default/Up".
+        /// </summary>
+        public InputAction @Up => m_Wrapper.m_Default_Up;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Down".
+        /// </summary>
+        public InputAction @Down => m_Wrapper.m_Default_Down;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Right".
+        /// </summary>
+        public InputAction @Right => m_Wrapper.m_Default_Right;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Left".
+        /// </summary>
+        public InputAction @Left => m_Wrapper.m_Default_Left;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Default; }
@@ -813,6 +917,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ExitGame.started += instance.OnExitGame;
             @ExitGame.performed += instance.OnExitGame;
             @ExitGame.canceled += instance.OnExitGame;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+            @Right.started += instance.OnRight;
+            @Right.performed += instance.OnRight;
+            @Right.canceled += instance.OnRight;
+            @Left.started += instance.OnLeft;
+            @Left.performed += instance.OnLeft;
+            @Left.canceled += instance.OnLeft;
         }
 
         /// <summary>
@@ -881,6 +997,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ExitGame.started -= instance.OnExitGame;
             @ExitGame.performed -= instance.OnExitGame;
             @ExitGame.canceled -= instance.OnExitGame;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+            @Right.started -= instance.OnRight;
+            @Right.performed -= instance.OnRight;
+            @Right.canceled -= instance.OnRight;
+            @Left.started -= instance.OnLeft;
+            @Left.performed -= instance.OnLeft;
+            @Left.canceled -= instance.OnLeft;
         }
 
         /// <summary>
@@ -1054,5 +1182,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnExitGame(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Up" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Down" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDown(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Right" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Left" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeft(InputAction.CallbackContext context);
     }
 }

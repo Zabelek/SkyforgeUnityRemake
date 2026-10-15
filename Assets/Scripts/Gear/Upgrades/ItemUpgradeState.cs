@@ -1,5 +1,3 @@
-using System;
-
 public class ItemUpgradeState
 {
     #region Variables
@@ -54,7 +52,6 @@ public class ItemUpgradeState
         CurrentExp = 0;
         Generation++;
     }
-
     internal bool CanGenUp()
     {
         return CurrentExp == GetMaxExp();

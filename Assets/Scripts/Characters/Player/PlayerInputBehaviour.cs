@@ -36,6 +36,8 @@ public class PlayerInputBehaviour : MonoBehaviour
     public event EventHandler OpenMenuAction;
     public event EventHandler OpenSettingsAction;
     public event EventHandler OnInteractionAction;
+    //In case the movement buttons click registry is needed (Ether transformer minigame)
+    public event EventHandler OnUpAction, OnDownAction, OnRightAction, OnLeftAction;
     private PlayerInputActions _inputActions;
     #endregion
 
@@ -73,13 +75,11 @@ public class PlayerInputBehaviour : MonoBehaviour
         _inputActions.Default.Dash.performed += Dash_Performed;
         _inputActions.Default.Interaction.performed += Interaction_Performed;
         _inputActions.Default.ExitGame.performed += AppExit_Performed;
+        _inputActions.Default.Up.performed += Up_Performed;
+        _inputActions.Default.Down.performed += Down_Performed;
+        _inputActions.Default.Left.performed += Left_Performed;
+        _inputActions.Default.Right.performed += Right_Performed;
     }
-
-    private void OpenSettings_Performed(InputAction.CallbackContext context)
-    {
-        OpenSettingsAction?.Invoke(this, EventArgs.Empty);
-    }
-
     private void OnDestroy()
     {
         _inputActions.Default.DrawWeapon.performed -= DrawWeapon_Perfordmed;
@@ -114,6 +114,10 @@ public class PlayerInputBehaviour : MonoBehaviour
     #endregion
 
     #region EventHandlers
+    private void OpenSettings_Performed(InputAction.CallbackContext context)
+    {
+        OpenSettingsAction?.Invoke(this, EventArgs.Empty);
+    }
     private void Interaction_Performed(InputAction.CallbackContext context)
     {
         OnInteractionAction?.Invoke(this, EventArgs.Empty);
@@ -245,7 +249,26 @@ public class PlayerInputBehaviour : MonoBehaviour
     {
         OnAppExitAction?.Invoke(this, EventArgs.Empty);
     }
+    private void Up_Performed(InputAction.CallbackContext context)
+    {
+        OnUpAction?.Invoke(this, EventArgs.Empty);
 
+    }
+    private void Down_Performed(InputAction.CallbackContext context)
+    {
+        OnDownAction?.Invoke(this, EventArgs.Empty);
+
+    }
+    private void Left_Performed(InputAction.CallbackContext context)
+    {
+        OnLeftAction?.Invoke(this, EventArgs.Empty);
+
+    }
+    private void Right_Performed(InputAction.CallbackContext context)
+    {
+        OnRightAction?.Invoke(this, EventArgs.Empty);
+
+    }
     #endregion
 
     #region Methods

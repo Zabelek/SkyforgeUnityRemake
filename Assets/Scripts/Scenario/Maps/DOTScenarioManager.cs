@@ -17,9 +17,9 @@ public class DOTScenarioManager : ScenarioManager
     [SerializeField] private ParticleSystem _particlesLaserExp;
     [SerializeField] private Transform _laserDirGuide;
     [SerializeField] private WeaponBehaviour _lastSceneErrai;
-    [Header("Chest")]
+    [Header("Chests")]
     [SerializeField] private CapsuleCollider _chestBossArea;
-    [SerializeField] private LootChestBehaviour _lootChest;
+    [SerializeField] private LootChestBehaviour _lootChest, _lootChestVisited, _firstChest;
     [SerializeField] protected VoicelineSO[] _chestVoicelines;
     private bool _chestOpened = false, _bossEngaged = false;
     #endregion
@@ -28,9 +28,22 @@ public class DOTScenarioManager : ScenarioManager
     protected override void Awake()
     {
         base.Awake();
-        _lootChest.OnChestOpenEvent += ChestOpenedAction;
+        if(SkyforgeLoader.CurrentProfile?.StoryVariables.DivineObservatoryVisited == false)
+        {
+            _lootChest.gameObject.SetActive(true);
+            _lootChestVisited.gameObject.SetActive(false);
+            _firstChest.gameObject.SetActive(true);
+            _lootChest.OnChestOpenEvent += ChestOpenedAction;
+            SkyforgeLoader.CurrentProfile.StoryVariables.DivineObservatoryVisited = true;
+        }
+        else
+        {
+            _lootChest.gameObject.SetActive(false);
+            _lootChestVisited.gameObject.SetActive(true);
+            _firstChest.gameObject.SetActive(false);
+            _lootChestVisited.OnChestOpenEvent += ChestOpenedAction;
+        }
     }
-
     protected override void Update()
     {
         base.Update();
@@ -141,6 +154,9 @@ public class DOTScenarioManager : ScenarioManager
             }
         }
     }
+    #endregion
+
+    #region Methods
     private IEnumerator DelayedBackToMenu()
     {
         yield return new WaitForSeconds(21);
@@ -165,16 +181,19 @@ public class DOTScenarioManager : ScenarioManager
         yield return new WaitForSeconds(1);
         _player.EquipWeapon(_lastSceneErrai, null);
     }
+    protected override void LoadMidScenario()
+    {
+        base.LoadMidScenario();
+        Stage = 3;
+    }
+    #endregion
+
+    #region EventHandlers
     private void ChestOpenedAction(object sender, EventArgs e)
     {
         _chestOpened = true;
         _interface.ShowCharacterMessage(_chestVoicelines[1]);
         _lootChest.OnChestOpenEvent -= ChestOpenedAction;
-    }
-    protected override void LoadMidScenario()
-    {
-        base.LoadMidScenario();
-        Stage = 3;
     }
     #endregion
 }

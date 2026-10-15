@@ -597,7 +597,6 @@ public class CharacterBehaviour : MonoBehaviour
     {
         _animationBehaviour?.SetAnimationBool(animationName, value);
     }
-
     public void SetAnimationState(string animationName, float value)
     {
         _animationBehaviour?.SetAnimationFloat(animationName, value);

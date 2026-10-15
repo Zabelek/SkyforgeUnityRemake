@@ -1,9 +1,6 @@
-using NUnit.Framework.Constraints;
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GUIMenuRebirthMode : MonoBehaviour
@@ -55,7 +52,7 @@ public class GUIMenuRebirthMode : MonoBehaviour
     #endregion
 
     #region Methods
-    public void OpenRebirthVoew(bool immediate)
+    public void OpenRebirthView(bool immediate)
     {
         _isOpen = true;
         if (immediate)
@@ -178,7 +175,7 @@ public class GUIMenuRebirthMode : MonoBehaviour
     #region EventHandlers
     private void OpenButton_Clicked()
     {
-        OpenRebirthVoew(false);
+        OpenRebirthView(false);
     }
     private void CloseButton_Clicked()
     {

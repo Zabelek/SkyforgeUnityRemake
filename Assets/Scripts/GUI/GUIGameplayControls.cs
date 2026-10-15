@@ -109,9 +109,13 @@ public class GUIGameplayControls : MonoBehaviour
     //so that the player stats object doesn't have to be casted every frame
     private HeroStats _playerStats;
     //Special In-World Interface
+    //to determine if the the playewr views a special interface provided by a world object
     [HideInInspector] public bool IsPlayerInSpecialWorldInterface;
+    //The special interface and the parent object that the interface will return to once the lpayer leaves the view.
+    //Normally, the interface is moved to the main interface canvas
     [HideInInspector] public RectTransform CurrentSpecialWorldInterface, TempInterfaceParent;
     [HideInInspector] public CinemachineCamera CurrentWorldInterfaceCinemachineCamera;
+    private ISpecialInterfaceProvider _currentSpecialInterfdaaceProvider;
     #endregion
 
     #region Mono
@@ -548,7 +552,7 @@ public class GUIGameplayControls : MonoBehaviour
             }
         }
     }
-    public void SetSpecialWorldInterface(RectTransform interfaceControls, RectTransform interfaceParent, CinemachineCamera camera)
+    public void SetSpecialWorldInterface(RectTransform interfaceControls, RectTransform interfaceParent, CinemachineCamera camera, ISpecialInterfaceProvider provider)
     {
         if (!IsPlayerInSpecialWorldInterface)
         {
@@ -569,6 +573,7 @@ public class GUIGameplayControls : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             _gameplayControls.gameObject.SetActive(false);
+            _currentSpecialInterfdaaceProvider = provider;
         }
     }
     public void ClearSpecialWorldInterface()
@@ -594,6 +599,8 @@ public class GUIGameplayControls : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _gameplayControls.gameObject.SetActive(true);
+            _currentSpecialInterfdaaceProvider.CloseInterface();
+            _currentSpecialInterfdaaceProvider = null;
         }
     }
     #endregion

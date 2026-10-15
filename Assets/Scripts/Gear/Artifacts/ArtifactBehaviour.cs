@@ -1,7 +1,6 @@
-using UnityEngine;
-
 public class ArtifactBehaviour : GearPeaceBehaviour
 {
+    #region Methods
     public override GearBonus GetBaseStats(Item item)
     {
         return GetGeneralBaseStats(item);
@@ -102,4 +101,5 @@ public class ArtifactBehaviour : GearPeaceBehaviour
         }
         return ret;
     }
+    #endregion
 }

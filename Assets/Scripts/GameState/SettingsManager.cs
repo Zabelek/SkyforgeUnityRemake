@@ -30,6 +30,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
+            ApplyGlobalSettings();
             ApplySceneSettings();
         }
     }

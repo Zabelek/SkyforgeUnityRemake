@@ -101,6 +101,11 @@ public class GUIGameMenu : MonoBehaviour
     #region Methods
     public async Task OpenMenu()
     {
+        //Everything has to be removed and cameras have to be set up on the right priority so that there is no flickering on enbtering menu from other views
+        CloseAllControlGroups();
+        _atlasCinemachineBrain.Priority = 1;
+        _emptyCinemachineBrain.Priority = 5;
+        _characterCinemachineBrain.Priority = 1;
         _sceneRoot.gameObject.SetActive(true);
         _menuCloseDelay = 0.5f;
         _statsPanel.UpdateValues();
