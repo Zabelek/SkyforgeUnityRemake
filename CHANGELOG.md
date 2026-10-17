@@ -29,7 +29,6 @@
 - Fixed a bug when the freshly created profile would not sync with the gameplay scene
 - Fixed a bug with the damage display, preventing it to fade out properly
 - Added resource state change side notifications
-
 - Implemented some of the code improvements and bug fixes from the AleksSmash2019’s fork. Thank you again for your amazing work, AleksSmash2019!
 - Implemented vsync, window mode and target frame rate settings by AleksSmash2019
 - Introduced IDs to some Scriptable Objects, as they duplicate in some cases and SO = SO doesn’t always work. All Scriptable Object will have string IDs soon.
@@ -53,3 +52,60 @@
 - Fixed a bug causing the enemies to incorrectly scale their stats with a difficulty level
 - Changed the Argus voice at the end
 - Minor code cleanup
+
+## v0.0.3a
+- Added a new outfit – Divine Paladin Armor
+- Fixed a bug with combo abilities not locking player input after Thirst for Battle -> Whirlwind
+- Fixed a bug with Dryad boss not spawning after killing Entid in some cases.
+- Reworked the way player meshes are activated during outfit changing.
+- Relocated colliders from player prefab into separate armor prefabs
+- Added support to transferring additional colliders for Cloth and EZSoftBone components
+- Introduced equipment in the player profile
+- Added Item registry to SkyforgeLoader
+- Implemented bag tab in game menu with dragging items and displaying tooltips with item data
+- Made ArmorSO and WeaponSO inherit after ItemSO and relocated their asset menu
+- Added Ragnar, Deadly Heat weapon
+- Added equipment view to the game menu
+- Added a default player outfit without armor
+- Extended weapon-ability communication
+- Added better enemy killing registry
+- Added equipment synchronization with user profile
+- Improved effect stacking
+- Added functional armor
+- Fixed audio bugs
+- Added quick access item slot handling (no GUI for now)
+- Fixed some textures of both armors
+- Better organized init sequence for then player
+- further adjustments to armor and weapons materials
+- Organized the player stat data storage
+- organized the player visualization management in game menu
+- Added a window for picking an item after clicking at slot in equipment view
+- Added openable chests on the map
+- Added three artifacts: Cutthroat’s Ring, Viper Wristlet and Sunny Prism
+- Added Marks of King/Assassin/Sage/Judge
+- Added loot spheres that drop from enemies
+- Improved stat calculations
+- Added invulnerability support
+- Added Gvardar weapon
+- Added Special Operations Armor
+- Weapon drawing bug fixes
+- Added Argus voicelines for the Triffid boss encounter
+- Added Interface sounds of moving items around and equipping them
+- Added projectile class that unifies shooting mechanics
+- Improved summoning monsters from abilities
+- Introduced a new map – Sky Forge
+- Introduced a custom interface displaying on interacting with map objects
+- Fixed bug when a projectile hitting after death prevents resurrection
+- Fixed bugs with restricted movement areas stopping player after dashing towards the edge
+- Implemented a new between-scene transition method
+- Added story variables, allowing for different map states according to story progress
+- Added Argus introduction to Sky Forge location
+- Implemented Generations of items
+- Added items: Tear of Rebirth, Flame of Rebirth, Breeze of Rebirth, Bud of Rebirth, Star of Rebirth, Seal of Rebirth and Sparkle of Rebirth
+- Implemented Generation Improving mode in the Equipment view
+- Added an interactive machine in the middle of Sky Forge
+- Added marked bonuses to the equipment pieces. Each piece is divided by 20 Ether Fibers, each of value from 50% to 100%
+- Implemented an Ether Transformation minigame that creates or improves the Ether Fibers in equipment
+- Added sounds to Ether Transformation Minigame and to Generation Upgrade mode.
+- Fixed a bug with healing Dryad not starting the heal ability.
+- Added interface effects to the Generation state of items

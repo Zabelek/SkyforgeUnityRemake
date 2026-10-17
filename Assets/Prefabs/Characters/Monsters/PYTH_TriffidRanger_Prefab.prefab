@@ -222,6 +222,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5225876271097640297, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4079621229093531190}
+    - targetCorrespondingSourceObject: {fileID: 5225876271097640297, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6325178314706085489}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9217023375570061297, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
       insertIndex: 2
@@ -241,17 +244,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3582747863490604528, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
   m_PrefabInstance: {fileID: 2923990957242132088}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3541890302161019409 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1851903304270496873, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
-  m_PrefabInstance: {fileID: 2923990957242132088}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6304313412076462473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3648422a1e3ce7438e88ff00d34c159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1 &6304313412076462473 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9217023375570061297, guid: b8c27347fc01cdf41a49d30483cca14b, type: 3}
@@ -270,8 +262,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterBehaviour
   CharacterSO: {fileID: 11400000, guid: 9e4e6f27bc6fdad428bf680d9f26c82f, type: 2}
-  _visualHitReceiver: {fileID: 3541890302161019409}
-  _outfitManager: {fileID: 0}
   RegisteredBones: []
   SpeakingBehaviour: {fileID: 3348629077108506769}
   DefaultAnimatorController: {fileID: 9100000, guid: 9b1740f3bbf5c2c44b4a20b683d82209, type: 2}
@@ -298,7 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3de97401944284ca6da0170602bc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHandlerBehaviour
-  _character: {fileID: 2992237203623964949}
   _followCloseUpDistanceLimit: 8.5
   _attackRangeExtraLimit: 0.6
   _collisionRadius: 0.5
@@ -341,8 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimationBehaviour
   _animator: {fileID: 8891536714369460908}
-  _character: {fileID: 2992237203623964949}
-  _aiHandler: {fileID: 7849871448173078083}
   AvailableAttackVariants: 3
 --- !u!224 &6922613784766173969 stripped
 RectTransform:
@@ -852,4 +839,70 @@ SkinnedMeshRenderer:
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 153e04273d691ce4093e193979ec0f69, type: 3}
   m_PrefabInstance: {fileID: 3030781956629813053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7053029608293911393
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6922613784766173969}
+    m_Modifications:
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.48899996
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.35776
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5938745745375004097, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: m_Name
+      value: LootManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5946856624914801547, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+      propertyPath: _character
+      value: 
+      objectReference: {fileID: 2992237203623964949}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+--- !u!4 &6325178314706085489 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3902062473723030800, guid: 14d67b3f92ff51e4db6493d50eca4059, type: 3}
+  m_PrefabInstance: {fileID: 7053029608293911393}
   m_PrefabAsset: {fileID: 0}

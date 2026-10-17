@@ -30,17 +30,24 @@ public class DOTScenarioManager : ScenarioManager
         base.Awake();
         if(SkyforgeLoader.CurrentProfile?.StoryVariables.DivineObservatoryVisited == false)
         {
+            _firstChest.gameObject.SetActive(true);
+            SkyforgeLoader.CurrentProfile.StoryVariables.DivineObservatoryVisited = true;
+        }
+        else
+        {
+            _firstChest.gameObject.SetActive(false);
+        }
+        if (SkyforgeLoader.CurrentProfile?.StoryVariables.DivineObservatoryBossChestOpened == false)
+        {
             _lootChest.gameObject.SetActive(true);
             _lootChestVisited.gameObject.SetActive(false);
-            _firstChest.gameObject.SetActive(true);
             _lootChest.OnChestOpenEvent += ChestOpenedAction;
-            SkyforgeLoader.CurrentProfile.StoryVariables.DivineObservatoryVisited = true;
+            SkyforgeLoader.CurrentProfile.StoryVariables.DivineObservatoryBossChestOpened = true;
         }
         else
         {
             _lootChest.gameObject.SetActive(false);
             _lootChestVisited.gameObject.SetActive(true);
-            _firstChest.gameObject.SetActive(false);
             _lootChestVisited.OnChestOpenEvent += ChestOpenedAction;
         }
     }

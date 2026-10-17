@@ -59,13 +59,13 @@ public class SFEtherTransformerBehaviour : GIItemDragBehaviour, IPlayerInteracta
     public float AssasinEnergyOverload { get; set; }
     public float JudgeEnergyOverload { get; set; }
     public float SageEnergyOverload { get; set; }
-    //Gain variables indicate how much energyt has already been accumulated during current minigame. They indicate the type of output bonus or strength of Ether Fibre
+    //Gain variables indicate how much energyt has already been accumulated during current minigame. They indicate the type of output bonus or strength of Ether Fiber
     public float KingEnergyGain { get; set; }
     public float AssasinEnergyGain { get; set; }
     public float JudgeEnergyGain { get; set; }
     public float SageEnergyGain { get; set; }
     public bool UpgradingOngoing { get; set; }
-    //while the player picks what fibre they want to redo
+    //while the player picks what fiber they want to redo
     public bool FiberPickMode { get; set; }
     public float CurrentUpgradingTime { get; set; }
     public bool LeverLocked { get; set; }
@@ -115,6 +115,8 @@ public class SFEtherTransformerBehaviour : GIItemDragBehaviour, IPlayerInteracta
         _inputBehaviour.OnLeftAction += LeftButton_Pressed;
         _inputBehaviour.OnRightAction += RightButton_Pressed;
         LeverLocked = false;
+        _upgradableView.SetTitle("Equipment");
+        _resourceView.SetTitle("Resources");
     }
     protected override void Update()
     {
@@ -322,7 +324,7 @@ public class SFEtherTransformerBehaviour : GIItemDragBehaviour, IPlayerInteracta
                 {
                     if (targetValue > 100)
                         targetValue = 100;
-                    _console.text = "Upgrade successful! Percent of current Ether Fibre completion:\n" + (targetValue/100).ToString("0.00%");
+                    _console.text = "Upgrade successful! Percent of current Ether Fiber completion:\n" + (targetValue/100).ToString("0.00%");
                     _upgradableSlot.Item.ItemUpgradeState.EtherFibers[_currentlySelectedFiberNumber] = targetValue / 100;
                 }
                 else

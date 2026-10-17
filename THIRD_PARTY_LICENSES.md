@@ -103,6 +103,7 @@ Texture Assets used from ambientCG:
 * Concrete047A Texture
 * Metal048C Texture
 * Wood026 Texture
+* Marble010 Texture
 
 License: CC0 1.0 Universal
 
@@ -166,6 +167,16 @@ Sound Assets used from Pixabay:
 * UI Sound 73 by juniorsoundays
 * UI Interface Sound 16 by SoundReality
 * Switch by studiomandragore (Freesound)
+* Sacred Rune Lock – Holy Magic Seal Activation by Coghezzi
+* Opening Metal Door by Universfield
+* Mining Maschine Cave Mine Factory Field-recording Fantasy by szegvari (Freesound)
+* Machine Break Loop by dbsound
+* Door Opening 2 by SoundReality
+* Banging Metal Door SFX by u_c2s90p6i67
+* Large Metal Gate Door Knocking by SoundReality
+* Metal warehouse door opened with chains by MichelleGrobler (Freesound)
+* Magic Surprise by Universfield
+* warp magic (6) by Yodguard
 
 License: Pixabay Content License
 

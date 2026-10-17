@@ -9,8 +9,9 @@ public class PYTHHealingDryadAIHandlerBehaviour : AIHandlerBehaviour
     #endregion
 
     #region Mono
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if(_character is MonsterBehaviour && (_character as MonsterBehaviour).SpecialAttack is PYTHDryadHealAbilityBehaviour)
         {
             _dryad = _character as MonsterBehaviour;
